@@ -51,14 +51,14 @@
 
                         <!-- Property Value -->
                         <div class="mb-3">
-                            <label class="form-label">Property Price (AED)</label>
-                            <input type="number" id="propertyValue" class="form-control" value="1000000">
+                            <label class="form-label">Property Price (<span class="currency-code"></span>)</label>
+                            <input type="number" id="propertyValue" class="form-control" value="1000000" data-base-value="1000000">
                         </div>
 
                         <!-- Down Payment -->
                         <div class="mb-3">
-                            <label class="form-label">Down Payment (AED)</label>
-                            <input type="number" id="downPayment" class="form-control" value="200000">
+                            <label class="form-label">Down Payment (<span class="currency-code"></span>)</label>
+                            <input type="number" id="downPayment" class="form-control" value="200000" data-base-value="200000">
                         </div>
 
                         <!-- Interest Rate -->
@@ -122,8 +122,8 @@
                             <div class="col-6 text-end">
                                 <p id="upfrontDown">AED 200,000</p>
                                 <p id="upfrontDLD">AED 40,000</p>
-                                <p>AED 3,000</p>
-                                <p>AED 4,000</p>
+                                <p id="valuationFee">AED 3,000</p>
+                                <p id="registrationFee">AED 4,000</p>
                             </div>
                             <div class="col-6">
                                 <p>Mortgage Registration (0.25%)</p>
@@ -155,6 +155,34 @@
             const loanDurationInput = document.getElementById('loanDuration');
             const interestInput = document.getElementById('interestRate');
             const durationLabel = document.getElementById('durationLabel');
+
+            const selectedCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
+            const currencySymbols = { AED: 'AED', USD: '$', EUR: '€', GBP: '£' };
+            const baseCurrency = 'AED';
+            let conversionRate = 1;
+            const valuationFeeBase = 3000;
+            const registrationFeeBase = 4000;
+
+            document.querySelectorAll('.currency-code').forEach(el => el.textContent = selectedCurrency);
+
+            if (selectedCurrency !== baseCurrency) {
+                fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        conversionRate = data.rates[selectedCurrency] || 1;
+                        propertyValueInput.value = (parseFloat(propertyValueInput.dataset.baseValue) * conversionRate).toFixed(2);
+                        downPaymentInput.value = (parseFloat(downPaymentInput.dataset.baseValue) * conversionRate).toFixed(2);
+                        calculate();
+                    });
+            } else {
+                propertyValueInput.value = propertyValueInput.dataset.baseValue;
+                downPaymentInput.value = downPaymentInput.dataset.baseValue;
+            }
+
+            function formatCurrency(amount) {
+                const symbol = currencySymbols[selectedCurrency] || selectedCurrency;
+                return `${symbol} ${Math.round(amount).toLocaleString()}`;
+            }
 
             const rateOptions = [{
                 label: '3 years fixed-rate',
@@ -237,20 +265,24 @@
                 const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
                 const totalInterest = (monthlyPayment * months) - loanAmount;
 
-                document.getElementById('loanAmount').innerText = `AED ${loanAmount.toLocaleString()}`;
-                document.getElementById('monthlyCost').innerText = `AED ${Math.round(monthlyPayment).toLocaleString()}`;
-                document.getElementById('interestPaid').innerText = `AED ${Math.round(totalInterest).toLocaleString()}`;
+                document.getElementById('loanAmount').innerText = formatCurrency(loanAmount);
+                document.getElementById('monthlyCost').innerText = formatCurrency(monthlyPayment);
+                document.getElementById('interestPaid').innerText = formatCurrency(totalInterest);
 
                 const dldFee = propertyValue * 0.04;
                 const mrFee = propertyValue * 0.0025;
                 const agencyFee = propertyValue * 0.02;
-                const totalUpfront = downPayment + dldFee + 3000 + 4000 + mrFee + agencyFee;
+                const valuationFee = valuationFeeBase * conversionRate;
+                const registrationFee = registrationFeeBase * conversionRate;
+                const totalUpfront = downPayment + dldFee + valuationFee + registrationFee + mrFee + agencyFee;
 
-                document.getElementById('upfrontDown').innerText = `AED ${downPayment.toLocaleString()}`;
-                document.getElementById('upfrontDLD').innerText = `AED ${Math.round(dldFee).toLocaleString()}`;
-                document.getElementById('upfrontMR').innerText = `AED ${Math.round(mrFee).toLocaleString()}`;
-                document.getElementById('upfrontAgency').innerText = `AED ${Math.round(agencyFee).toLocaleString()}`;
-                document.getElementById('totalUpfront').innerText = `AED ${Math.round(totalUpfront).toLocaleString()}`;
+                document.getElementById('upfrontDown').innerText = formatCurrency(downPayment);
+                document.getElementById('upfrontDLD').innerText = formatCurrency(dldFee);
+                document.getElementById('valuationFee').innerText = formatCurrency(valuationFee);
+                document.getElementById('registrationFee').innerText = formatCurrency(registrationFee);
+                document.getElementById('upfrontMR').innerText = formatCurrency(mrFee);
+                document.getElementById('upfrontAgency').innerText = formatCurrency(agencyFee);
+                document.getElementById('totalUpfront').innerText = formatCurrency(totalUpfront);
             }
 
             function displayInvalid(message = 'Invalid Input') {

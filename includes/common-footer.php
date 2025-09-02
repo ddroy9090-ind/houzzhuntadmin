@@ -187,6 +187,37 @@
     }
 </script>
 
+<script>
+    (function () {
+        const selectedCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
+        const baseCurrency = 'AED';
+        const currencySymbols = { AED: 'AED', USD: '$', EUR: '€', GBP: '£' };
+
+        function applyConversion(rate) {
+            document.querySelectorAll('[data-base-amount]').forEach(el => {
+                const base = parseFloat(el.getAttribute('data-base-amount'));
+                if (isNaN(base)) return;
+                const converted = base * rate;
+                el.textContent = converted.toLocaleString(undefined, { maximumFractionDigits: 2 });
+            });
+            document.querySelectorAll('.currency-symbol').forEach(el => {
+                el.textContent = currencySymbols[selectedCurrency] || selectedCurrency;
+            });
+        }
+
+        if (selectedCurrency !== baseCurrency) {
+            fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
+                .then(res => res.json())
+                .then(data => {
+                    const rate = data.rates[selectedCurrency] || 1;
+                    applyConversion(rate);
+                });
+        } else {
+            applyConversion(1);
+        }
+    })();
+</script>
+
 
 
 
