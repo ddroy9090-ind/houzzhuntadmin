@@ -5,9 +5,9 @@
 // $db   = "houzzhunt_portal";
 
 $host = "localhost";
-$user = "u431421769_houzzhunt";
+$user = "u431421769_root";
 $pass = "Reliant@1977";
-$db   = "u431421769_channelportal";
+$db   = "u431421769_houzzhuntcms";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
