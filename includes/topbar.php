@@ -8,6 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $userName = $_SESSION['name'];
 $userRole = $_SESSION['role'];
+$currentCurrency = $_SESSION['currency'] ?? 'AED';
+$currencyOptions = ['AED','USD','EUR','GBP'];
 ?>
 <header id="page-topbar">
     <div class="layout-width">
@@ -57,6 +59,16 @@ $userRole = $_SESSION['role'];
             </div>
 
             <div class="d-flex align-items-center">
+
+                <div class="dropdown ms-sm-3">
+                    <form method="POST" action="set_currency.php">
+                        <select name="currency" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <?php foreach ($currencyOptions as $code): ?>
+                                <option value="<?= $code ?>" <?= $currentCurrency === $code ? 'selected' : '' ?>><?= $code ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
+                </div>
 
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn material-shadow-none" id="page-header-user-dropdown"

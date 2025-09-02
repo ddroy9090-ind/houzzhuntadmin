@@ -21,6 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['role'] = $user['role'];
             $_SESSION['name'] = $user['name'];
 
+            // Detect user currency based on IP
+            $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+            $geoData = @json_decode(file_get_contents("https://ipapi.co/{$ip}/json/"), true);
+            $_SESSION['currency'] = $geoData['currency'] ?? 'AED';
+
             // Redirect to index.php (common dashboard)
             header("Location: index.php");
             exit;
