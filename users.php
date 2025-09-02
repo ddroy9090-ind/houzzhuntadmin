@@ -120,9 +120,10 @@
                         </div>
 
                         <!-- ✅ Backend Connected Form -->
-                        <form id="registerForm" class="tablelist-form" action="register_user.php" method="POST"
+                     <form id="registerForm" class="tablelist-form" action="register_user.php" method="POST"
                             autocomplete="off">
-                            <div class="modal-body">
+                             <input type="hidden" id="user-id" name="id" />
+                             <div class="modal-body">
                                 <!-- Name -->
                                 <div class="mb-3">
                                     <label for="name-field" class="form-label">Name</label>
@@ -144,8 +145,8 @@
                                         placeholder="Enter Email" required />
                                 </div>
 
-                                <!-- Password -->
-                                <div class="mb-3 position-relative toggleBtn">
+                                 <!-- Password -->
+                                 <div class="mb-3 position-relative toggleBtn" id="password-group">
                                     <label for="password-field" class="form-label">Password</label>
                                     <input type="password" id="password-field" name="password" class="form-control"
                                         placeholder="Enter Password" required />
@@ -156,8 +157,8 @@
                                     </button>
                                 </div>
 
-                                <!-- Confirm Password -->
-                                <div class="mb-3 position-relative toggleBtn">
+                                 <!-- Confirm Password -->
+                                 <div class="mb-3 position-relative toggleBtn" id="confirm-password-group">
                                     <label for="confirm-password-field" class="form-label">Confirm Password</label>
                                     <input type="password" id="confirm-password-field" name="confirm_password"
                                         class="form-control" placeholder="Confirm Password" required />
@@ -225,55 +226,136 @@
                     }
                 }
 
-                document.getElementById("registerForm").addEventListener("submit", function (e) {
-                    e.preventDefault();
+                document.addEventListener('DOMContentLoaded', function () {
+                    const form = document.getElementById('registerForm');
+                    const modalTitle = document.getElementById('exampleModalLabel');
+                    const submitBtn = document.getElementById('add-btn');
+                    const passwordGroup = document.getElementById('password-group');
+                    const confirmPasswordGroup = document.getElementById('confirm-password-group');
+                    const passwordField = document.getElementById('password-field');
+                    const confirmPasswordField = document.getElementById('confirm-password-field');
+                    const userIdField = document.getElementById('user-id');
+                    let formMode = 'add';
+                    let editRow = null;
+                    let deleteUserId = null;
 
-                    let form = this;
-                    let formData = new FormData(form);
+                    document.getElementById('create-btn').addEventListener('click', function () {
+                        formMode = 'add';
+                        modalTitle.innerText = 'Register User';
+                        submitBtn.innerText = 'Add User';
+                        form.reset();
+                        userIdField.value = '';
+                        passwordGroup.style.display = '';
+                        confirmPasswordGroup.style.display = '';
+                        passwordField.required = true;
+                        confirmPasswordField.required = true;
+                    });
 
-                    fetch("register_user.php", {
-                        method: "POST",
-                        body: formData
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.status === "success") {
-                                // ✅ Close modal
-                                let modalEl = document.querySelector('#showModal');
-                                if (modalEl) {
-                                    let modal = bootstrap.Modal.getInstance(modalEl);
-                                    if (modal) modal.hide();
-                                }
+                    document.querySelectorAll('.edit-item-btn').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            formMode = 'edit';
+                            editRow = this.closest('tr');
+                            const id = this.getAttribute('data-id');
+                            const name = editRow.querySelector('.name').innerText;
+                            const username = editRow.querySelector('.username').innerText;
+                            const email = editRow.querySelector('.email').innerText;
+                            const role = editRow.querySelector('.role').innerText.trim();
 
-                                // ✅ Reset form
-                                form.reset();
+                            modalTitle.innerText = 'Edit User';
+                            submitBtn.innerText = 'Update User';
+                            userIdField.value = id;
+                            document.getElementById('name-field').value = name;
+                            document.getElementById('username-field').value = username;
+                            document.getElementById('email-field').value = email;
+                            document.getElementById('role-field').value = role;
 
-                                // ✅ Show success toast
-                                let toastEl = document.getElementById("toastSuccess");
-                                let toast = new bootstrap.Toast(toastEl, {
-                                    delay: 5000
-                                });
-                                toast.show();
+                            passwordGroup.style.display = 'none';
+                            confirmPasswordGroup.style.display = 'none';
+                            passwordField.required = false;
+                            confirmPasswordField.required = false;
+                        });
+                    });
+
+                    document.querySelectorAll('.remove-item-btn').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            deleteUserId = this.getAttribute('data-id');
+                        });
+                    });
+
+                    document.getElementById('delete-record').addEventListener('click', function () {
+                        if (!deleteUserId) return;
+                        fetch('delete_user.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: 'id=' + encodeURIComponent(deleteUserId)
+                        })
+                        .then(res => res.text())
+                        .then(res => {
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteRecordModal'));
+                            if (modal) modal.hide();
+                            if (res.trim() === 'success') {
+                                const row = document.querySelector("button.remove-item-btn[data-id='" + deleteUserId + "']").closest('tr');
+                                if (row) row.remove();
+                                const toastEl = document.getElementById('toastSuccess');
+                                toastEl.querySelector('.toast-body').innerText = 'User removed successfully!';
+                                new bootstrap.Toast(toastEl, {delay:5000}).show();
                             } else {
-                                // ❌ Show error toast
-                                let toastEl = document.getElementById("toastError");
-                                toastEl.querySelector(".toast-body").innerText = data.message;
-                                let toast = new bootstrap.Toast(toastEl, {
-                                    delay: 5000
-                                });
-                                toast.show();
+                                const toastEl = document.getElementById('toastError');
+                                toastEl.querySelector('.toast-body').innerText = 'Failed to remove user';
+                                new bootstrap.Toast(toastEl, {delay:5000}).show();
                             }
                         })
                         .catch(err => {
-                            // ❌ Generic server error toast
-                            let toastEl = document.getElementById("toastError");
-                            toastEl.querySelector(".toast-body").innerText = "Server error!";
-                            let toast = new bootstrap.Toast(toastEl, {
-                                delay: 5000
-                            });
-                            toast.show();
+                            const toastEl = document.getElementById('toastError');
+                            toastEl.querySelector('.toast-body').innerText = 'Server error!';
+                            new bootstrap.Toast(toastEl, {delay:5000}).show();
                             console.error(err);
                         });
+                    });
+
+                    form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const formData = new FormData(form);
+                        const url = formMode === 'edit' ? 'edit_user.php' : 'register_user.php';
+                        fetch(url, { method: 'POST', body: formData })
+                        .then(res => formMode === 'edit' ? res.text() : res.json())
+                        .then(data => {
+                            const success = formMode === 'edit' ? data.trim() === 'success' : data.status === 'success';
+                            if (success) {
+                                const toastEl = document.getElementById('toastSuccess');
+                                toastEl.querySelector('.toast-body').innerText = formMode === 'edit' ? 'User updated successfully!' : 'User registered successfully!';
+                                new bootstrap.Toast(toastEl, {delay:5000}).show();
+                                const modalEl = document.getElementById('showModal');
+                                const modal = bootstrap.Modal.getInstance(modalEl);
+                                if (modal) modal.hide();
+                                if (formMode === 'edit' && editRow) {
+                                    editRow.querySelector('.name').innerText = document.getElementById('name-field').value;
+                                    editRow.querySelector('.username').innerText = document.getElementById('username-field').value;
+                                    editRow.querySelector('.email').innerText = document.getElementById('email-field').value;
+                                    const roleCell = editRow.querySelector('.role');
+                                    if (roleCell.querySelector('span')) {
+                                        roleCell.querySelector('span').innerText = document.getElementById('role-field').value;
+                                    } else {
+                                        roleCell.innerText = document.getElementById('role-field').value;
+                                    }
+                                } else if (formMode === 'add') {
+                                    setTimeout(() => location.reload(), 1000);
+                                }
+                                form.reset();
+                            } else {
+                                const toastEl = document.getElementById('toastError');
+                                const msg = formMode === 'edit' ? 'Failed to update user!' : (data.message || 'Something went wrong!');
+                                toastEl.querySelector('.toast-body').innerText = msg;
+                                new bootstrap.Toast(toastEl, {delay:5000}).show();
+                            }
+                        })
+                        .catch(err => {
+                            const toastEl = document.getElementById('toastError');
+                            toastEl.querySelector('.toast-body').innerText = 'Server error!';
+                            new bootstrap.Toast(toastEl, {delay:5000}).show();
+                            console.error(err);
+                        });
+                    });
                 });
             </script>
 
