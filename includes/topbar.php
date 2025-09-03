@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once 'config.php';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -62,7 +61,6 @@ $currencyOptions = ['AED','USD','EUR','GBP'];
 
                 <div class="dropdown ms-sm-3">
                     <form method="POST" action="set_currency.php">
-                        <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                         <select name="currency" class="form-select form-select-sm" onchange="this.form.submit()">
                             <?php foreach ($currencyOptions as $code): ?>
                                 <option value="<?= $code ?>" <?= $currentCurrency === $code ? 'selected' : '' ?>><?= $code ?></option>
