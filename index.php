@@ -2,14 +2,25 @@
 include 'includes/auth.php';
 include 'config.php';
 
+// Show PHP errors instead of a blank page if something goes wrong
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$totalProperties = $conn->query("SELECT COUNT(*) AS c FROM properties")->fetch_assoc()['c'];
-$totalLeads = $conn->query("SELECT COUNT(*) AS c FROM leads")->fetch_assoc()['c'];
-$totalUsers = $conn->query("SELECT COUNT(*) AS c FROM users")->fetch_assoc()['c'];
-$todayLeads = $conn->query("SELECT COUNT(*) AS c FROM leads WHERE DATE(created_at)=CURDATE()")->fetch_assoc()['c'];
+// Helper function to safely fetch a single count value from the database
+function fetch_count(mysqli $conn, string $query): int {
+    $result = $conn->query($query);
+    return $result ? (int)$result->fetch_assoc()['c'] : 0;
+}
 
+$totalProperties = fetch_count($conn, "SELECT COUNT(*) AS c FROM properties");
+$totalLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads");
+$totalUsers       = fetch_count($conn, "SELECT COUNT(*) AS c FROM users");
+$todayLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads WHERE DATE(created_at)=CURDATE()");
+
+// Run queries for recent items and handle potential failures gracefully
 $recentProperties = $conn->query("SELECT id, project_name, location, starting_price FROM properties ORDER BY created_at DESC LIMIT 5");
-$recentLeads = $conn->query("SELECT leads.id, leads.name, leads.email, leads.avatar, leads.status, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
+$recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, leads.avatar, leads.status, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
 ?>
 
 <?php include 'includes/common-header.php'; ?>
@@ -347,25 +358,28 @@ $recentLeads = $conn->query("SELECT leads.id, leads.name, leads.email, leads.ava
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php while ($p = $recentProperties->fetch_assoc()): ?>
+                                                    <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
+                                                        <?php while ($p = $recentProperties->fetch_assoc()): ?>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="property-details.php?id=<?php echo $p['id']; ?>" class="fw-medium link-primary">#<?php echo str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?></a>
+                                                                </td>
+                                                                <td><?php echo htmlspecialchars($p['project_name']); ?></td>
+                                                                <td>
+                                                                    <span class="badge bg-success-subtle text-success"><?php echo htmlspecialchars($p['location']); ?></span>
+                                                                </td>
+                                                                <td>
+                                                                    <h5 class="fs-14 fw-medium mb-0">
+                                                                        <?php echo htmlspecialchars($p['starting_price']); ?><span class="text-muted fs-11 ms-1">(<?php echo htmlspecialchars($p['project_name']); ?>)</span>
+                                                                    </h5>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endwhile; ?>
+                                                    <?php else: ?>
                                                         <tr>
-                                                            <td>
-                                                                <a href="property-details.php?id=<?php echo $p['id']; ?>"
-                                                                    class="fw-medium link-primary">#<?php echo str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?></a>
-                                                            </td>
-                                                            <td><?php echo htmlspecialchars($p['project_name']); ?></td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge bg-success-subtle text-success"><?php echo htmlspecialchars($p['location']); ?></span>
-                                                            </td>
-                                                            <td>
-                                                                <h5 class="fs-14 fw-medium mb-0">
-                                                                    <?php echo htmlspecialchars($p['starting_price']); ?><span
-                                                                        class="text-muted fs-11 ms-1">(<?php echo htmlspecialchars($p['project_name']); ?>)</span>
-                                                                </h5>
-                                                            </td>
+                                                            <td colspan="4" class="text-center">No properties found.</td>
                                                         </tr>
-                                                    <?php endwhile; ?>
+                                                    <?php endif; ?>
                                                 </tbody>
 
                                             </table>
@@ -404,53 +418,59 @@ $recentLeads = $conn->query("SELECT leads.id, leads.name, leads.email, leads.ava
                                                 </thead>
                                                 <tbody>
 
-                                                    <?php while ($l = $recentLeads->fetch_assoc()): ?>
-                                                        <tr>
-                                                            <td>#<?php echo htmlspecialchars($l['id']); ?></td>
-                                                            <td>
-                                                               <div class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0 me-2">
-                                                                        <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
-                                                                            <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt=""
-                                                                                class="avatar-xs rounded-circle material-shadow" />
-                                                                        <?php else: ?>
-                                                                            <img src="assets/images/users/default-avatar.jpg" alt=""
-                                                                                class="avatar-xs rounded-circle material-shadow" />
-                                                                        <?php endif; ?>
+                                                    <?php if ($recentLeads && $recentLeads->num_rows > 0): ?>
+                                                        <?php while ($l = $recentLeads->fetch_assoc()): ?>
+                                                            <tr>
+                                                                <td>#<?php echo htmlspecialchars($l['id']); ?></td>
+                                                                <td>
+                                                                   <div class="d-flex align-items-center">
+                                                                        <div class="flex-shrink-0 me-2">
+                                                                            <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
+                                                                                <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt=""
+                                                                                    class="avatar-xs rounded-circle material-shadow" />
+                                                                            <?php else: ?>
+                                                                                <img src="assets/images/users/default-avatar.jpg" alt=""
+                                                                                    class="avatar-xs rounded-circle material-shadow" />
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                        <div class="flex-grow-1"><?php echo htmlspecialchars($l['name']); ?></div>
                                                                     </div>
-                                                                    <div class="flex-grow-1"><?php echo htmlspecialchars($l['name']); ?></div>
-                                                                </div>
-                                                            </td>
-                                                            <td><?php echo htmlspecialchars($l['email']); ?></td>
-                                                            <td><?php echo htmlspecialchars($l['project_name']); ?></td>
-                                                            <td>
-                                                                <?php
-                                                                $statusClass = '';
-                                                                $statusText = isset($l['status']) ? $l['status'] : 'Pending';
+                                                                </td>
+                                                                <td><?php echo htmlspecialchars($l['email']); ?></td>
+                                                                <td><?php echo htmlspecialchars($l['project_name']); ?></td>
+                                                                <td>
+                                                                    <?php
+                                                                    $statusClass = '';
+                                                                    $statusText = isset($l['status']) ? $l['status'] : 'Pending';
 
-                                                                switch (strtolower($statusText)) {
-                                                                    case 'completed':
-                                                                    case 'active':
-                                                                        $statusClass = 'bg-success-subtle text-success';
-                                                                        break;
-                                                                    case 'pending':
-                                                                        $statusClass = 'bg-warning-subtle text-warning';
-                                                                        break;
-                                                                    case 'cancelled':
-                                                                    case 'rejected':
-                                                                        $statusClass = 'bg-danger-subtle text-danger';
-                                                                        break;
-                                                                    default:
-                                                                        $statusClass = 'bg-info-subtle text-info';
-                                                                }
-                                                                ?>
-                                                                <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo date('d/m/Y', strtotime($l['created_at'])); ?>
-                                                            </td>
+                                                                    switch (strtolower($statusText)) {
+                                                                        case 'completed':
+                                                                        case 'active':
+                                                                            $statusClass = 'bg-success-subtle text-success';
+                                                                            break;
+                                                                        case 'pending':
+                                                                            $statusClass = 'bg-warning-subtle text-warning';
+                                                                            break;
+                                                                        case 'cancelled':
+                                                                        case 'rejected':
+                                                                            $statusClass = 'bg-danger-subtle text-danger';
+                                                                            break;
+                                                                        default:
+                                                                            $statusClass = 'bg-info-subtle text-info';
+                                                                    }
+                                                                    ?>
+                                                                    <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
+                                                                </td>
+                                                                <td>
+                                                                    <?php echo date('d/m/Y', strtotime($l['created_at'])); ?>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endwhile; ?>
+                                                    <?php else: ?>
+                                                        <tr>
+                                                            <td colspan="6" class="text-center">No leads found.</td>
                                                         </tr>
-                                                    <?php endwhile; ?>
+                                                    <?php endif; ?>
 
                                                 </tbody>
                                             </table>
