@@ -33,6 +33,7 @@ $result = $conn->query("SELECT * FROM properties ORDER BY id DESC");
                                                 <div class="d-flex align-items-center justify-content-between property-top-details">
                                                     <h5 class="property-title mb-0"><?= $property['status'] ?? 'For Sale'; ?></h5>
                                                     <h5 class="property-title1 mb-0">
+                                                        <span class="currency-symbol">AED</span>
                                                         <span class="currency-symbol"></span>
                                                         <span class="price" data-base-amount="<?= $property['starting_price'] ?? 0; ?>">
                                                             <?= $property['starting_price'] ?? '-'; ?>
