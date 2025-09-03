@@ -76,41 +76,40 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-card">
-                                <table class="table align-middle table-nowrap mb-0">
-                                    <thead class="">
+                                <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                    <thead class="text-muted table-light">
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Property</th>
-                                            <th>Status</th>
-                                            <th>Date</th>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Property</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if ($leads && $leads->num_rows > 0): while ($row = $leads->fetch_assoc()): ?>
+                                        <?php if ($leads && $leads->num_rows > 0): while ($l = $leads->fetch_assoc()): ?>
                                             <tr>
-                                                <td>#<?php echo htmlspecialchars($row['id']); ?></td>
+                                                <td>#<?php echo htmlspecialchars($l['id']); ?></td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="flex-shrink-0 me-2">
-                                                            <?php if (!empty($row['avatar'])): ?>
-                                                                <img src="<?php echo htmlspecialchars($row['avatar']); ?>" alt="" class="avatar-xs rounded-circle material-shadow" />
+                                                            <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
+                                                                <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt="" class="avatar-xs rounded-circle material-shadow" />
                                                             <?php else: ?>
                                                                 <img src="assets/images/users/default-avatar.jpg" alt="" class="avatar-xs rounded-circle material-shadow" />
                                                             <?php endif; ?>
                                                         </div>
-                                                        <div class="flex-grow-1"><?php echo htmlspecialchars($row['name']); ?></div>
+                                                        <div class="flex-grow-1"><?php echo htmlspecialchars($l['name']); ?></div>
                                                     </div>
                                                 </td>
-                                                <td><?php echo htmlspecialchars($row['email']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['phone']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['project_name'] ?? ''); ?></td>
+                                                <td><?php echo htmlspecialchars($l['email']); ?></td>
+                                                <td><?php echo htmlspecialchars($l['project_name'] ?? ''); ?></td>
                                                 <td>
                                                     <?php
-                                                    $statusText = $row['status'] ?? 'Pending';
                                                     $statusClass = '';
+                                                    $statusText = isset($l['status']) ? $l['status'] : 'Pending';
+
                                                     switch (strtolower($statusText)) {
                                                         case 'completed':
                                                         case 'active':
@@ -129,10 +128,10 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                                     ?>
                                                     <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
                                                 </td>
-                                                <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                                                <td><?php echo date('d/m/Y', strtotime($l['created_at'])); ?></td>
                                             </tr>
                                         <?php endwhile; else: ?>
-                                            <tr><td colspan="7" class="text-center">No leads found</td></tr>
+                                            <tr><td colspan="6" class="text-center">No leads found</td></tr>
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
