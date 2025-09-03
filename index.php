@@ -288,14 +288,14 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                             style="height: 269px" dir="ltr"></div>
 
                                         <div class="px-2 py-2 mt-1">
-                                            <p class="mb-1">Canada <span class="float-end">75%</span></p>
+                                            <p class="mb-1">Dubai <span class="float-end">75%</span></p>
                                             <div class="progress mt-2" style="height: 6px;">
                                                 <div class="progress-bar progress-bar-striped bg-primary"
                                                     role="progressbar" style="width: 75%" aria-valuenow="75"
                                                     aria-valuemin="0" aria-valuemax="75"></div>
                                             </div>
 
-                                            <p class="mt-3 mb-1">Greenland <span class="float-end">47%</span>
+                                            <p class="mt-3 mb-1">Abu Dhabi <span class="float-end">47%</span>
                                             </p>
                                             <div class="progress mt-2" style="height: 6px;">
                                                 <div class="progress-bar progress-bar-striped bg-primary"
@@ -303,7 +303,7 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                                     aria-valuemin="0" aria-valuemax="47"></div>
                                             </div>
 
-                                            <p class="mt-3 mb-1">Russia <span class="float-end">82%</span></p>
+                                            <p class="mt-3 mb-1">Sharjah <span class="float-end">82%</span></p>
                                             <div class="progress mt-2" style="height: 6px;">
                                                 <div class="progress-bar progress-bar-striped bg-primary"
                                                     role="progressbar" style="width: 82%" aria-valuenow="82"
