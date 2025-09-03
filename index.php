@@ -19,7 +19,8 @@ $totalUsers       = fetch_count($conn, "SELECT COUNT(*) AS c FROM users");
 $todayLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads WHERE DATE(created_at)=CURDATE()");
 
 // Run queries for recent items and handle potential failures gracefully
-$recentProperties = $conn->query("SELECT id, project_name, location, starting_price FROM properties ORDER BY created_at DESC LIMIT 5");
+// Fetch latest properties including main image for card display
+$recentProperties = $conn->query("SELECT id, project_name, location, starting_price, main_picture FROM properties ORDER BY created_at DESC LIMIT 5");
 $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, leads.avatar, leads.status, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
 ?>
 
@@ -346,44 +347,33 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                     </div>
 
                                     <div class="card-body">
-                                        <div class="table-responsive table-card">
-                                            <table
-                                                class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                                                <thead class="text-muted table-light">
-                                                    <tr>
-                                                        <th scope="col">ID</th>
-                                                        <th scope="col">Project</th>
-                                                        <th scope="col">Location</th>
-                                                        <th scope="col">Price</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
-                                                        <?php while ($p = $recentProperties->fetch_assoc()): ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="property-details.php?id=<?php echo $p['id']; ?>" class="fw-medium link-primary">#<?php echo str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?></a>
-                                                                </td>
-                                                                <td><?php echo htmlspecialchars($p['project_name']); ?></td>
-                                                                <td>
-                                                                    <span class="badge bg-success-subtle text-success"><?php echo htmlspecialchars($p['location']); ?></span>
-                                                                </td>
-                                                                <td>
-                                                                    <h5 class="fs-14 fw-medium mb-0">
-                                                                        <?php echo htmlspecialchars($p['starting_price']); ?><span class="text-muted fs-11 ms-1">(<?php echo htmlspecialchars($p['project_name']); ?>)</span>
-                                                                    </h5>
-                                                                </td>
-                                                            </tr>
-                                                        <?php endwhile; ?>
-                                                    <?php else: ?>
-                                                        <tr>
-                                                            <td colspan="4" class="text-center">No properties found.</td>
-                                                        </tr>
-                                                    <?php endif; ?>
-                                                </tbody>
-
-                                            </table>
-
+                                        <div class="row g-4">
+                                            <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
+                                                <?php while ($p = $recentProperties->fetch_assoc()): ?>
+                                                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                        <div class="card h-100">
+                                                            <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>" class="card-img-top" alt="<?= htmlspecialchars($p['project_name']); ?>">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title mb-2">
+                                                                    <a href="property-details.php?id=<?= $p['id']; ?>" class="text-reset">#<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?></a>
+                                                                </h5>
+                                                                <p class="mb-2">
+                                                                    <i class="ri-map-pin-line align-bottom me-1"></i>
+                                                                    <?= htmlspecialchars($p['location']); ?>
+                                                                </p>
+                                                                <h6 class="mb-0">
+                                                                    <i class="ri-price-tag-3-line align-bottom me-1"></i>
+                                                                    <?= htmlspecialchars($p['starting_price']); ?>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endwhile; ?>
+                                            <?php else: ?>
+                                                <div class="col-12">
+                                                    <p class="text-center mb-0">No properties found.</p>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div> <!-- .card-->
