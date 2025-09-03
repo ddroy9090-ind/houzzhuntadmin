@@ -124,14 +124,36 @@
             });
         });
     });
-</script>
+    </script>
+
+<?php if (basename($_SERVER['PHP_SELF']) === 'index.php'): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var chartEl = document.querySelector("#customer_impression_charts");
+            if (chartEl) {
+                chartEl.innerHTML = "";
+                var options = {
+                    chart: { type: 'bar', height: 350 },
+                    series: [{
+                        name: 'Count',
+                        data: [<?php echo $totalProperties; ?>, <?php echo $totalLeads; ?>, <?php echo $totalUsers; ?>, <?php echo $todayLeads; ?>]
+                    }],
+                    xaxis: { categories: ['Total Properties', 'Total Leads', 'Channel Partners', 'Leads Today'] },
+                    colors: ['#0ab39c', '#299cdb', '#f7b84b', '#5b73e8'],
+                    plotOptions: { bar: { columnWidth: '45%', distributed: true } }
+                };
+                var chart = new ApexCharts(chartEl, options);
+                chart.render();
+            }
+        });
+    </script>
+<?php endif; ?>
 
 
 
 
 
-
-<script>
+    <script>
     function showFileName(input) {
         const fileName = input.files[0] ? input.files[0].name : '';
         document.getElementById('file-name-' + input.id).textContent = fileName;
