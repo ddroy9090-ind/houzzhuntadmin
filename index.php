@@ -9,7 +9,7 @@ $totalUsers = $conn->query("SELECT COUNT(*) AS c FROM users")->fetch_assoc()['c'
 $todayLeads = $conn->query("SELECT COUNT(*) AS c FROM leads WHERE DATE(created_at)=CURDATE()")->fetch_assoc()['c'];
 
 $recentProperties = $conn->query("SELECT id, project_name, location, starting_price FROM properties ORDER BY created_at DESC LIMIT 5");
-$recentLeads = $conn->query("SELECT leads.name, leads.email, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
+$recentLeads = $conn->query("SELECT leads.id, leads.name, leads.email, leads.avatar, leads.status, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
 ?>
 
 <?php include 'includes/common-header.php'; ?>
@@ -406,11 +406,9 @@ $recentLeads = $conn->query("SELECT leads.name, leads.email, properties.project_
 
                                                     <?php while ($l = $recentLeads->fetch_assoc()): ?>
                                                         <tr>
+                                                            <td>#<?php echo htmlspecialchars($l['id']); ?></td>
                                                             <td>
-                                                                #VZ2112
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
+                                                               <div class="d-flex align-items-center">
                                                                     <div class="flex-shrink-0 me-2">
                                                                         <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
                                                                             <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt=""
