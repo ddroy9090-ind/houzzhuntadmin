@@ -27,13 +27,17 @@ if (!$property) {
     include 'includes/common-footer.php';
     exit;
 }
+
+$heroImage = !empty($property['main_picture'])
+    ? 'uploads/' . $property['main_picture']
+    : 'assets/images/banner/hero-banner.webp';
 ?>
 
 <div class="main-content">
     <div class="page-content">
 
         <!-- Hero Section -->
-        <section class="hero-section">
+        <section class="hero-section" style="background-image: url('<?= $heroImage ?>');">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-md-10 text-center">
@@ -220,10 +224,14 @@ if (!$property) {
                 </div>
 
                 <!-- Google Map -->
+                <?php
+                $defaultMap = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115619.66473777338!2d55.17128!3d25.204849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f434f8dfdf0b7%3A0x28f3f8b35e5a2c2c!2sDubai!5e0!3m2!1sen!2sae!4v1692184877643!5m2!1sen!2sae";
+                $mapSrc = !empty($property['location'])
+                    ? 'https://www.google.com/maps?q=' . urlencode($property['location']) . '&z=15&output=embed'
+                    : $defaultMap;
+                ?>
                 <div class="map-container mb-4">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115619.66473777338!2d55.17128!3d25.204849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f434f8dfdf0b7%3A0x28f3f8b35e5a2c2c!2sDubai!5e0!3m2!1sen!2sae!4v1692184877643!5m2!1sen!2sae"
-                        width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
+                    <iframe src="<?= $mapSrc ?>" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
 

@@ -276,8 +276,9 @@
                         <!-- Location Coordinates -->
                         <div class="mb-3 col-md-6">
                             <label for="location" class="form-label">Location Coordinates</label>
-                            <input type="text" class="form-control" id="location" name="location">
-
+                            <input type="text" class="form-control" id="location" name="location"
+                                placeholder="25.204849,55.270782">
+                            <small class="form-text text-muted">Enter latitude and longitude separated by a comma.</small>
                         </div>
 
                         <!-- Text Field -->
