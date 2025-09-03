@@ -135,7 +135,7 @@ if (!$property) {
         </section>
 
         <!-- Floorplan Section -->
-        <div class="floorplan-section py-5">
+        <div class="floorplan-section">
             <div class="container-fluid">
                 <div class="row justify-content-center ">
                     <div class="col-12 text-center">

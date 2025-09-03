@@ -77,4 +77,8 @@
         </div>
         <!-- /.modal -->
 
+
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
         <?php include 'includes/sidebar.php' ?>

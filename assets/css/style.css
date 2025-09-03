@@ -116,7 +116,7 @@ p {
 }
 
 .navbar-menu {
-  background: #0d2d2b;
+  background: linear-gradient(245deg, #0f635c, #067e74);
 }
 
 :is([data-layout="vertical"], [data-layout="semibox"])[data-sidebar-size="sm"] .navbar-brand-box {
@@ -158,9 +158,9 @@ p {
   font-size: 17px;
 }
 
-.page-content {
+/* .page-content {
   background-color: #fff;
-}
+} */
 
 .form-select:focus {
   box-shadow: none;
@@ -270,6 +270,7 @@ span.whiteYellow {
     url('../images/banner/white-texture.png') no-repeat center center/cover;
   padding: 60px 0;
   color: #fff;
+  margin: 30px 0;
 }
 
 
@@ -344,6 +345,7 @@ span.whiteYellow {
   color: #fff;
   background: url('../images/banner/cta-banner.webp') no-repeat center center/cover;
   z-index: 1;
+  margin: 30px 0;
 }
 
 .property-amenities h2 {
@@ -513,7 +515,7 @@ h2.heading-title {
 .propertiesList {
   border: 1px #e8e8e8 solid;
   border-radius: 12px;
-  /* margin-top: 15px; */
+  background-color: #fff;
   margin-bottom: 20px;
 }
 
@@ -924,7 +926,7 @@ h2.heading-title {
 
 .table>thead {
   border-color: var(--vz-border-color);
-  background-color: #0d2d2b;
+   background: linear-gradient(245deg, #0f635c, #067e74);
   color: #fff;
 }
 

@@ -127,37 +127,7 @@
 </script>
 
 
-<!-- 
-<script>
-    (function () {
-        'use strict'
 
-        const form = document.getElementById('propertyForm');
-        const errorMessages = form.querySelectorAll('.error-msg');
-
-        errorMessages.forEach(msg => msg.style.display = 'none');
-
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            let isValid = true;
-
-            form.querySelectorAll('input, textarea, select').forEach(input => {
-                const errorMsg = input.parentElement.querySelector('.error-msg');
-                if (input.checkValidity() === false) {
-                    isValid = false;
-                    if (errorMsg) errorMsg.style.display = 'block';
-                } else {
-                    if (errorMsg) errorMsg.style.display = 'none';
-                }
-            });
-
-            if (isValid) {
-                alert("Form submitted successfully!");
-                form.reset();
-            }
-        });
-    })()
-</script> -->
 
 
 
@@ -217,7 +187,6 @@
         }
     })();
 </script>
-
 
 
 
