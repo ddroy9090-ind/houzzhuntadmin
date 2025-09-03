@@ -22,6 +22,15 @@ $todayLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads WHERE DA
 // Fetch latest properties including main image for card display
 $recentProperties = $conn->query("SELECT id, project_name, location, starting_price, main_picture FROM properties ORDER BY created_at DESC LIMIT 5");
 $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, leads.avatar, leads.status, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
+
+// Fetch all project names and locations for map markers
+$projectLocations = $conn->query("SELECT project_name, location FROM properties");
+$projectMarkers = [];
+if ($projectLocations) {
+    while ($row = $projectLocations->fetch_assoc()) {
+        $projectMarkers[] = $row;
+    }
+}
 ?>
 
 <?php include 'includes/common-header.php'; ?>

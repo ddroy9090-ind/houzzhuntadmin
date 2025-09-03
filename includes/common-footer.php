@@ -32,6 +32,28 @@
 <script src="assets/libs/jsvectormap/jsvectormap.min.js"></script>
 <script src="assets/libs/jsvectormap/maps/world-merc.js"></script>
 
+<?php if (isset($projectMarkers)) : ?>
+<script>
+    (function () {
+        var projectData = <?php echo json_encode($projectMarkers); ?>;
+        var locationCoords = {
+            "Dubai": [25.276987, 55.296249],
+            "Abu Dhabi": [24.4539, 54.3773],
+            "Sharjah": [25.3463, 55.4209],
+            "Gurgaon": [28.4595, 77.0266],
+            "Delhi": [28.7041, 77.1025]
+        };
+        window.projectMarkers = projectData
+            .map(function (p) {
+                var coords = locationCoords[p.location];
+                if (!coords) return null;
+                return { name: p.project_name, coords: coords };
+            })
+            .filter(Boolean);
+    })();
+</script>
+<?php endif; ?>
+
 <!--Swiper slider js-->
 <script src="assets/libs/swiper/swiper-bundle.min.js"></script>
 
