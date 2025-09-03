@@ -9,10 +9,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = trim($_POST['phone']);
     $property_id = isset($_POST['property_id']) ? (int)$_POST['property_id'] : 0;
     $note  = trim($_POST['message']);
+    $status = isset($_POST['status']) ? trim($_POST['status']) : 'Pending';
 
-    $stmt = $conn->prepare("INSERT INTO leads (name,email,phone,property_id,message) VALUES (?,?,?,NULLIF(?,0),?)");
+    // Handle avatar upload
+    $avatarPath = null;
+    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = 'uploads/leads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        $fileName = time() . '_' . basename($_FILES['avatar']['name']);
+        $targetPath = $uploadDir . $fileName;
+        if (move_uploaded_file($_FILES['avatar']['tmp_name'], $targetPath)) {
+            $avatarPath = $targetPath;
+        }
+    }
+
+    $stmt = $conn->prepare("INSERT INTO leads (name,email,phone,property_id,message,avatar,status) VALUES (?,?,?,NULLIF(?,0),?,?,?)");
     if ($stmt) {
-        $stmt->bind_param('sssis', $name, $email, $phone, $property_id, $note);
+        $stmt->bind_param('sssisss', $name, $email, $phone, $property_id, $note, $avatarPath, $status);
         if ($stmt->execute()) {
             $message = 'Lead added successfully!';
         } else {
@@ -64,24 +79,60 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                 <table class="table align-middle table-nowrap mb-0">
                                     <thead class="">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Property</th>
+                                            <th>Status</th>
                                             <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php if ($leads && $leads->num_rows > 0): while ($row = $leads->fetch_assoc()): ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                                <td>#<?php echo htmlspecialchars($row['id']); ?></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-shrink-0 me-2">
+                                                            <?php if (!empty($row['avatar'])): ?>
+                                                                <img src="<?php echo htmlspecialchars($row['avatar']); ?>" alt="" class="avatar-xs rounded-circle material-shadow" />
+                                                            <?php else: ?>
+                                                                <img src="assets/images/users/default-avatar.jpg" alt="" class="avatar-xs rounded-circle material-shadow" />
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <div class="flex-grow-1"><?php echo htmlspecialchars($row['name']); ?></div>
+                                                    </div>
+                                                </td>
                                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                                                 <td><?php echo htmlspecialchars($row['phone']); ?></td>
                                                 <td><?php echo htmlspecialchars($row['project_name'] ?? ''); ?></td>
+                                                <td>
+                                                    <?php
+                                                    $statusText = $row['status'] ?? 'Pending';
+                                                    $statusClass = '';
+                                                    switch (strtolower($statusText)) {
+                                                        case 'completed':
+                                                        case 'active':
+                                                            $statusClass = 'bg-success-subtle text-success';
+                                                            break;
+                                                        case 'pending':
+                                                            $statusClass = 'bg-warning-subtle text-warning';
+                                                            break;
+                                                        case 'cancelled':
+                                                        case 'rejected':
+                                                            $statusClass = 'bg-danger-subtle text-danger';
+                                                            break;
+                                                        default:
+                                                            $statusClass = 'bg-info-subtle text-info';
+                                                    }
+                                                    ?>
+                                                    <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
+                                                </td>
                                                 <td><?php echo htmlspecialchars($row['created_at']); ?></td>
                                             </tr>
                                         <?php endwhile; else: ?>
-                                            <tr><td colspan="5" class="text-center">No leads found</td></tr>
+                                            <tr><td colspan="7" class="text-center">No leads found</td></tr>
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
@@ -94,7 +145,7 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
             <div class="modal fade" id="leadModal" tabindex="-1" aria-labelledby="leadModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="leads.php" method="POST">
+                        <form action="leads.php" method="POST" enctype="multipart/form-data">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="leadModalLabel">Add Lead</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -120,6 +171,19 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                             <option value="<?php echo $p['id']; ?>"><?php echo htmlspecialchars($p['project_name']); ?></option>
                                         <?php endwhile; endif; ?>
                                     </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lead-status" class="form-label">Status</label>
+                                    <select class="form-select" id="lead-status" name="status">
+                                        <option value="Pending">Pending</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lead-avatar" class="form-label">Profile Image</label>
+                                    <input type="file" class="form-control" id="lead-avatar" name="avatar" accept="image/*">
                                 </div>
                                 <div class="mb-3">
                                     <label for="lead-message" class="form-label">Message</label>
