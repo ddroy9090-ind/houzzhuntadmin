@@ -3,14 +3,18 @@ include 'includes/auth.php';
 include 'includes/common-header.php';
 include 'config.php'; // Database connection
 
+// Fetch distinct project names for filter dropdown
+$projectQuery = "SELECT DISTINCT project_name FROM properties WHERE project_name IS NOT NULL AND project_name <> '' ORDER BY project_name";
+$projectResult = $conn->query($projectQuery);
+
 // Build search query
 $where = [];
 $types = '';
 $params = [];
 
 if (!empty($_GET['project_name'])) {
-    $projectName = '%' . $_GET['project_name'] . '%';
-    $where[] = "project_name LIKE ?";
+    $projectName = $_GET['project_name'];
+    $where[] = "project_name = ?";
     $types .= 's';
     $params[] = &$projectName;
 }
@@ -67,7 +71,16 @@ $result = $stmt->get_result();
                     <div class="col-12">
                         <form method="GET" class="row g-2 mb-4">
                             <div class="col-md-3">
-                                <input type="text" name="project_name" class="form-control" placeholder="Project Name" value="<?= htmlspecialchars($_GET['project_name'] ?? '') ?>">
+                                <select name="project_name" class="form-select">
+                                    <option value="">Project Name</option>
+                                    <?php if ($projectResult && $projectResult->num_rows > 0): ?>
+                                        <?php while ($project = $projectResult->fetch_assoc()): ?>
+                                            <option value="<?= htmlspecialchars($project['project_name']); ?>" <?= ((isset($_GET['project_name']) && $_GET['project_name'] === $project['project_name']) ? 'selected' : '') ?>>
+                                                <?= htmlspecialchars($project['project_name']); ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    <?php endif; ?>
+                                </select>
                             </div>
                             <div class="col-md-3">
                                 <input type="text" name="offplan_name" class="form-control" placeholder="Offplan Name" value="<?= htmlspecialchars($_GET['offplan_name'] ?? '') ?>">
@@ -82,8 +95,8 @@ $result = $stmt->get_result();
                                 <input type="number" name="max_price" class="form-control" placeholder="Max Price" value="<?= htmlspecialchars($_GET['max_price'] ?? '') ?>">
                             </div>
                             <div class="col-md-12 d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Search</button>
-                                <a href="all-properties.php" class="btn btn-secondary">Reset</a>
+                                <button type="submit" class="btn btn-primary"><i class="ri-search-line me-1"></i>Search</button>
+                                <a href="all-properties.php" class="btn btn-secondary"><i class="ri-refresh-line me-1"></i>Reset</a>
                             </div>
                         </form>
                     </div>
