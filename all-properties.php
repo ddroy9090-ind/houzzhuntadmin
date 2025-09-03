@@ -3,47 +3,6 @@ include 'includes/auth.php';
 include 'includes/common-header.php';
 include 'config.php'; // Database connection
 
-// Build search query
-$where = [];
-$types = '';
-$params = [];
-
-if (!empty($_GET['project_name'])) {
-    $projectName = '%' . $_GET['project_name'] . '%';
-    $where[] = "project_name LIKE ?";
-    $types .= 's';
-    $params[] = &$projectName;
-}
-if (!empty($_GET['offplan_name'])) {
-    $offplanName = '%' . $_GET['offplan_name'] . '%';
-    $where[] = "project_heading LIKE ?";
-    $types .= 's';
-    $params[] = &$offplanName;
-}
-if (!empty($_GET['area'])) {
-    $area = '%' . $_GET['area'] . '%';
-    $where[] = "starting_area LIKE ?";
-    $types .= 's';
-    $params[] = &$area;
-}
-if (!empty($_GET['min_price'])) {
-    $minPrice = $_GET['min_price'];
-    $where[] = "starting_price >= ?";
-    $types .= 'd';
-    $params[] = &$minPrice;
-}
-if (!empty($_GET['max_price'])) {
-    $maxPrice = $_GET['max_price'];
-    $where[] = "starting_price <= ?";
-    $types .= 'd';
-    $params[] = &$maxPrice;
-}
-
-$query = "SELECT * FROM properties";
-if ($where) {
-    $query .= " WHERE " . implode(" AND ", $where);
-}
-$query .= " ORDER BY id DESC";
 
 $stmt = $conn->prepare($query);
 if ($params) {
@@ -63,27 +22,6 @@ $result = $stmt->get_result();
                             <h2 class="heading-title mb-2"><span>All Properties Listed here!</span></h2>
                         </div>
                     </div>
-
-                    <div class="col-12">
-                        <form method="GET" class="row g-2 mb-4">
-                            <div class="col-md-3">
-                                <input type="text" name="project_name" class="form-control" placeholder="Project Name" value="<?= htmlspecialchars($_GET['project_name'] ?? '') ?>">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" name="offplan_name" class="form-control" placeholder="Offplan Name" value="<?= htmlspecialchars($_GET['offplan_name'] ?? '') ?>">
-                            </div>
-                            <div class="col-md-2">
-                                <input type="text" name="area" class="form-control" placeholder="Area" value="<?= htmlspecialchars($_GET['area'] ?? '') ?>">
-                            </div>
-                            <div class="col-md-2">
-                                <input type="number" name="min_price" class="form-control" placeholder="Min Price" value="<?= htmlspecialchars($_GET['min_price'] ?? '') ?>">
-                            </div>
-                            <div class="col-md-2">
-                                <input type="number" name="max_price" class="form-control" placeholder="Max Price" value="<?= htmlspecialchars($_GET['max_price'] ?? '') ?>">
-                            </div>
-                            <div class="col-md-12 d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Search</button>
-                                <a href="all-properties.php" class="btn btn-secondary">Reset</a>
                             </div>
                         </form>
                     </div>
