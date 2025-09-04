@@ -961,6 +961,7 @@ h4.card-title.mb-0.flex-grow-1 {
   border-radius: 8px;
   margin-bottom: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  height: 270px;
 }
 
 .floorplan-section .floorplan-details {
