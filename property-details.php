@@ -61,7 +61,8 @@ $heroImage = !empty($property['main_picture'])
                     <div class="col-12 mt-3">
                         <div class="d-flex justify-content-center gap-3 flex-wrap">
                             <?php if (!empty($property['brochure'])): ?>
-                                <a href="uploads/<?= htmlspecialchars($property['brochure']); ?>" class="btn-custom" download>
+                                <a href="uploads/<?= htmlspecialchars($property['brochure']); ?>" class="btn-custom"
+                                    download>
                                     Download Brochure
                                     <i class="bi bi-download"></i>
                                 </a>
@@ -113,27 +114,66 @@ $heroImage = !empty($property['main_picture'])
             </div>
         </section>
 
-        <!-- Gallery Section -->
+        <!-- Property Gallery Section -->
         <section class="property-gallery-section">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-lg-8 position-relative p-0">
-                        <?php if (!empty($property['main_picture'])): ?>
-                            <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture"
-                                class="img-fluid w-100 h-100">
-                        <?php endif; ?>
-                    </div>
-                    <div class="col-12 col-lg-4 p-0">
-                        <div class="row">
-                            <div class="col-12">
-                                <?php if (!empty($property['image2'])): ?>
-                                    <img src="uploads/<?= $property['image2']; ?>" alt="Image 2" class="img-fluid w-100">
-                                <?php endif; ?>
+                <div class="row g-3">
+                    <!-- Left Large Image -->
+                    <div class="col-12 col-lg-8 position-relative">
+                        <div class="swiper main-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="https://d33om22pidobo4.cloudfront.net/projects/featuredimages/frame-37160png-343fecfa-3bee-4958-897c-d71777a0bcb2.png?d=1000x666&f=webp"
+                                        alt="Building" class="img-fluid w-100 rounded">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
+                                        alt="Alternate Building" class="img-fluid w-100 rounded">
+                                </div>
                             </div>
+                            <!-- Navigation -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Images -->
+                    <div class="col-12 col-lg-4">
+                        <div class="row g-3">
                             <div class="col-12">
-                                <?php if (!empty($property['image3'])): ?>
-                                    <img src="uploads/<?= $property['image3']; ?>" alt="Image 3" class="img-fluid w-100">
-                                <?php endif; ?>
+                                <div class="swiper side-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
+                                                alt="Jacuzzi" class="img-fluid w-100 rounded">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
+                                                alt="Living Room" class="img-fluid w-100 rounded">
+                                        </div>
+                                    </div>
+                                    <!-- Navigation -->
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="swiper side-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
+                                                alt="Living Room" class="img-fluid w-100 rounded">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
+                                                alt="Jacuzzi" class="img-fluid w-100 rounded">
+                                        </div>
+                                    </div>
+                                    <!-- Navigation -->
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -166,59 +206,55 @@ $heroImage = !empty($property['main_picture'])
             </div>
         </section>
 
-        <!-- Floorplan Section -->
-        <div class="floorplan-section">
-            <div class="container-fluid">
-                <div class="row justify-content-center ">
-                    <div class="col-12 text-center">
-                        <h2 class="payment-title heading-title"><span>Floor Plan</span></h2>
-                    </div>
-                </div>
-                <div class="row g-4 align-items-center">
-                    <!-- Left Side -->
-                    <div class="col-lg-4">
-                        <div class="floorplan-left">
-                            <?php if (!empty($property['floor_plan'])): ?>
-                                <img src="uploads/<?= $property['floor_plan']; ?>" alt="Floorplan"
-                                    class="w-100 floorplan-img">
-                            <?php endif; ?>
-
-                            <ul class="floorplan-details list-unstyled small mb-3">
-                                <li>
-                                    <strong>
-                                        <span class="currency-symbol"></span>
-                                        <span data-base-amount="<?= htmlspecialchars($property['starting_price']); ?>">
-                                            <?= htmlspecialchars($property['starting_price']); ?>
-                                        </span>
-                                    </strong> Starting Price (Floor Plan)
-                                </li>
-                                <li>
-                                    <strong>
-                                        <span class="currency-symbol"></span>
-                                        <span data-base-amount="<?= htmlspecialchars($property['aed_per_sqft']); ?>">
-                                            <?= htmlspecialchars($property['aed_per_sqft']); ?>
-                                        </span>
-                                    </strong> per Sqft
-                                </li>
-                                <li><strong><?= htmlspecialchars($property['starting_area']); ?></strong> Starting Area</li>
-                            </ul>
-
-                            <a href="uploads/<?= $property['floor_plan']; ?>" target="_blank" class="btn view-btn">View
-                                Floor Plan</a>
+        <div class="floorplan-container">
+            <!-- LEFT SECTION -->
+            <div class="floorplan-left">
+                <div class="swiper mySwiper1">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://a.storyblok.com/f/165304/668x690/d73ba1d330/gardenia-bay-floor-plan.png"
+                                alt="Floorplan 1">
+                            <div class="floorplan-details">
+                                <div><strong>8.5M AED</strong> Starting price</div>
+                                <div><strong>12,108 AED</strong> per ft²</div>
+                                <div><strong>702 ft²</strong> Starting area</div>
+                            </div>
+                            <a href="#" class="gradient-btn btn-green-glossy mt-3">Green Glossy</a>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://a.storyblok.com/f/165304/996x668/1a83678dd5/gardenia-bay-floor-plan.png"
+                                alt="Floorplan 2">
+                            <div class="floorplan-details">
+                                <div><strong>7.2M AED</strong> Starting price</div>
+                                <div><strong>10,500 AED</strong> per ft²</div>
+                                <div><strong>620 ft²</strong> Starting area</div>
+                            </div>
+                            <a href="#" class="gradient-btn btn-green-glossy mt-3">Green Glossy</a>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://a.storyblok.com/f/165304/1322x750/97d0d615e6/gardenia-bay-floor-plan.png"
+                                alt="Floorplan 3">
+                            <div class="floorplan-details">
+                                <div><strong>9M AED</strong> Starting price</div>
+                                <div><strong>13,000 AED</strong> per ft²</div>
+                                <div><strong>780 ft²</strong> Starting area</div>
+                            </div>
+                            <a href="#" class="gradient-btn btn-green-glossy mt-3">Green Glossy</a>
                         </div>
                     </div>
-                    <div class="col-lg-8">
-                        <div class="floorplanmain">
-                            <a href="#">
-                                <img src="assets/images/offplan/floorplan.jpg" alt="">
-                            </a>
-                        </div>
-                    </div>
+                    <!-- Swiper buttons -->
+                    <div class="swiper-button-prev">&#8592;</div>
+                    <div class="swiper-button-next"> &#8594;</div>
                 </div>
             </div>
+
+            <!-- RIGHT SECTION -->
+            <div class="floorplan-right">
+                <h3>Get all the floor plans <br> and the best offers in this project</h3>
+                <img src="https://houzzhunt.com/assets/images/homepage/help-contact.webp" alt="3D Plan 1">
+                <button class="right-btn">→</button>
+            </div>
         </div>
-
-
 
         <!-- Payment Plan Section -->
         <section class="payment-plan-section d-none">

@@ -32,26 +32,26 @@
 <script src="assets/libs/jsvectormap/jsvectormap.min.js"></script>
 <script src="assets/libs/jsvectormap/maps/world-merc.js"></script>
 
-<?php if (isset($projectMarkers)) : ?>
-<script>
-    (function () {
-        var projectData = <?php echo json_encode($projectMarkers); ?>;
-        var locationCoords = {
-            "Dubai": [25.276987, 55.296249],
-            "Abu Dhabi": [24.4539, 54.3773],
-            "Sharjah": [25.3463, 55.4209],
-            "Gurgaon": [28.4595, 77.0266],
-            "Delhi": [28.7041, 77.1025]
-        };
-        window.projectMarkers = projectData
-            .map(function (p) {
-                var coords = locationCoords[p.location];
-                if (!coords) return null;
-                return { name: p.project_name, coords: coords };
-            })
-            .filter(Boolean);
-    })();
-</script>
+<?php if (isset($projectMarkers)): ?>
+    <script>
+        (function () {
+            var projectData = <?php echo json_encode($projectMarkers); ?>;
+            var locationCoords = {
+                "Dubai": [25.276987, 55.296249],
+                "Abu Dhabi": [24.4539, 54.3773],
+                "Sharjah": [25.3463, 55.4209],
+                "Gurgaon": [28.4595, 77.0266],
+                "Delhi": [28.7041, 77.1025]
+            };
+            window.projectMarkers = projectData
+                .map(function (p) {
+                    var coords = locationCoords[p.location];
+                    if (!coords) return null;
+                    return { name: p.project_name, coords: coords };
+                })
+                .filter(Boolean);
+        })();
+    </script>
 <?php endif; ?>
 
 <!--Swiper slider js-->
@@ -146,7 +146,7 @@
             });
         });
     });
-    </script>
+</script>
 
 <?php if (basename($_SERVER['PHP_SELF']) === 'index.php'): ?>
     <script>
@@ -175,7 +175,7 @@
 
 
 
-    <script>
+<script>
     function showFileName(input) {
         const fileName = input.files[0] ? input.files[0].name : '';
         document.getElementById('file-name-' + input.id).textContent = fileName;
@@ -236,6 +236,28 @@
     })();
 </script>
 
+
+<script>
+    // Main Large Image Swiper
+    new Swiper(".main-swiper", {
+        loop: true,
+        navigation: {
+            nextEl: ".main-swiper .swiper-button-next",
+            prevEl: ".main-swiper .swiper-button-prev",
+        },
+    });
+
+    // Side Image Swipers
+    document.querySelectorAll(".side-swiper").forEach(function (el) {
+        new Swiper(el, {
+            loop: true,
+            navigation: {
+                nextEl: el.querySelector(".swiper-button-next"),
+                prevEl: el.querySelector(".swiper-button-prev"),
+            },
+        });
+    });
+</script>
 
 
 </body>
