@@ -110,8 +110,8 @@ $result = $stmt->get_result();
                                 <input type="hidden" name="max_price" id="max-price" value="<?= htmlspecialchars($selectedMax) ?>">
                             </div>
                             <div class="col-md-2 d-flex gap-2">
-                                <button type="submit" class="btn btn-primary"><i class="ri-search-line me-1"></i>Search</button>
-                                <a href="all-properties.php" class="btn btn-secondary"><i class="ri-refresh-line me-1"></i>Reset</a>
+                                <button type="submit" class="btn btn-primary"><i class="ri-search-line me-1"></i></button>
+                                <a href="all-properties.php" class="btn btn-danger"><i class="ri-refresh-line me-1"></i></a>
                             </div>
                         </form>
                     </div>
