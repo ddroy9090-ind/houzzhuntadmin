@@ -125,54 +125,55 @@ $heroImage = !empty($property['main_picture'])
                             <div class="row g-3 align-items-stretch">
                                 <!-- Left Large Image -->
                                 <div class="col-12 col-lg-8">
-                                    <img
-                                        src="https://d33om22pidobo4.cloudfront.net/projects/featuredimages/frame-37160png-343fecfa-3bee-4958-897c-d71777a0bcb2.png?d=1000x666&f=webp"
-                                        alt="Building" class="img-fluid w-100 h-100 rounded object-fit-cover">
+                                    <?php if (!empty($property['main_picture'])): ?>
+                                        <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture" class="img-fluid w-100 h-100 rounded">
+                                    <?php endif; ?>
                                 </div>
                                 <!-- Right Side Images (stacked) -->
                                 <div class="col-12 col-lg-4">
                                     <div class="row g-3 h-100">
                                         <div class="col-12">
-                                            <img
-                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
-                                                alt="Jacuzzi" class="img-fluid w-100 rounded">
+                                            <?php if (!empty($property['image2'])): ?>
+                                                <img src="uploads/<?= $property['image2']; ?>" alt="Image 2" class="img-fluid w-100 rounded">
+                                            <?php endif; ?>
                                         </div>
                                         <div class="col-12">
-                                            <img
-                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
-                                                alt="Living Room" class="img-fluid w-100 rounded">
+                                            <?php if (!empty($property['image3'])): ?>
+                                                <img src="uploads/<?= $property['image3']; ?>" alt="Image 3" class="img-fluid w-100 rounded">
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Slide 2 (example) -->
+                        <!-- Slide 1 -->
                         <div class="swiper-slide">
                             <div class="row g-3 align-items-stretch">
+                                <!-- Left Large Image -->
                                 <div class="col-12 col-lg-8">
-                                    <img
-                                        src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=1000x666&f=webp"
-                                        alt="Alternate Building" class="img-fluid w-100 h-100 rounded object-fit-cover">
+                                    <?php if (!empty($property['main_picture'])): ?>
+                                        <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture" class="img-fluid w-100 h-100 rounded">
+                                    <?php endif; ?>
                                 </div>
+                                <!-- Right Side Images (stacked) -->
                                 <div class="col-12 col-lg-4">
                                     <div class="row g-3 h-100">
                                         <div class="col-12">
-                                            <img
-                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
-                                                alt="Living Room" class="img-fluid w-100 rounded">
+                                            <?php if (!empty($property['image2'])): ?>
+                                                <img src="uploads/<?= $property['image2']; ?>" alt="Image 2" class="img-fluid w-100 rounded">
+                                            <?php endif; ?>
                                         </div>
                                         <div class="col-12">
-                                            <img
-                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
-                                                alt="Jacuzzi" class="img-fluid w-100 rounded">
+                                            <?php if (!empty($property['image3'])): ?>
+                                                <img src="uploads/<?= $property['image3']; ?>" alt="Image 3" class="img-fluid w-100 rounded">
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Add more slides by duplicating the block above -->
+                        
                     </div>
 
                     <!-- Navigation (kept off the images) -->
@@ -182,7 +183,7 @@ $heroImage = !empty($property['main_picture'])
                 </div>
             </div>
         </section>
-    
+
         <!-- Amenities Section -->
         <section class="property-amenities">
             <div class="container">
