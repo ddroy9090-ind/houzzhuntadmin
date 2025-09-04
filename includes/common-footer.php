@@ -177,8 +177,8 @@
 
     <script>
     function showFileName(input) {
-        const fileName = input.files[0] ? input.files[0].name : '';
-        document.getElementById('file-name-' + input.id).textContent = fileName;
+        const names = Array.from(input.files).map(file => file.name).join(', ');
+        document.getElementById('file-name-' + input.id).textContent = names;
     }
 
     function handleDragOver(event) {

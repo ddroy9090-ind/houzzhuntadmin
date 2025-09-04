@@ -122,8 +122,14 @@ $result = $stmt->get_result();
                                 <div class="propertiesList">
                                     <div class="property-card">
                                         <a href="property-details.php?id=<?= $property['id']; ?>" class="">
-                                            <?php if (!empty($property['main_picture'])): ?>
-                                                <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture" class="img-fluid w-100">
+                                            <?php
+                                            $mainImage = '';
+                                            if (!empty($property['main_picture'])) {
+                                                $parts = array_map('trim', explode(',', $property['main_picture']));
+                                                $mainImage = $parts[0];
+                                            }
+                                            if (!empty($mainImage)): ?>
+                                                <img src="uploads/<?= $mainImage; ?>" alt="Main Picture" class="img-fluid w-100">
                                             <?php else: ?>
                                                 <img src="assets/images/offplan/default.png" alt="No Image" class="img-fluid w-100">
                                             <?php endif; ?>

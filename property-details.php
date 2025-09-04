@@ -28,9 +28,16 @@ if (!$property) {
     exit;
 }
 
-$heroImage = !empty($property['main_picture'])
-    ? 'uploads/' . $property['main_picture']
+$mainImages = !empty($property['main_picture']) ? array_map('trim', explode(',', $property['main_picture'])) : [];
+$heroImage = !empty($mainImages)
+    ? 'uploads/' . $mainImages[0]
     : 'assets/images/banner/hero-banner.webp';
+$galleryImages = $mainImages;
+foreach (['image2', 'image3', 'image4'] as $imgField) {
+    if (!empty($property[$imgField])) {
+        $galleryImages[] = $property[$imgField];
+    }
+}
 ?>
 
 <div class="main-content">
@@ -116,27 +123,16 @@ $heroImage = !empty($property['main_picture'])
         <!-- Gallery Section -->
         <section class="property-gallery-section">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-lg-8 position-relative p-0">
-                        <?php if (!empty($property['main_picture'])): ?>
-                            <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture"
-                                class="img-fluid w-100 h-100">
-                        <?php endif; ?>
-                    </div>
-                    <div class="col-12 col-lg-4 p-0">
-                        <div class="row">
-                            <div class="col-12">
-                                <?php if (!empty($property['image2'])): ?>
-                                    <img src="uploads/<?= $property['image2']; ?>" alt="Image 2" class="img-fluid w-100">
-                                <?php endif; ?>
+                <div class="swiper property-gallery-swiper">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($galleryImages as $img): ?>
+                            <div class="swiper-slide">
+                                <img src="uploads/<?= htmlspecialchars($img); ?>" alt="Property Image" class="img-fluid w-100">
                             </div>
-                            <div class="col-12">
-                                <?php if (!empty($property['image3'])): ?>
-                                    <img src="uploads/<?= $property['image3']; ?>" alt="Image 3" class="img-fluid w-100">
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
+                    <div class="swiper-button-next property-gallery-next"></div>
+                    <div class="swiper-button-prev property-gallery-prev"></div>
                 </div>
             </div>
         </section>
@@ -452,3 +448,14 @@ $heroImage = !empty($property['main_picture'])
 </div>
 
 <?php include 'includes/common-footer.php'; ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new Swiper('.property-gallery-swiper', {
+            loop: true,
+            navigation: {
+                nextEl: '.property-gallery-next',
+                prevEl: '.property-gallery-prev',
+            },
+        });
+    });
+</script>

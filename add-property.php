@@ -118,7 +118,7 @@
                                 ondrop="handleDrop(event, 'main_picture')">
                                 <div class="icon"><img width="40" src="assets/icons/upload-images.png" alt=""></div>
                                 <p>Drop files here or click to upload</p>
-                                <input type="file" id="main_picture" name="main_picture" onchange="showFileName(this)">
+                                <input type="file" id="main_picture" name="main_picture[]" multiple onchange="showFileName(this)">
                             </div>
                             <div id="file-name-main_picture" class="file-name"></div>
 

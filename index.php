@@ -350,7 +350,14 @@ if ($projectLocations) {
                                                     <div class="col-sm-6 col-lg-4 col-xl-3">
                                                         <a href="property-details.php?id=<?= $p['id']; ?>" class="text-decoration-none text-dark">
                                                             <div class="card h-100">
-                                                                <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>"
+                                                                <?php
+                                                                $mainImage = '';
+                                                                if (!empty($p['main_picture'])) {
+                                                                    $parts = array_map('trim', explode(',', $p['main_picture']));
+                                                                    $mainImage = $parts[0];
+                                                                }
+                                                                ?>
+                                                                <img src="<?= !empty($mainImage) ? 'uploads/' . $mainImage : 'assets/images/offplan/default.png'; ?>"
                                                                     class="card-img-top"
                                                                     alt="<?= htmlspecialchars($p['project_name']); ?>">
                                                                 <div class="card-body">

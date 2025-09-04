@@ -17,6 +17,26 @@ function uploadFile($fileInput, $folder = "uploads/")
     return null;
 }
 
+function uploadMultipleFiles($fileInput, $folder = "uploads/")
+{
+    $uploaded = [];
+    if (!empty($_FILES[$fileInput]['name'][0])) {
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
+        foreach ($_FILES[$fileInput]['name'] as $key => $name) {
+            if ($_FILES[$fileInput]['error'][$key] === 0) {
+                $filename = time() . "_" . $key . "_" . basename($name);
+                $targetPath = $folder . $filename;
+                if (move_uploaded_file($_FILES[$fileInput]['tmp_name'][$key], $targetPath)) {
+                    $uploaded[] = $filename;
+                }
+            }
+        }
+    }
+    return !empty($uploaded) ? implode(',', $uploaded) : null;
+}
+
 // Collect form data
 $project_name = $_POST['project_name'] ?? '';
 $description = $_POST['description'] ?? '';
@@ -41,7 +61,7 @@ $amenities = isset($_POST['amenities']) ? implode(", ", $_POST['amenities']) : "
 
 // File uploads
 $brochure = uploadFile("brochure");
-$main_picture = uploadFile("main_picture");
+$main_picture = uploadMultipleFiles("main_picture");
 $image2 = uploadFile("image2");
 $image3 = uploadFile("image3");
 $image4 = uploadFile("image4");
