@@ -437,19 +437,20 @@ if ($projectLocations) {
                                                                 <td>
                                                                     <?php
                                                                     $statusClass = '';
-                                                                    $statusText = isset($l['status']) ? $l['status'] : 'Pending';
+                                                                    $statusText = isset($l['status']) ? $l['status'] : 'Interested';
 
                                                                     switch (strtolower($statusText)) {
-                                                                        case 'completed':
-                                                                        case 'active':
+                                                                        case 'interested':
                                                                             $statusClass = 'bg-success-subtle text-success';
                                                                             break;
-                                                                        case 'pending':
-                                                                            $statusClass = 'bg-warning-subtle text-warning';
-                                                                            break;
-                                                                        case 'cancelled':
-                                                                        case 'rejected':
+                                                                        case 'not interested':
                                                                             $statusClass = 'bg-danger-subtle text-danger';
+                                                                            break;
+                                                                        case 'cold':
+                                                                            $statusClass = 'bg-info-subtle text-info';
+                                                                            break;
+                                                                        case 'hot':
+                                                                            $statusClass = 'bg-warning-subtle text-warning';
                                                                             break;
                                                                         default:
                                                                             $statusClass = 'bg-info-subtle text-info';

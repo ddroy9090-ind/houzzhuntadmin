@@ -3,13 +3,28 @@ include 'includes/auth.php';
 include 'config.php';
 
 $message = '';
+
+// Handle deletion
+if (isset($_GET['delete'])) {
+    $delId = (int)$_GET['delete'];
+    $stmt = $conn->prepare('DELETE FROM leads WHERE id=?');
+    if ($stmt) {
+        $stmt->bind_param('i', $delId);
+        $stmt->execute();
+        $stmt->close();
+    }
+    header('Location: leads.php');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id   = isset($_POST['id']) ? (int)$_POST['id'] : 0;
     $name  = trim($_POST['name']);
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $property_id = isset($_POST['property_id']) ? (int)$_POST['property_id'] : 0;
     $note  = trim($_POST['message']);
-    $status = isset($_POST['status']) ? trim($_POST['status']) : 'Pending';
+    $status = isset($_POST['status']) ? trim($_POST['status']) : 'Interested';
 
     // Handle avatar upload
     $avatarPath = null;
@@ -25,17 +40,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $stmt = $conn->prepare("INSERT INTO leads (name,email,phone,property_id,message,avatar,status) VALUES (?,?,?,NULLIF(?,0),?,?,?)");
-    if ($stmt) {
-        $stmt->bind_param('sssisss', $name, $email, $phone, $property_id, $note, $avatarPath, $status);
-        if ($stmt->execute()) {
-            $message = 'Lead added successfully!';
+    if ($id > 0) {
+        if ($avatarPath) {
+            $stmt = $conn->prepare('UPDATE leads SET name=?,email=?,phone=?,property_id=NULLIF(?,0),message=?,avatar=?,status=? WHERE id=?');
+            if ($stmt) {
+                $stmt->bind_param('sssisssi', $name, $email, $phone, $property_id, $note, $avatarPath, $status, $id);
+                if ($stmt->execute()) {
+                    $message = 'Lead updated successfully!';
+                } else {
+                    $message = 'Error updating lead: ' . $stmt->error;
+                }
+                $stmt->close();
+            } else {
+                $message = 'Error preparing statement: ' . $conn->error;
+            }
         } else {
-            $message = 'Error adding lead: ' . $stmt->error;
+            $stmt = $conn->prepare('UPDATE leads SET name=?,email=?,phone=?,property_id=NULLIF(?,0),message=?,status=? WHERE id=?');
+            if ($stmt) {
+                $stmt->bind_param('sssissi', $name, $email, $phone, $property_id, $note, $status, $id);
+                if ($stmt->execute()) {
+                    $message = 'Lead updated successfully!';
+                } else {
+                    $message = 'Error updating lead: ' . $stmt->error;
+                }
+                $stmt->close();
+            } else {
+                $message = 'Error preparing statement: ' . $conn->error;
+            }
         }
-        $stmt->close();
     } else {
-        $message = 'Error preparing statement: ' . $conn->error;
+        $stmt = $conn->prepare('INSERT INTO leads (name,email,phone,property_id,message,avatar,status) VALUES (?,?,?,NULLIF(?,0),?,?,?)');
+        if ($stmt) {
+            $stmt->bind_param('sssisss', $name, $email, $phone, $property_id, $note, $avatarPath, $status);
+            if ($stmt->execute()) {
+                $message = 'Lead added successfully!';
+            } else {
+                $message = 'Error adding lead: ' . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            $message = 'Error preparing statement: ' . $conn->error;
+        }
     }
 }
 
@@ -72,7 +117,7 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h4 class="card-title mb-0">Lead Management</h4>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#leadModal"><i class="ri-add-line align-bottom me-1"></i> Add Lead</button>
+                            <button type="button" class="btn btn-success" id="addLeadBtn" data-bs-toggle="modal" data-bs-target="#leadModal"><i class="ri-add-line align-bottom me-1"></i> Add Lead</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-card">
@@ -85,6 +130,7 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                             <th scope="col">Property</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Date</th>
+                                           <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,19 +154,20 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                                 <td>
                                                     <?php
                                                     $statusClass = '';
-                                                    $statusText = isset($l['status']) ? $l['status'] : 'Pending';
+                                                    $statusText = isset($l['status']) ? $l['status'] : 'Interested';
 
                                                     switch (strtolower($statusText)) {
-                                                        case 'completed':
-                                                        case 'active':
+                                                        case 'interested':
                                                             $statusClass = 'bg-success-subtle text-success';
                                                             break;
-                                                        case 'pending':
-                                                            $statusClass = 'bg-warning-subtle text-warning';
-                                                            break;
-                                                        case 'cancelled':
-                                                        case 'rejected':
+                                                        case 'not interested':
                                                             $statusClass = 'bg-danger-subtle text-danger';
+                                                            break;
+                                                        case 'cold':
+                                                            $statusClass = 'bg-info-subtle text-info';
+                                                            break;
+                                                        case 'hot':
+                                                            $statusClass = 'bg-warning-subtle text-warning';
                                                             break;
                                                         default:
                                                             $statusClass = 'bg-info-subtle text-info';
@@ -129,9 +176,20 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                                     <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
                                                 </td>
                                                 <td><?php echo date('d/m/Y', strtotime($l['created_at'])); ?></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-primary edit-lead-btn"
+                                                        data-id="<?php echo $l['id']; ?>"
+                                                        data-name="<?php echo htmlspecialchars($l['name']); ?>"
+                                                        data-email="<?php echo htmlspecialchars($l['email']); ?>"
+                                                    data-phone="<?php echo htmlspecialchars($l['phone']); ?>"
+                                                        data-property="<?php echo htmlspecialchars($l['property_id']); ?>"
+                                                        data-status="<?php echo htmlspecialchars($l['status']); ?>"
+                                                        data-message="<?php echo htmlspecialchars($l['message']); ?>">Edit</button>
+                                                    <a href="leads.php?delete=<?php echo $l['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this lead?');">Delete</a>
+                                                </td>
                                             </tr>
                                         <?php endwhile; else: ?>
-                                            <tr><td colspan="6" class="text-center">No leads found</td></tr>
+                                            <tr><td colspan="7" class="text-center">No leads found</td></tr>
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
@@ -144,12 +202,13 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
             <div class="modal fade" id="leadModal" tabindex="-1" aria-labelledby="leadModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="leads.php" method="POST" enctype="multipart/form-data">
+                        <form action="leads.php" method="POST" enctype="multipart/form-data" id="lead-form">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="leadModalLabel">Add Lead</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                                <input type="hidden" name="id" id="lead-id" />
                                 <div class="mb-3">
                                     <label for="lead-name" class="form-label">Name</label>
                                     <input type="text" class="form-control" id="lead-name" name="name" required>
@@ -174,10 +233,10 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                 <div class="mb-3">
                                     <label for="lead-status" class="form-label">Status</label>
                                     <select class="form-select" id="lead-status" name="status">
-                                        <option value="Pending">Pending</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Rejected">Rejected</option>
+                                        <option value="Interested">Interested</option>
+                                        <option value="Not Interested">Not Interested</option>
+                                        <option value="Cold">Cold</option>
+                                        <option value="Hot">Hot</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -201,5 +260,27 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
     </div>
     <?php include 'includes/footer.php'; ?>
 </div>
+<script>
+document.querySelectorAll('.edit-lead-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const modalEl = document.getElementById('leadModal');
+        document.getElementById('leadModalLabel').innerText = 'Edit Lead';
+        document.getElementById('lead-id').value = this.dataset.id;
+        document.getElementById('lead-name').value = this.dataset.name;
+        document.getElementById('lead-email').value = this.dataset.email;
+        document.getElementById('lead-phone').value = this.dataset.phone;
+        document.getElementById('lead-property').value = this.dataset.property;
+        document.getElementById('lead-status').value = this.dataset.status;
+        document.getElementById('lead-message').value = this.dataset.message;
+        new bootstrap.Modal(modalEl).show();
+    });
+});
+
+document.getElementById('addLeadBtn').addEventListener('click', () => {
+    document.getElementById('leadModalLabel').innerText = 'Add Lead';
+    document.getElementById('lead-form').reset();
+    document.getElementById('lead-id').value = '';
+});
+</script>
 <?php include 'includes/common-footer.php'; ?>
 
