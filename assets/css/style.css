@@ -1064,117 +1064,117 @@ h4.card-title.mb-0.flex-grow-1 {
 
 
 .floorplan-container {
-    display: grid;
-    grid-template-columns: 70% 30%;
+  display: grid;
+  grid-template-columns: 70% 30%;
 }
 
 /* LEFT SIDE */
 .floorplan-left {
-    padding: 40px;
+  padding: 40px;
 }
 
 .floorplan-container .swiper {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .floorplan-container .swiper-slide {
-    text-align: center;
+  text-align: center;
 }
 
 .floorplan-container .swiper-slide img {
-    width: 70%;
-    height: 350px;
+  width: 70%;
+  height: 350px;
 }
 
 .floorplan-details {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    font-size: 14px;
-    color: #555;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 14px;
+  color: #555;
 }
 
 .floorplan-details div strong {
-    display: block;
-    font-size: 16px;
-    color: #000;
+  display: block;
+  font-size: 16px;
+  color: #000;
 }
 
 .inquiry-btn {
-    margin-top: 20px;
-    padding: 12px 30px;
-    border: 1px solid #d07a6a;
-    color: #d07a6a;
-    border-radius: 30px;
-    background: transparent;
-    cursor: pointer;
-    transition: 0.3s;
+  margin-top: 20px;
+  padding: 12px 30px;
+  border: 1px solid #d07a6a;
+  color: #d07a6a;
+  border-radius: 30px;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .inquiry-btn:hover {
-    background: #d07a6a;
-    color: #fff;
+  background: #d07a6a;
+  color: #fff;
 }
 
 /* RIGHT SIDE */
 .floorplan-right {
-    background: linear-gradient(180deg, #004a44, #edbb68);
-    color: #fff;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  background: linear-gradient(180deg, #004a44, #edbb68);
+  color: #fff;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .floorplan-right img {
-    width: 80%;
-    margin: 15px 0;
-    border-radius: 10px;
+  width: 80%;
+  margin: 15px 0;
+  border-radius: 10px;
 }
 
 .floorplan-right h3 {
-    font-size: 22px;
-    line-height: 1.4;
-    margin-bottom: 20px;
-    color: #fff;
+  font-size: 22px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  color: #fff;
 }
 
 .right-btn {
-    margin-top: 15px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: #fff;
-    color: #d07a6a;
-    font-size: 20px;
-    cursor: pointer;
+  margin-top: 15px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  color: #d07a6a;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* Swiper navigation arrows */
 .floorplan-container .swiper-button-next,
 .floorplan-container .swiper-button-prev {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background-color: #004a44;
-    opacity: 1;
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: #004a44;
+  opacity: 1;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .floorplan-container .swiper-button-next:after,
 .floorplan-container .swiper-button-prev:after {
-    font-size: 16px;
-    font-weight: bold;
-    display: none;
+  font-size: 16px;
+  font-weight: bold;
+  display: none;
 }
 
 
@@ -1192,8 +1192,9 @@ h4.card-title.mb-0.flex-grow-1 {
 
 .property-gallery-section .swiper-button-next,
 .property-gallery-section .swiper-button-prev {
-  color: #fff;            /* arrow color */
-  background:#fff;
+  color: #fff;
+  /* arrow color */
+  background: #fff;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1201,7 +1202,8 @@ h4.card-title.mb-0.flex-grow-1 {
 
 .property-gallery-section .swiper-button-next:after,
 .property-gallery-section .swiper-button-prev:after {
-  font-size: 16px;        /* arrow size */
+  font-size: 16px;
+  /* arrow size */
 }
 
 
