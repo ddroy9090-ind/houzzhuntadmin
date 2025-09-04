@@ -212,7 +212,9 @@
 
         function applyConversion(rate) {
             document.querySelectorAll('[data-base-amount]').forEach(el => {
-                const base = parseFloat(el.getAttribute('data-base-amount'));
+                // Ensure any commas or non-numeric characters are stripped before parsing
+                const raw = el.getAttribute('data-base-amount') || '';
+                const base = parseFloat(raw.replace(/[^0-9.]/g, ''));
                 if (isNaN(base)) return;
                 const converted = base * rate;
                 el.textContent = converted.toLocaleString(undefined, { maximumFractionDigits: 2 });

@@ -165,18 +165,20 @@
 
             document.querySelectorAll('.currency-code').forEach(el => el.textContent = selectedCurrency);
 
+            const sanitize = (val) => parseFloat((val || '').toString().replace(/[^0-9.]/g, ''));
+
             if (selectedCurrency !== baseCurrency) {
                 fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
                     .then(res => res.json())
                     .then(data => {
                         conversionRate = data.rates[selectedCurrency] || 1;
-                        propertyValueInput.value = (parseFloat(propertyValueInput.dataset.baseValue) * conversionRate).toFixed(2);
-                        downPaymentInput.value = (parseFloat(downPaymentInput.dataset.baseValue) * conversionRate).toFixed(2);
+                        propertyValueInput.value = (sanitize(propertyValueInput.dataset.baseValue) * conversionRate).toFixed(2);
+                        downPaymentInput.value = (sanitize(downPaymentInput.dataset.baseValue) * conversionRate).toFixed(2);
                         calculate();
                     });
             } else {
-                propertyValueInput.value = propertyValueInput.dataset.baseValue;
-                downPaymentInput.value = downPaymentInput.dataset.baseValue;
+                propertyValueInput.value = sanitize(propertyValueInput.dataset.baseValue);
+                downPaymentInput.value = sanitize(downPaymentInput.dataset.baseValue);
             }
 
             function formatCurrency(amount) {
