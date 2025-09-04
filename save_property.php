@@ -42,16 +42,32 @@ $amenities = isset($_POST['amenities']) ? implode(", ", $_POST['amenities']) : "
 // File uploads
 $brochure = uploadFile("brochure");
 $main_picture = uploadFile("main_picture");
-$image2 = uploadFile("image2");
-$image3 = uploadFile("image3");
-$image4 = uploadFile("image4");
+$gallery_images = [];
+if (!empty($_FILES['gallery_images']['name'][0])) {
+    foreach ($_FILES['gallery_images']['name'] as $index => $name) {
+        if ($_FILES['gallery_images']['error'][$index] === 0) {
+            $filename = time() . "_" . basename($name);
+            $targetPath = "uploads/" . $filename;
+            if (!is_dir("uploads/")) {
+                mkdir("uploads/", 0777, true);
+            }
+            if (move_uploaded_file($_FILES['gallery_images']['tmp_name'][$index], $targetPath)) {
+                $gallery_images[] = $filename;
+            }
+        }
+    }
+}
+$image2 = $gallery_images[0] ?? null;
+$image3 = $gallery_images[1] ?? null;
+$image4 = $gallery_images[2] ?? null;
+$gallery_images_str = implode(",", $gallery_images);
 $floor_plan = uploadFile("floor_plan");
 
 
 // Insert Query
-$sql = "INSERT INTO properties 
-(project_name, description, sub_heading, brochure, project_heading, project_details, starting_price, payment_plan, handover, main_picture, image2, image3, image4, amenities, floor_plan, aed_per_sqft, starting_area, location, extra_text, burj_al_arab, dubai_marina, dubai_mall, sheikh_zayed) 
-VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+$sql = "INSERT INTO properties
+(project_name, description, sub_heading, brochure, project_heading, project_details, starting_price, payment_plan, handover, main_picture, image2, image3, image4, gallery_images, amenities, floor_plan, aed_per_sqft, starting_area, location, extra_text, burj_al_arab, dubai_marina, dubai_mall, sheikh_zayed)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $stmt = $conn->prepare($sql);
 
@@ -59,10 +75,10 @@ if ($stmt === false) {
     die("Prepare failed: " . $conn->error);
 }
 
-// bind_param → total 23 parameters, all treated as string "s"
+// bind_param → total 24 parameters, all treated as string "s"
 if (
     !$stmt->bind_param(
-        "sssssssssssssssssssssss",  // 23 "s"
+        "ssssssssssssssssssssssss",  // 24 "s"
         $project_name,
         $description,
         $sub_heading,
@@ -76,6 +92,7 @@ if (
         $image2,
         $image3,
         $image4,
+        $gallery_images_str,
         $amenities,
         $floor_plan,
         $aed_per_sqft,
