@@ -127,45 +127,17 @@
 
                         </div>
 
-                        <!-- Additional Images -->
+                        <!-- Gallery Images -->
                         <div class="mb-3 col-md-6">
-                            <label class="form-label">Image 2</label>
-                            <div class="custom-upload" onclick="document.getElementById('image2').click()"
+                            <label class="form-label">Gallery Images</label>
+                            <div class="custom-upload" onclick="document.getElementById('gallery_images').click()"
                                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, 'image2')">
+                                ondrop="handleDrop(event, 'gallery_images')">
                                 <div class="icon"><img width="40" src="assets/icons/upload-images.png" alt=""></div>
                                 <p>Drop files here or click to upload</p>
-                                <input type="file" id="image2" name="image2" onchange="showFileName(this)">
+                                <input type="file" id="gallery_images" name="gallery_images[]" multiple onchange="showFileName(this)">
                             </div>
-                            <div id="file-name-image2" class="file-name"></div>
-
-                        </div>
-
-                        <!-- Image 3 -->
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Image 3</label>
-                            <div class="custom-upload" onclick="document.getElementById('image3').click()"
-                                ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, 'image3')">
-                                <div class="icon"><img width="40" src="assets/icons/upload-images.png" alt=""></div>
-                                <p>Drop files here or click to upload</p>
-                                <input type="file" id="image3" name="image3" onchange="showFileName(this)">
-                            </div>
-                            <div id="file-name-image3" class="file-name"></div>
-
-                        </div>
-
-                        <!-- Image 4 -->
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Image 4</label>
-                            <div class="custom-upload" onclick="document.getElementById('image4').click()"
-                                ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
-                                ondrop="handleDrop(event, 'image4')">
-                                <div class="icon"><img width="40" src="assets/icons/upload-images.png" alt=""></div>
-                                <p>Drop files here or click to upload</p>
-                                <input type="file" id="image4" name="image4" onchange="showFileName(this)">
-                            </div>
-                            <div id="file-name-image4" class="file-name"></div>
+                            <div id="file-name-gallery_images" class="file-name"></div>
 
                         </div>
                     </div>

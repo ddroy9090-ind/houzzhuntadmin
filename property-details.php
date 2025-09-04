@@ -114,69 +114,32 @@ $heroImage = !empty($property['main_picture'])
             </div>
         </section>
 
-        <!-- Property Gallery Section (Single Swiper for the whole section) -->
+        <!-- Property Gallery Section -->
         <section class="property-gallery-section">
             <div class="container-fluid">
                 <div class="swiper gallery-swiper position-relative">
                     <div class="swiper-wrapper">
-
-                        <!-- Slide 1 -->
-                        <div class="swiper-slide">
-                            <div class="row g-3 align-items-stretch">
-                                <!-- Left Large Image -->
-                                <div class="col-12 col-lg-8">
-                                    <?php if (!empty($property['main_picture'])): ?>
-                                        <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture" class="img-fluid w-100 h-100 rounded">
-                                    <?php endif; ?>
-                                </div>
-                                <!-- Right Side Images (stacked) -->
-                                <div class="col-12 col-lg-4">
-                                    <div class="row g-3 h-100">
-                                        <div class="col-12">
-                                            <?php if (!empty($property['image2'])): ?>
-                                                <img src="uploads/<?= $property['image2']; ?>" alt="Image 2" class="img-fluid w-100 rounded">
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="col-12">
-                                            <?php if (!empty($property['image3'])): ?>
-                                                <img src="uploads/<?= $property['image3']; ?>" alt="Image 3" class="img-fluid w-100 rounded">
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                        <?php
+                        $gallery = [];
+                        if (!empty($property['main_picture'])) {
+                            $gallery[] = $property['main_picture'];
+                        }
+                        if (!empty($property['gallery_images'])) {
+                            $more = array_filter(array_map('trim', explode(',', $property['gallery_images'])));
+                            $gallery = array_merge($gallery, $more);
+                        } else {
+                            if (!empty($property['image2'])) $gallery[] = $property['image2'];
+                            if (!empty($property['image3'])) $gallery[] = $property['image3'];
+                            if (!empty($property['image4'])) $gallery[] = $property['image4'];
+                        }
+                        foreach ($gallery as $img): ?>
+                            <div class="swiper-slide">
+                                <img src="uploads/<?= htmlspecialchars($img); ?>" alt="Gallery Image" class="img-fluid w-100 h-100 rounded">
                             </div>
-                        </div>
-
-                        <!-- Slide 1 -->
-                        <div class="swiper-slide">
-                            <div class="row g-3 align-items-stretch">
-                                <!-- Left Large Image -->
-                                <div class="col-12 col-lg-8">
-                                    <?php if (!empty($property['main_picture'])): ?>
-                                        <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture" class="img-fluid w-100 h-100 rounded">
-                                    <?php endif; ?>
-                                </div>
-                                <!-- Right Side Images (stacked) -->
-                                <div class="col-12 col-lg-4">
-                                    <div class="row g-3 h-100">
-                                        <div class="col-12">
-                                            <?php if (!empty($property['image2'])): ?>
-                                                <img src="uploads/<?= $property['image2']; ?>" alt="Image 2" class="img-fluid w-100 rounded">
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="col-12">
-                                            <?php if (!empty($property['image3'])): ?>
-                                                <img src="uploads/<?= $property['image3']; ?>" alt="Image 3" class="img-fluid w-100 rounded">
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
+                        <?php endforeach; ?>
                     </div>
 
-                    <!-- Navigation (kept off the images) -->
+                    <!-- Navigation -->
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-pagination d-lg-none"></div>

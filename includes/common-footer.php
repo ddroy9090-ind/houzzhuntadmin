@@ -180,8 +180,8 @@
 
 <script>
     function showFileName(input) {
-        const fileName = input.files[0] ? input.files[0].name : '';
-        document.getElementById('file-name-' + input.id).textContent = fileName;
+        const files = Array.from(input.files).map(f => f.name).join(', ');
+        document.getElementById('file-name-' + input.id).textContent = files;
     }
 
     function handleDragOver(event) {
