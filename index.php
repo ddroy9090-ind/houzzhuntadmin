@@ -23,6 +23,15 @@ $todayLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads WHERE DA
 // Fetch latest properties including main image for card display
 $recentProperties = $conn->query("SELECT id, project_name, location, starting_price, main_picture FROM properties ORDER BY created_at DESC LIMIT 5");
 $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, leads.avatar, leads.status, properties.project_name, leads.created_at FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT 5");
+
+// Fetch all project names and locations for map markers
+$projectLocations = $conn->query("SELECT project_name, location FROM properties");
+$projectMarkers = [];
+if ($projectLocations) {
+    while ($row = $projectLocations->fetch_assoc()) {
+        $projectMarkers[] = $row;
+    }
+}
 ?>
 
 <?php include 'includes/common-header.php'; ?>
@@ -339,6 +348,7 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                             <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
                                                 <?php while ($p = $recentProperties->fetch_assoc()): ?>
                                                     <div class="col-sm-6 col-lg-4 col-xl-3">
+<<<<<<< HEAD
                                                         <a href="property-details.php?id=<?= $p['id']; ?>" class="text-decoration-none text-dark">
                                                             <div class="card h-100">
                                                                 <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>"
@@ -357,6 +367,22 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                                                         <?= htmlspecialchars($p['starting_price']); ?>
                                                                     </h6>
                                                                 </div>
+=======
+                                                        <div class="card h-100">
+                                                            <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>" class="card-img-top" alt="<?= htmlspecialchars($p['project_name']); ?>">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title mb-2">
+                                                                    <a href="property-details.php?id=<?= $p['id']; ?>" class="text-dark">#<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?></a>
+                                                                </h5>
+                                                                <p class="mb-2">
+                                                                    <i class="ri-map-pin-line align-bottom me-1"></i>
+                                                                    <?= htmlspecialchars($p['location']); ?>
+                                                                </p>
+                                                                <h6 class="mb-0">
+                                                                    <i class="ri-price-tag-3-line align-bottom me-1"></i>
+                                                                    <?= htmlspecialchars($p['starting_price']); ?>
+                                                                </h6>
+>>>>>>> 1c0b034ec69e250ecf6109e1837f67c92138dafb
                                                             </div>
                                                         </a>
                                                     </div>

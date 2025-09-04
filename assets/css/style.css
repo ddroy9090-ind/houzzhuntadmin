@@ -215,12 +215,16 @@ span.whiteYellow {
 
 .hero-section {
   background: url('../images/banner/hero-banner.webp') no-repeat center center;
-  background-size: cover;        /* Image ko area ke hisaab se cover karega */
-  width: 100%;                   /* Always full width */
-  min-height: 500px;             /* Minimum height fix */
+  background-size: cover;
+  /* Image ko area ke hisaab se cover karega */
+  width: 100%;
+  /* Always full width */
+  min-height: 500px;
+  /* Minimum height fix */
   display: flex;
   align-items: center;
-  justify-content: center;       /* Content ko center kare horizontally */
+  justify-content: center;
+  /* Content ko center kare horizontally */
   color: #fff;
   position: relative;
   margin-bottom: 0;
@@ -258,7 +262,7 @@ span.whiteYellow {
   font-weight: 600;
   color: #fff;
   max-width: 500px;
-  margin:5px auto;
+  margin: 5px auto;
   line-height: normal;
 }
 
