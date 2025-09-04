@@ -26,8 +26,8 @@ $project_details = $_POST['project_details'] ?? '';
 $starting_price = $_POST['starting_price'] ?? '';
 $payment_plan = $_POST['payment_plan'] ?? '';
 $handover = $_POST['handover'] ?? '';
-$aed_per_sqft = $_POST['aed_per_sqft'] ?? '';
-$starting_area = $_POST['starting_area'] ?? '';
+$aed_per_sqft = $_POST['aed_per_sqft'][0] ?? '';
+$starting_area = $_POST['starting_area'][0] ?? '';
 $location = $_POST['location'] ?? '';
 $extra_text = $_POST['extra_text'] ?? '';
 $burj_al_arab = $_POST['burj_al_arab'] ?? '';
@@ -61,7 +61,27 @@ $image2 = $gallery_images[0] ?? null;
 $image3 = $gallery_images[1] ?? null;
 $image4 = $gallery_images[2] ?? null;
 $gallery_images_str = implode(",", $gallery_images);
-$floor_plan = uploadFile("floor_plan");
+$floor_plans = [];
+if (!empty($_FILES['floor_plan']['name'][0])) {
+    foreach ($_FILES['floor_plan']['name'] as $index => $name) {
+        if ($name && $_FILES['floor_plan']['error'][$index] === 0) {
+            $filename = time() . "_" . basename($name);
+            $targetPath = "uploads/" . $filename;
+            if (!is_dir("uploads/")) {
+                mkdir("uploads/", 0777, true);
+            }
+            if (move_uploaded_file($_FILES['floor_plan']['tmp_name'][$index], $targetPath)) {
+                $floor_plans[] = [
+                    'image' => $filename,
+                    'starting_price' => $_POST['floor_starting_price'][$index] ?? '',
+                    'aed_per_sqft' => $_POST['aed_per_sqft'][$index] ?? '',
+                    'starting_area' => $_POST['starting_area'][$index] ?? ''
+                ];
+            }
+        }
+    }
+}
+$floor_plan = json_encode($floor_plans);
 
 
 // Insert Query

@@ -193,27 +193,27 @@
                     <div class="row">
                         <!-- Floor Plan -->
                         <div class="mb-3 col-md-6">
-                            <label for="floor_plan" class="form-label">Floor Plan</label>
-                            <input type="file" class="form-control" id="floor_plan" name="floor_plan">
+                            <label for="floor_plan1" class="form-label">Floor Plan</label>
+                            <input type="file" class="form-control" id="floor_plan1" name="floor_plan[]">
 
                         </div>
 
                         <!-- Starting Price (renamed) -->
                         <div class="mb-3 col-md-6">
-                            <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
+                            <label for="floor_starting_price1" class="form-label">Starting Price (Floor Plan)</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="floor_starting_price"
-                                    name="floor_starting_price" data-base-value="0">
+                                <input type="text" class="form-control" id="floor_starting_price1"
+                                    name="floor_starting_price[]" data-base-value="0">
                             </div>
                         </div>
 
                         <!-- Price per Sqft -->
                         <div class="mb-3 col-md-6">
-                            <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
+                            <label for="aed_per_sqft1" class="form-label">Price per Sqft</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft"
+                                <input type="text" class="form-control" id="aed_per_sqft1" name="aed_per_sqft[]"
                                     data-base-value="0">
                             </div>
 
@@ -221,8 +221,8 @@
 
                         <!-- Starting Area -->
                         <div class="mb-3 col-md-6">
-                            <label for="starting_area" class="form-label">Starting Area</label>
-                            <input type="text" class="form-control" id="starting_area" name="starting_area">
+                            <label for="starting_area1" class="form-label">Starting Area</label>
+                            <input type="text" class="form-control" id="starting_area1" name="starting_area[]">
 
                         </div>
                     </div>
@@ -231,27 +231,27 @@
                     <div class="row">
                         <!-- Floor Plan -->
                         <div class="mb-3 col-md-6">
-                            <label for="floor_plan" class="form-label">Floor Plan</label>
-                            <input type="file" class="form-control" id="floor_plan" name="floor_plan">
+                            <label for="floor_plan2" class="form-label">Floor Plan</label>
+                            <input type="file" class="form-control" id="floor_plan2" name="floor_plan[]">
 
                         </div>
 
                         <!-- Starting Price (renamed) -->
                         <div class="mb-3 col-md-6">
-                            <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
+                            <label for="floor_starting_price2" class="form-label">Starting Price (Floor Plan)</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="floor_starting_price"
-                                    name="floor_starting_price" data-base-value="0">
+                                <input type="text" class="form-control" id="floor_starting_price2"
+                                    name="floor_starting_price[]" data-base-value="0">
                             </div>
                         </div>
 
                         <!-- Price per Sqft -->
                         <div class="mb-3 col-md-6">
-                            <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
+                            <label for="aed_per_sqft2" class="form-label">Price per Sqft</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft"
+                                <input type="text" class="form-control" id="aed_per_sqft2" name="aed_per_sqft[]"
                                     data-base-value="0">
                             </div>
 
@@ -259,8 +259,8 @@
 
                         <!-- Starting Area -->
                         <div class="mb-3 col-md-6">
-                            <label for="starting_area" class="form-label">Starting Area</label>
-                            <input type="text" class="form-control" id="starting_area" name="starting_area">
+                            <label for="starting_area2" class="form-label">Starting Area</label>
+                            <input type="text" class="form-control" id="starting_area2" name="starting_area[]">
 
                         </div>
                     </div>
@@ -269,27 +269,27 @@
                     <div class="row">
                         <!-- Floor Plan -->
                         <div class="mb-3 col-md-6">
-                            <label for="floor_plan" class="form-label">Floor Plan</label>
-                            <input type="file" class="form-control" id="floor_plan" name="floor_plan">
+                            <label for="floor_plan3" class="form-label">Floor Plan</label>
+                            <input type="file" class="form-control" id="floor_plan3" name="floor_plan[]">
 
                         </div>
 
                         <!-- Starting Price (renamed) -->
                         <div class="mb-3 col-md-6">
-                            <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
+                            <label for="floor_starting_price3" class="form-label">Starting Price (Floor Plan)</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="floor_starting_price"
-                                    name="floor_starting_price" data-base-value="0">
+                                <input type="text" class="form-control" id="floor_starting_price3"
+                                    name="floor_starting_price[]" data-base-value="0">
                             </div>
                         </div>
 
                         <!-- Price per Sqft -->
                         <div class="mb-3 col-md-6">
-                            <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
+                            <label for="aed_per_sqft3" class="form-label">Price per Sqft</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft"
+                                <input type="text" class="form-control" id="aed_per_sqft3" name="aed_per_sqft[]"
                                     data-base-value="0">
                             </div>
 
@@ -297,8 +297,8 @@
 
                         <!-- Starting Area -->
                         <div class="mb-3 col-md-6">
-                            <label for="starting_area" class="form-label">Starting Area</label>
-                            <input type="text" class="form-control" id="starting_area" name="starting_area">
+                            <label for="starting_area3" class="form-label">Starting Area</label>
+                            <input type="text" class="form-control" id="starting_area3" name="starting_area[]">
 
                         </div>
                     </div>

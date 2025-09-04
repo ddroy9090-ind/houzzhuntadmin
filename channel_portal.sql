@@ -44,7 +44,7 @@ CREATE TABLE `properties` (
   `image4` varchar(255) DEFAULT NULL,
   `gallery_images` text DEFAULT NULL,
   `amenities` text DEFAULT NULL,
-  `floor_plan` varchar(255) DEFAULT NULL,
+  `floor_plan` text DEFAULT NULL,
   `aed_per_sqft` varchar(50) DEFAULT NULL,
   `starting_area` varchar(50) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
