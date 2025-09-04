@@ -85,7 +85,12 @@ $heroImage = !empty($property['main_picture'])
                     <!-- Left Column (Stats) -->
                     <div class="col-md-5">
                         <p>Starting Price</p>
-                        <h5><?= $property['starting_price']; ?></h5>
+                        <h5>
+                            <span class="currency-symbol"></span>
+                            <span data-base-amount="<?= htmlspecialchars($property['starting_price']); ?>">
+                                <?= htmlspecialchars($property['starting_price']); ?>
+                            </span>
+                        </h5>
 
                         <p>Payment Plan</p>
                         <h5><?= $property['payment_plan']; ?></h5>
@@ -177,10 +182,23 @@ $heroImage = !empty($property['main_picture'])
                             <?php endif; ?>
 
                             <ul class="floorplan-details list-unstyled small mb-3">
-                                <li><strong><?= $property['starting_price']; ?></strong> Starting Price (Floor Plan)
+                                <li>
+                                    <strong>
+                                        <span class="currency-symbol"></span>
+                                        <span data-base-amount="<?= htmlspecialchars($property['starting_price']); ?>">
+                                            <?= htmlspecialchars($property['starting_price']); ?>
+                                        </span>
+                                    </strong> Starting Price (Floor Plan)
                                 </li>
-                                <li><strong><?= $property['aed_per_sqft']; ?></strong> AED per Sqft</li>
-                                <li><strong><?= $property['starting_area']; ?></strong> Starting Area</li>
+                                <li>
+                                    <strong>
+                                        <span class="currency-symbol"></span>
+                                        <span data-base-amount="<?= htmlspecialchars($property['aed_per_sqft']); ?>">
+                                            <?= htmlspecialchars($property['aed_per_sqft']); ?>
+                                        </span>
+                                    </strong> per Sqft
+                                </li>
+                                <li><strong><?= htmlspecialchars($property['starting_area']); ?></strong> Starting Area</li>
                             </ul>
 
                             <a href="uploads/<?= $property['floor_plan']; ?>" target="_blank" class="btn view-btn">View
