@@ -69,6 +69,9 @@
 
 
 
+
+
+
 <script>
     function togglePassword(fieldId, btn) {
         let field = document.getElementById(fieldId);
@@ -258,6 +261,22 @@
         });
     });
 </script>
+
+<script>
+    var slider = document.getElementById('price-slider');
+    noUiSlider.create(slider, {
+        start: [<?= $selectedMin ?>, <?= $selectedMax ?>],
+        connect: true,
+        range: {
+            'min': <?= $minPriceBound ?>,
+            'max': <?= $maxPriceBound ?>
+        },
+        step: 1000, // smoother step size
+        tooltips: false,
+    });
+
+</script>
+
 
 
 </body>

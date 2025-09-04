@@ -1070,7 +1070,9 @@ h4.card-title.mb-0.flex-grow-1 {
 
 /* LEFT SIDE */
 .floorplan-left {
-  padding: 40px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 
 .floorplan-container .swiper {
@@ -1083,7 +1085,7 @@ h4.card-title.mb-0.flex-grow-1 {
 }
 
 .floorplan-container .swiper-slide img {
-  width: 70%;
+  width: 98%;
   height: 350px;
 }
 
@@ -1207,6 +1209,77 @@ h4.card-title.mb-0.flex-grow-1 {
 }
 
 
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #444;
+  line-height: 38px !important;
+}
+
+.select2-container .select2-selection--single {
+
+  height: 38px !important;
+
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+
+  left: 45% !important;
+
+  top: 66% !important;
+
+}
+
+
+/* Parent selector styling */
+#price-slider {
+  margin-top: 10px;
+}
+
+/* Track height thin */
+#price-slider .noUi-target,
+#price-slider .noUi-base,
+#price-slider .noUi-connects {
+  height: 4px;
+  /* thin track */
+}
+
+/* Track background */
+#price-slider .noUi-connect {
+  background: #4CAF50;
+  /* Active part color */
+}
+
+/* Handle size small */
+#price-slider .noUi-handle {
+  width: 14px;
+  height: 14px;
+  top: -5px;
+  /* center align on thin track */
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #4CAF50;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Touch area small */
+#price-slider .noUi-touch-area {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+/* Smooth hover effect */
+#price-slider .noUi-handle:hover {
+  transform: scale(1.2);
+}
+
+
+.noUi-target {
+  background: transparent !important;
+  border-radius: 0px !important;
+  border: none !important;
+  box-shadow:none !important;
+}
 
 /* Responsive */
 @media(max-width: 768px) {

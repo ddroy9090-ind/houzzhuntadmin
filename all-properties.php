@@ -81,13 +81,14 @@ $result = $stmt->get_result();
                     </div>
 
                     <div class="col-12">
-                        <form method="GET" class="row g-2 mb-4">
-                            <div class="col-md-2">
+                        <form method="GET" class="row g-4 mb-4">
+                            <div class="col-md-3">
                                 <select name="project_name" class="form-select project-select">
                                     <option value="">Project Name</option>
                                     <?php if ($projectResult && $projectResult->num_rows > 0): ?>
                                         <?php while ($project = $projectResult->fetch_assoc()): ?>
-                                            <option value="<?= htmlspecialchars($project['project_name']); ?>" <?= ((isset($_GET['project_name']) && $_GET['project_name'] === $project['project_name']) ? 'selected' : '') ?>>
+                                            <option value="<?= htmlspecialchars($project['project_name']); ?>"
+                                                <?= ((isset($_GET['project_name']) && $_GET['project_name'] === $project['project_name']) ? 'selected' : '') ?>>
                                                 <?= htmlspecialchars($project['project_name']); ?>
                                             </option>
                                         <?php endwhile; ?>
@@ -95,23 +96,34 @@ $result = $stmt->get_result();
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <input type="text" name="offplan_name" class="form-control" placeholder="Offplan Name" value="<?= htmlspecialchars($_GET['offplan_name'] ?? '') ?>">
+                                <input type="text" name="offplan_name" class="form-control" placeholder="Offplan Name"
+                                    value="<?= htmlspecialchars($_GET['offplan_name'] ?? '') ?>">
                             </div>
                             <div class="col-md-2">
-                                <input type="text" name="area" class="form-control" placeholder="Area" value="<?= htmlspecialchars($_GET['area'] ?? '') ?>">
+                                <input type="text" name="area" class="form-control" placeholder="Area"
+                                    value="<?= htmlspecialchars($_GET['area'] ?? '') ?>">
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Price Range</label>
-                                <div id="price-slider" data-min="<?= $minPriceBound ?>" data-max="<?= $maxPriceBound ?>"></div>
-                                <div class="d-flex justify-content-between mt-2">
-                                    <span id="price-slider-value"><?= htmlspecialchars($selectedMin) ?> - <?= htmlspecialchars($selectedMax) ?></span>
+                            <div class="col-md-3">
+                                <div class="position-relative" style="bottom: 28px;">
+                                    <label class="form-label">Price Range</label>
+                                    <div id="price-slider" data-min="<?= $minPriceBound ?>"
+                                        data-max="<?= $maxPriceBound ?>"></div>
+                                    <div class="d-flex justify-content-between">
+                                        <span id="price-slider-value"><?= htmlspecialchars($selectedMin) ?> -
+                                            <?= htmlspecialchars($selectedMax) ?></span>
+                                    </div>
+                                    <input type="hidden" name="min_price" id="min-price"
+                                        value="<?= htmlspecialchars($selectedMin) ?>">
+                                    <input type="hidden" name="max_price" id="max-price"
+                                        value="<?= htmlspecialchars($selectedMax) ?>">
                                 </div>
-                                <input type="hidden" name="min_price" id="min-price" value="<?= htmlspecialchars($selectedMin) ?>">
-                                <input type="hidden" name="max_price" id="max-price" value="<?= htmlspecialchars($selectedMax) ?>">
                             </div>
+
                             <div class="col-md-2 d-flex gap-2">
-                                <button type="submit" class="btn btn-primary"><i class="ri-search-line me-1"></i></button>
-                                <a href="all-properties.php" class="btn btn-danger"><i class="ri-refresh-line me-1"></i></a>
+                                <button style="height: 40px;" type="submit" class="btn btn-primary"><i
+                                        class="ri-search-line me-1"></i></button>
+                                <a style="height: 40px;" href="all-properties.php" class="btn btn-danger"><i
+                                        class="ri-refresh-line me-1"></i></a>
                             </div>
                         </form>
                     </div>
@@ -123,16 +135,20 @@ $result = $stmt->get_result();
                                     <div class="property-card">
                                         <a href="property-details.php?id=<?= $property['id']; ?>" class="">
                                             <?php if (!empty($property['main_picture'])): ?>
-                                                <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture" class="img-fluid w-100">
+                                                <img src="uploads/<?= $property['main_picture']; ?>" alt="Main Picture"
+                                                    class="img-fluid w-100">
                                             <?php else: ?>
                                                 <img src="assets/images/offplan/default.png" alt="No Image" class="img-fluid w-100">
                                             <?php endif; ?>
                                             <div class="p-3">
-                                                <div class="d-flex align-items-center justify-content-between property-top-details">
-                                                    <h5 class="property-title mb-0"><?= $property['status'] ?? 'For Sale'; ?></h5>
+                                                <div
+                                                    class="d-flex align-items-center justify-content-between property-top-details">
+                                                    <h5 class="property-title mb-0"><?= $property['status'] ?? 'For Sale'; ?>
+                                                    </h5>
                                                     <h5 class="property-title1 mb-0">
                                                         <span class="currency-symbol"></span>
-                                                        <span class="price" data-base-amount="<?= $property['starting_price'] ?? 0; ?>">
+                                                        <span class="price"
+                                                            data-base-amount="<?= $property['starting_price'] ?? 0; ?>">
                                                             <?= $property['starting_price'] ?? '-'; ?>
                                                         </span>
                                                     </h5>
@@ -144,7 +160,8 @@ $result = $stmt->get_result();
                                                         <span><?= $property['location'] ?? '-'; ?></span>
                                                     </div>
                                                     <div class="room-details">
-                                                        <span><img src="assets/icons/area.png" alt=""><?= $property['starting_area'] ?? '-'; ?></span>
+                                                        <span><img src="assets/icons/area.png"
+                                                                alt=""><?= $property['starting_area'] ?? '-'; ?></span>
                                                     </div>
                                                 </div>
                                             </div>

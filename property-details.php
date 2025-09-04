@@ -219,7 +219,7 @@ $heroImage = !empty($property['main_picture'])
                                 <div><strong>12,108 AED</strong> per ft²</div>
                                 <div><strong>702 ft²</strong> Starting area</div>
                             </div>
-                            <a href="#" class="gradient-btn btn-green-glossy mt-3">Green Glossy</a>
+                            <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
                         <div class="swiper-slide">
                             <img src="https://a.storyblok.com/f/165304/996x668/1a83678dd5/gardenia-bay-floor-plan.png"
@@ -229,7 +229,7 @@ $heroImage = !empty($property['main_picture'])
                                 <div><strong>10,500 AED</strong> per ft²</div>
                                 <div><strong>620 ft²</strong> Starting area</div>
                             </div>
-                            <a href="#" class="gradient-btn btn-green-glossy mt-3">Green Glossy</a>
+                            <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
                         <div class="swiper-slide">
                             <img src="https://a.storyblok.com/f/165304/1322x750/97d0d615e6/gardenia-bay-floor-plan.png"
@@ -239,7 +239,7 @@ $heroImage = !empty($property['main_picture'])
                                 <div><strong>13,000 AED</strong> per ft²</div>
                                 <div><strong>780 ft²</strong> Starting area</div>
                             </div>
-                            <a href="#" class="gradient-btn btn-green-glossy mt-3">Green Glossy</a>
+                            <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
                     </div>
                     <!-- Swiper buttons -->
