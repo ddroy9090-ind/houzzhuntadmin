@@ -172,46 +172,45 @@ $heroImage = !empty($property['main_picture'])
             </div>
         </section>
 
+        <?php
+        $floorPlans = [];
+        if (!empty($property['floor_plan'])) {
+            $decoded = json_decode($property['floor_plan'], true);
+            if (is_array($decoded)) {
+                $floorPlans = $decoded;
+            } else {
+                $floorPlans[] = ['image' => $property['floor_plan']];
+            }
+        }
+        ?>
+        <?php if (!empty($floorPlans)): ?>
         <div class="floorplan-container">
 
             <!-- LEFT SECTION -->
             <div class="floorplan-left">
                 <div class="swiper mySwiper1">
                     <div class="swiper-wrapper">
-                        <!-- ---- Floor Plan 1 ----- -->
+                        <?php foreach ($floorPlans as $plan): ?>
                         <div class="swiper-slide">
-                            <img src="https://a.storyblok.com/f/165304/668x690/d73ba1d330/gardenia-bay-floor-plan.png"
-                                alt="Floorplan 1">
+                            <?php if (!empty($plan['image'])): ?>
+                            <img src="uploads/<?= htmlspecialchars($plan['image']); ?>" alt="Floorplan">
+                            <?php endif; ?>
                             <div class="floorplan-details">
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="8500000">8,500,000</span></strong> Starting price</div>
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="12108">12,108</span></strong> per ft²</div>
-                                <div><strong><span data-base-amount="702">702</span> ft²</strong> Starting area</div>
+                                <?php if (!empty($plan['starting_price'])): ?>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="<?= htmlspecialchars($plan['starting_price']); ?>"><?= htmlspecialchars($plan['starting_price']); ?></span></strong> Starting price</div>
+                                <?php endif; ?>
+                                <?php if (!empty($plan['aed_per_sqft'])): ?>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="<?= htmlspecialchars($plan['aed_per_sqft']); ?>"><?= htmlspecialchars($plan['aed_per_sqft']); ?></span></strong> per ft²</div>
+                                <?php endif; ?>
+                                <?php if (!empty($plan['starting_area'])): ?>
+                                <div><strong><span data-base-amount="<?= htmlspecialchars($plan['starting_area']); ?>"><?= htmlspecialchars($plan['starting_area']); ?></span> ft²</strong> Starting area</div>
+                                <?php endif; ?>
                             </div>
-                            <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
+                            <?php if (!empty($plan['image'])): ?>
+                            <a href="uploads/<?= htmlspecialchars($plan['image']); ?>" class="gradient-btn btn-green-glossy mt-3" target="_blank">View Floor Plan</a>
+                            <?php endif; ?>
                         </div>
-                        <!-- ---- Floor Plan 2 ----- -->
-                        <div class="swiper-slide">
-                            <img src="https://a.storyblok.com/f/165304/996x668/1a83678dd5/gardenia-bay-floor-plan.png"
-                                alt="Floorplan 2">
-                            <div class="floorplan-details">
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="7200000">7,200,000</span></strong> Starting price</div>
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="10500">10,500</span></strong> per ft²</div>
-                                <div><strong><span data-base-amount="620">620</span> ft²</strong> Starting area</div>
-                            </div>
-                            <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
-                        </div>
-
-                        <!-- ---- Floor Plan 3 ----- -->
-                        <div class="swiper-slide">
-                            <img src="https://a.storyblok.com/f/165304/1322x750/97d0d615e6/gardenia-bay-floor-plan.png"
-                                alt="Floorplan 3">
-                            <div class="floorplan-details">
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="9000000">9,000,000</span></strong> Starting price</div>
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="13000">13,000</span></strong> per ft²</div>
-                                <div><strong><span data-base-amount="780">780</span> ft²</strong> Starting area</div>
-                            </div>
-                            <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                     <!-- Swiper buttons -->
                     <div class="swiper-button-prev">&#8592;</div>
@@ -226,6 +225,7 @@ $heroImage = !empty($property['main_picture'])
                 <button class="right-btn">→</button>
             </div>
         </div>
+        <?php endif; ?>
 
         <!-- Payment Plan Section -->
         <section class="payment-plan-section d-none">
