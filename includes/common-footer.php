@@ -219,15 +219,19 @@
             });
         }
 
+        // Always show the currency symbol even if the exchange-rate fetch fails.
+        applyConversion(1);
+
         if (selectedCurrency !== baseCurrency) {
             fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
                 .then(res => res.json())
                 .then(data => {
                     const rate = data.rates[selectedCurrency] || 1;
                     applyConversion(rate);
+                })
+                .catch(() => {
+                    // If the API request fails, we keep the base amount but the symbol remains visible.
                 });
-        } else {
-            applyConversion(1);
         }
     })();
 </script>
