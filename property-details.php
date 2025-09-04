@@ -60,10 +60,12 @@ $heroImage = !empty($property['main_picture'])
                     </div>
                     <div class="col-12 mt-3">
                         <div class="d-flex justify-content-center gap-3 flex-wrap">
-                            <a href="#" class="btn-custom">
-                                Download Brochure
-                                <i class="bi bi-download"></i>
-                            </a>
+                            <?php if (!empty($property['brochure'])): ?>
+                                <a href="uploads/<?= htmlspecialchars($property['brochure']); ?>" class="btn-custom" download>
+                                    Download Brochure
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            <?php endif; ?>
                             <a href="leads.php" class="btn-custom">
                                 Enquire Now
                                 <i class="bi bi-arrow-right"></i>
