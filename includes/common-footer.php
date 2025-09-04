@@ -211,8 +211,8 @@
         let currentCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
 
         function applyConversion(rate) {
-            document.querySelectorAll('[data-base-amount]').forEach(el => {
-                const raw = el.getAttribute('data-base-amount') || '';
+            document.querySelectorAll('[data-base-amount],[data-base-value]').forEach(el => {
+                const raw = el.getAttribute('data-base-amount') || el.getAttribute('data-base-value') || '';
                 const base = parseFloat(raw.replace(/[^0-9.]/g, ''));
                 if (isNaN(base)) return;
                 const converted = base * rate;
@@ -224,6 +224,9 @@
             });
             document.querySelectorAll('.currency-symbol').forEach(el => {
                 el.textContent = currencySymbols[currentCurrency] || currentCurrency;
+            });
+            document.querySelectorAll('.currency-code').forEach(el => {
+                el.textContent = currentCurrency;
             });
         }
 
