@@ -1070,7 +1070,7 @@ h4.card-title.mb-0.flex-grow-1 {
 
 /* LEFT SIDE */
 .floorplan-left {
-  padding: 10px;
+  padding: 20px 10px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }

@@ -197,10 +197,10 @@ $heroImage = !empty($property['main_picture'])
                             <?php endif; ?>
                             <div class="floorplan-details">
                                 <?php if (!empty($plan['starting_price'])): ?>
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="<?= htmlspecialchars($plan['starting_price']); ?>"><?= htmlspecialchars($plan['starting_price']); ?></span></strong> Starting price</div>
+                                <div><strong><span class="currency-symbol"></span> <span data-base-amount="<?= htmlspecialchars($plan['starting_price']); ?>"><?= htmlspecialchars($plan['starting_price']); ?></span></strong> Starting price</div>
                                 <?php endif; ?>
                                 <?php if (!empty($plan['aed_per_sqft'])): ?>
-                                <div><strong><span class="currency-symbol"></span><span data-base-amount="<?= htmlspecialchars($plan['aed_per_sqft']); ?>"><?= htmlspecialchars($plan['aed_per_sqft']); ?></span></strong> per ft²</div>
+                                <div><strong><span class="currency-symbol"></span> <span data-base-amount="<?= htmlspecialchars($plan['aed_per_sqft']); ?>"><?= htmlspecialchars($plan['aed_per_sqft']); ?></span></strong> per ft²</div>
                                 <?php endif; ?>
                                 <?php if (!empty($plan['starting_area'])): ?>
                                 <div><strong><span data-base-amount="<?= htmlspecialchars($plan['starting_area']); ?>"><?= htmlspecialchars($plan['starting_area']); ?></span> ft²</strong> Starting area</div>
