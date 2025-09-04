@@ -173,10 +173,12 @@ $heroImage = !empty($property['main_picture'])
         </section>
 
         <div class="floorplan-container">
+
             <!-- LEFT SECTION -->
             <div class="floorplan-left">
                 <div class="swiper mySwiper1">
                     <div class="swiper-wrapper">
+                        <!-- ---- Floor Plan 1 ----- -->
                         <div class="swiper-slide">
                             <img src="https://a.storyblok.com/f/165304/668x690/d73ba1d330/gardenia-bay-floor-plan.png"
                                 alt="Floorplan 1">
@@ -187,6 +189,7 @@ $heroImage = !empty($property['main_picture'])
                             </div>
                             <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
+                        <!-- ---- Floor Plan 2 ----- -->
                         <div class="swiper-slide">
                             <img src="https://a.storyblok.com/f/165304/996x668/1a83678dd5/gardenia-bay-floor-plan.png"
                                 alt="Floorplan 2">
@@ -197,6 +200,8 @@ $heroImage = !empty($property['main_picture'])
                             </div>
                             <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
+
+                        <!-- ---- Floor Plan 3 ----- -->
                         <div class="swiper-slide">
                             <img src="https://a.storyblok.com/f/165304/1322x750/97d0d615e6/gardenia-bay-floor-plan.png"
                                 alt="Floorplan 3">

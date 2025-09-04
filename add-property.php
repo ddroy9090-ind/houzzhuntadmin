@@ -83,7 +83,8 @@
                             <label for="starting_price" class="form-label">Starting Price</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="number" class="form-control" id="starting_price" name="starting_price" data-base-value="0">
+                                <input type="number" class="form-control" id="starting_price" name="starting_price"
+                                    data-base-value="0">
                             </div>
 
                         </div>
@@ -135,7 +136,8 @@
                                 ondrop="handleDrop(event, 'gallery_images')">
                                 <div class="icon"><img width="40" src="assets/icons/upload-images.png" alt=""></div>
                                 <p>Drop files here or click to upload</p>
-                                <input type="file" id="gallery_images" name="gallery_images[]" multiple onchange="showFileName(this)">
+                                <input type="file" id="gallery_images" name="gallery_images[]" multiple
+                                    onchange="showFileName(this)">
                             </div>
                             <div id="file-name-gallery_images" class="file-name"></div>
 
@@ -187,7 +189,7 @@
 
                     </div>
 
-                    <h4 class="mt-5">Floor Plan</h4>
+                    <h4 class="mt-5">Floor Plan 1</h4>
                     <div class="row">
                         <!-- Floor Plan -->
                         <div class="mb-3 col-md-6">
@@ -201,7 +203,8 @@
                             <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="floor_starting_price" name="floor_starting_price" data-base-value="0">
+                                <input type="text" class="form-control" id="floor_starting_price"
+                                    name="floor_starting_price" data-base-value="0">
                             </div>
                         </div>
 
@@ -210,7 +213,8 @@
                             <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
                             <div class="input-group">
                                 <span class="input-group-text currency-symbol"></span>
-                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft" data-base-value="0">
+                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft"
+                                    data-base-value="0">
                             </div>
 
                         </div>
@@ -221,35 +225,111 @@
                             <input type="text" class="form-control" id="starting_area" name="starting_area">
 
                         </div>
+                    </div>
+
+                    <h4 class="mt-5">Floor Plan 2</h4>
+                    <div class="row">
+                        <!-- Floor Plan -->
+                        <div class="mb-3 col-md-6">
+                            <label for="floor_plan" class="form-label">Floor Plan</label>
+                            <input type="file" class="form-control" id="floor_plan" name="floor_plan">
+
+                        </div>
+
+                        <!-- Starting Price (renamed) -->
+                        <div class="mb-3 col-md-6">
+                            <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="text" class="form-control" id="floor_starting_price"
+                                    name="floor_starting_price" data-base-value="0">
+                            </div>
+                        </div>
+
+                        <!-- Price per Sqft -->
+                        <div class="mb-3 col-md-6">
+                            <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft"
+                                    data-base-value="0">
+                            </div>
+
+                        </div>
+
+                        <!-- Starting Area -->
+                        <div class="mb-3 col-md-6">
+                            <label for="starting_area" class="form-label">Starting Area</label>
+                            <input type="text" class="form-control" id="starting_area" name="starting_area">
+
+                        </div>
+                    </div>
+
+                    <h4 class="mt-5">Floor Plan 3</h4>
+                    <div class="row">
+                        <!-- Floor Plan -->
+                        <div class="mb-3 col-md-6">
+                            <label for="floor_plan" class="form-label">Floor Plan</label>
+                            <input type="file" class="form-control" id="floor_plan" name="floor_plan">
+
+                        </div>
+
+                        <!-- Starting Price (renamed) -->
+                        <div class="mb-3 col-md-6">
+                            <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="text" class="form-control" id="floor_starting_price"
+                                    name="floor_starting_price" data-base-value="0">
+                            </div>
+                        </div>
+
+                        <!-- Price per Sqft -->
+                        <div class="mb-3 col-md-6">
+                            <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft"
+                                    data-base-value="0">
+                            </div>
+
+                        </div>
+
+                        <!-- Starting Area -->
+                        <div class="mb-3 col-md-6">
+                            <label for="starting_area" class="form-label">Starting Area</label>
+                            <input type="text" class="form-control" id="starting_area" name="starting_area">
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
 
                         <h4 class="mt-5">Nearby Places</h4>
 
                         <!-- Burj Al Arab -->
                         <div class="mb-3 col-md-6">
                             <label for="burj_al_arab" class="form-label">Burj Al Arab</label>
-                            <input type="number" step="0.01" class="form-control" id="burj_al_arab" name="burj_al_arab"
-                                >
+                            <input type="number" step="0.01" class="form-control" id="burj_al_arab" name="burj_al_arab">
                         </div>
 
                         <!-- Dubai Marina -->
                         <div class="mb-3 col-md-6">
                             <label for="dubai_marina" class="form-label">Dubai Marina</label>
-                            <input type="number" step="0.01" class="form-control" id="dubai_marina" name="dubai_marina"
-                                >
+                            <input type="number" step="0.01" class="form-control" id="dubai_marina" name="dubai_marina">
                         </div>
 
                         <!-- Dubai Mall -->
                         <div class="mb-3 col-md-6">
                             <label for="dubai_mall" class="form-label">Dubai Mall</label>
-                            <input type="number" step="0.01" class="form-control" id="dubai_mall" name="dubai_mall"
-                                >
+                            <input type="number" step="0.01" class="form-control" id="dubai_mall" name="dubai_mall">
                         </div>
 
                         <!-- Sheikh Zayed Road -->
                         <div class="mb-3 col-md-6">
                             <label for="sheikh_zayed" class="form-label">Sheikh Zayed Road</label>
-                            <input type="number" step="0.01" class="form-control" id="sheikh_zayed" name="sheikh_zayed"
-                               >
+                            <input type="number" step="0.01" class="form-control" id="sheikh_zayed" name="sheikh_zayed">
                         </div>
 
 
@@ -258,7 +338,8 @@
                             <label for="location" class="form-label">Location Coordinates</label>
                             <input type="text" class="form-control" id="location" name="location"
                                 placeholder="25.204849,55.270782">
-                            <small class="form-text text-muted">Enter latitude and longitude separated by a comma.</small>
+                            <small class="form-text text-muted">Enter latitude and longitude separated by a
+                                comma.</small>
                         </div>
 
                         <!-- Text Field -->
@@ -276,7 +357,7 @@
                         </div>
                     </div>
                 </form>
-                
+
             </div>
         </div>
 
