@@ -209,8 +209,10 @@
         const baseCurrency = 'AED';
         const currencySymbols = { AED: 'AED', USD: '$', EUR: '€', GBP: '£' };
         let currentCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
+        let currentRate = 1;
 
         function applyConversion(rate) {
+            currentRate = rate;
             document.querySelectorAll('[data-base-amount],[data-base-value]').forEach(el => {
                 const raw = el.getAttribute('data-base-amount') || el.getAttribute('data-base-value') || '';
                 const base = parseFloat(raw.replace(/[^0-9eE.+-]/g, ''));
@@ -260,6 +262,16 @@
         }
 
         updateCurrency(currentCurrency);
+
+        // keep base values in sync when user edits converted fields
+        document.querySelectorAll('[data-base-value]').forEach(el => {
+            el.addEventListener('input', function () {
+                const val = parseFloat(this.value.replace(/[^0-9eE.+-]/g, ''));
+                if (isNaN(val)) return;
+                const base = val / currentRate;
+                this.setAttribute('data-base-value', base);
+            });
+        });
     })();
 </script>
 

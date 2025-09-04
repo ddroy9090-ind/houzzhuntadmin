@@ -81,7 +81,10 @@
                         <!-- Starting Price -->
                         <div class="mb-3 col-md-6">
                             <label for="starting_price" class="form-label">Starting Price</label>
-                            <input type="number" class="form-control" id="starting_price" name="starting_price">
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="number" class="form-control" id="starting_price" name="starting_price" data-base-value="0">
+                            </div>
 
                         </div>
 
@@ -224,14 +227,19 @@
                         <!-- Starting Price (renamed) -->
                         <div class="mb-3 col-md-6">
                             <label for="floor_starting_price" class="form-label">Starting Price (Floor Plan)</label>
-                            <input type="text" class="form-control" id="floor_starting_price"
-                                name="floor_starting_price">
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="text" class="form-control" id="floor_starting_price" name="floor_starting_price" data-base-value="0">
+                            </div>
                         </div>
 
-                        <!-- AED per Sqft -->
+                        <!-- Price per Sqft -->
                         <div class="mb-3 col-md-6">
-                            <label for="aed_per_sqft" class="form-label">AED per Sqft</label>
-                            <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft">
+                            <label for="aed_per_sqft" class="form-label">Price per Sqft</label>
+                            <div class="input-group">
+                                <span class="input-group-text currency-symbol"></span>
+                                <input type="text" class="form-control" id="aed_per_sqft" name="aed_per_sqft" data-base-value="0">
+                            </div>
 
                         </div>
 
