@@ -215,9 +215,9 @@ $heroImage = !empty($property['main_picture'])
                             <img src="https://a.storyblok.com/f/165304/668x690/d73ba1d330/gardenia-bay-floor-plan.png"
                                 alt="Floorplan 1">
                             <div class="floorplan-details">
-                                <div><strong>8.5M AED</strong> Starting price</div>
-                                <div><strong>12,108 AED</strong> per ft²</div>
-                                <div><strong>702 ft²</strong> Starting area</div>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="8500000">8,500,000</span></strong> Starting price</div>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="12108">12,108</span></strong> per ft²</div>
+                                <div><strong><span data-base-amount="702">702</span> ft²</strong> Starting area</div>
                             </div>
                             <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
@@ -225,9 +225,9 @@ $heroImage = !empty($property['main_picture'])
                             <img src="https://a.storyblok.com/f/165304/996x668/1a83678dd5/gardenia-bay-floor-plan.png"
                                 alt="Floorplan 2">
                             <div class="floorplan-details">
-                                <div><strong>7.2M AED</strong> Starting price</div>
-                                <div><strong>10,500 AED</strong> per ft²</div>
-                                <div><strong>620 ft²</strong> Starting area</div>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="7200000">7,200,000</span></strong> Starting price</div>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="10500">10,500</span></strong> per ft²</div>
+                                <div><strong><span data-base-amount="620">620</span> ft²</strong> Starting area</div>
                             </div>
                             <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
@@ -235,9 +235,9 @@ $heroImage = !empty($property['main_picture'])
                             <img src="https://a.storyblok.com/f/165304/1322x750/97d0d615e6/gardenia-bay-floor-plan.png"
                                 alt="Floorplan 3">
                             <div class="floorplan-details">
-                                <div><strong>9M AED</strong> Starting price</div>
-                                <div><strong>13,000 AED</strong> per ft²</div>
-                                <div><strong>780 ft²</strong> Starting area</div>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="9000000">9,000,000</span></strong> Starting price</div>
+                                <div><strong><span class="currency-symbol"></span><span data-base-amount="13000">13,000</span></strong> per ft²</div>
+                                <div><strong><span data-base-amount="780">780</span> ft²</strong> Starting area</div>
                             </div>
                             <a href="#" class="gradient-btn btn-green-glossy mt-3">View Floor Plan</a>
                         </div>
