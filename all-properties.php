@@ -7,6 +7,14 @@ include 'config.php'; // Database connection
 $projectQuery = "SELECT DISTINCT project_name FROM properties WHERE project_name IS NOT NULL AND project_name <> '' ORDER BY project_name";
 $projectResult = $conn->query($projectQuery);
 
+// Fetch min and max price to use as slider bounds
+$priceQuery = "SELECT MIN(starting_price) AS min_price, MAX(starting_price) AS max_price FROM properties";
+$priceBounds = $conn->query($priceQuery)->fetch_assoc();
+$minPriceBound = $priceBounds['min_price'] ?? 0;
+$maxPriceBound = $priceBounds['max_price'] ?? 0;
+$selectedMin = $_GET['min_price'] ?? $minPriceBound;
+$selectedMax = $_GET['max_price'] ?? $maxPriceBound;
+
 // Build search query
 $where = [];
 $types = '';
@@ -57,6 +65,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
+<!-- Select2 & noUiSlider styles -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <div class="main-content">
     <div class="page-content">
         <div class="propertiesSection">
@@ -71,7 +83,7 @@ $result = $stmt->get_result();
                     <div class="col-12">
                         <form method="GET" class="row g-2 mb-4">
                             <div class="col-md-2">
-                                <select name="project_name" class="form-select">
+                                <select name="project_name" class="form-select project-select">
                                     <option value="">Project Name</option>
                                     <?php if ($projectResult && $projectResult->num_rows > 0): ?>
                                         <?php while ($project = $projectResult->fetch_assoc()): ?>
@@ -88,11 +100,14 @@ $result = $stmt->get_result();
                             <div class="col-md-2">
                                 <input type="text" name="area" class="form-control" placeholder="Area" value="<?= htmlspecialchars($_GET['area'] ?? '') ?>">
                             </div>
-                            <div class="col-md-2">
-                                <input type="number" name="min_price" class="form-control" placeholder="Min Price" value="<?= htmlspecialchars($_GET['min_price'] ?? '') ?>">
-                            </div>
-                            <div class="col-md-2">
-                                <input type="number" name="max_price" class="form-control" placeholder="Max Price" value="<?= htmlspecialchars($_GET['max_price'] ?? '') ?>">
+                            <div class="col-md-4">
+                                <label class="form-label">Price Range</label>
+                                <div id="price-slider" data-min="<?= $minPriceBound ?>" data-max="<?= $maxPriceBound ?>"></div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span id="price-slider-value"><?= htmlspecialchars($selectedMin) ?> - <?= htmlspecialchars($selectedMax) ?></span>
+                                </div>
+                                <input type="hidden" name="min_price" id="min-price" value="<?= htmlspecialchars($selectedMin) ?>">
+                                <input type="hidden" name="max_price" id="max-price" value="<?= htmlspecialchars($selectedMax) ?>">
                             </div>
                             <div class="col-md-2 d-flex gap-2">
                                 <button type="submit" class="btn btn-primary"><i class="ri-search-line me-1"></i>Search</button>
@@ -150,5 +165,43 @@ $result = $stmt->get_result();
 
     <?php include 'includes/footer.php'; ?>
 </div>
+<!-- jQuery, Select2, and noUiSlider scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.project-select').select2({
+            placeholder: 'Project Name',
+            allowClear: true
+        });
+
+        var priceSlider = document.getElementById('price-slider');
+        if (priceSlider) {
+            var min = parseInt(priceSlider.getAttribute('data-min'), 10);
+            var max = parseInt(priceSlider.getAttribute('data-max'), 10);
+            var startMin = parseInt(document.getElementById('min-price').value || min, 10);
+            var startMax = parseInt(document.getElementById('max-price').value || max, 10);
+            noUiSlider.create(priceSlider, {
+                start: [startMin, startMax],
+                connect: true,
+                range: {
+                    'min': min,
+                    'max': max
+                }
+            });
+            var minInput = document.getElementById('min-price');
+            var maxInput = document.getElementById('max-price');
+            var valueElement = document.getElementById('price-slider-value');
+            priceSlider.noUiSlider.on('update', function (values) {
+                var minVal = Math.round(values[0]);
+                var maxVal = Math.round(values[1]);
+                minInput.value = minVal;
+                maxInput.value = maxVal;
+                valueElement.textContent = minVal + ' - ' + maxVal;
+            });
+        }
+    });
+</script>
 
 <?php include 'includes/common-footer.php'; ?>
