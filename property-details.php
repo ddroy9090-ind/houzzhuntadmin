@@ -44,18 +44,39 @@ $heroImage = !empty($property['main_picture'])
                         <div class="hero-description">
                             <h1><?= $property['project_name']; ?></h1>
                             <h5><?= $property['sub_heading']; ?></h5>
-                            <p><?= $property['description']; ?></p>
-                        </div>
-                        <div class="cta-button">
-                            <?php if (!empty($property['brochure'])): ?>
-                                <a href="uploads/<?= $property['brochure']; ?>" target="_blank"
-                                    class="gradient-btn btn-yellow-white">Download Brochure</a>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Project Header Section -->
+        <section class="project-header">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="fw-bold">Download Brochure</h2>
+                        <p class="subtitle">Live the Vibe WHERE THE VIBE MEETS HOME</p>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="#" class="btn-custom">
+                                Download Brochure
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <a href="leads.php" class="btn-custom">
+                                Enquire Now
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                            <a href="#" class="share-icon">
+                                <i class="bi bi-share"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <!-- Community Section -->
         <section class="community-section">
@@ -231,8 +252,8 @@ $heroImage = !empty($property['main_picture'])
                     : $defaultMap;
                 ?>
                 <div class="map-container mb-4">
-                    <iframe src="<?= $mapSrc ?>" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="<?= $mapSrc ?>" width="100%" height="500" style="border:0;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
 
                 <!-- Nearby Places Icons -->

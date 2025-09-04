@@ -8,7 +8,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Helper function to safely fetch a single count value from the database
-function fetch_count(mysqli $conn, string $query): int {
+function fetch_count(mysqli $conn, string $query): int
+{
     $result = $conn->query($query);
     return $result ? (int)$result->fetch_assoc()['c'] : 0;
 }
@@ -238,7 +239,7 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                                     <p class="text-muted mb-0">Total Leads</p>
                                                 </div>
                                             </div>
-        <!--end col-->
+                                            <!--end col-->
                                             <div class="col-6 col-sm-3">
                                                 <div class="p-3 border border-dashed border-start-0">
                                                     <h5 class="mb-1"><span class="counter-value" data-target="<?php echo $totalUsers; ?>">0</span></h5>
@@ -338,23 +339,28 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                             <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
                                                 <?php while ($p = $recentProperties->fetch_assoc()): ?>
                                                     <div class="col-sm-6 col-lg-4 col-xl-3">
-                                                        <div class="card h-100">
-                                                            <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>" class="card-img-top" alt="<?= htmlspecialchars($p['project_name']); ?>">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title mb-2">
-                                                                    <a href="property-details.php?id=<?= $p['id']; ?>" class="text-reset">#<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?></a>
-                                                                </h5>
-                                                                <p class="mb-2">
-                                                                    <i class="ri-map-pin-line align-bottom me-1"></i>
-                                                                    <?= htmlspecialchars($p['location']); ?>
-                                                                </p>
-                                                                <h6 class="mb-0">
-                                                                    <i class="ri-price-tag-3-line align-bottom me-1"></i>
-                                                                    <?= htmlspecialchars($p['starting_price']); ?>
-                                                                </h6>
+                                                        <a href="property-details.php?id=<?= $p['id']; ?>" class="text-decoration-none text-dark">
+                                                            <div class="card h-100">
+                                                                <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>"
+                                                                    class="card-img-top"
+                                                                    alt="<?= htmlspecialchars($p['project_name']); ?>">
+                                                                <div class="card-body">
+                                                                    <h5 class=" mb-2">
+                                                                        #<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?>
+                                                                    </h5>
+                                                                    <p class="mb-2">
+                                                                        <i class="ri-map-pin-line align-bottom me-1"></i>
+                                                                        <?= htmlspecialchars($p['location']); ?>
+                                                                    </p>
+                                                                    <h6 class="mb-0" style="font-size: 16px;">
+                                                                        <i class="ri-price-tag-3-line align-bottom me-1"></i>
+                                                                        <?= htmlspecialchars($p['starting_price']); ?>
+                                                                    </h6>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
+
                                                 <?php endwhile; ?>
                                             <?php else: ?>
                                                 <div class="col-12">
@@ -400,7 +406,7 @@ $recentLeads      = $conn->query("SELECT leads.id, leads.name, leads.email, lead
                                                             <tr>
                                                                 <td>#<?php echo htmlspecialchars($l['id']); ?></td>
                                                                 <td>
-                                                                   <div class="d-flex align-items-center">
+                                                                    <div class="d-flex align-items-center">
                                                                         <div class="flex-shrink-0 me-2">
                                                                             <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
                                                                                 <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt=""

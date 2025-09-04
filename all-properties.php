@@ -70,7 +70,7 @@ $result = $stmt->get_result();
 
                     <div class="col-12">
                         <form method="GET" class="row g-2 mb-4">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <select name="project_name" class="form-select">
                                     <option value="">Project Name</option>
                                     <?php if ($projectResult && $projectResult->num_rows > 0): ?>
@@ -82,7 +82,7 @@ $result = $stmt->get_result();
                                     <?php endif; ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <input type="text" name="offplan_name" class="form-control" placeholder="Offplan Name" value="<?= htmlspecialchars($_GET['offplan_name'] ?? '') ?>">
                             </div>
                             <div class="col-md-2">
@@ -94,7 +94,7 @@ $result = $stmt->get_result();
                             <div class="col-md-2">
                                 <input type="number" name="max_price" class="form-control" placeholder="Max Price" value="<?= htmlspecialchars($_GET['max_price'] ?? '') ?>">
                             </div>
-                            <div class="col-md-12 d-flex gap-2">
+                            <div class="col-md-2 d-flex gap-2">
                                 <button type="submit" class="btn btn-primary"><i class="ri-search-line me-1"></i>Search</button>
                                 <a href="all-properties.php" class="btn btn-secondary"><i class="ri-refresh-line me-1"></i>Reset</a>
                             </div>
