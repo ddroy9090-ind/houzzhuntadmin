@@ -176,8 +176,8 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                                     <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
                                                 </td>
                                                 <td><?php echo date('d/m/Y', strtotime($l['created_at'])); ?></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-primary edit-lead-btn"
+                                                <td class='edit'>
+                                                    <button type="button" class="btn btn-sm btn-success edit-lead-btn"
                                                         data-id="<?php echo $l['id']; ?>"
                                                         data-name="<?php echo htmlspecialchars($l['name']); ?>"
                                                         data-email="<?php echo htmlspecialchars($l['email']); ?>"
