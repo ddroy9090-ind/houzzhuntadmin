@@ -357,7 +357,7 @@ $heroImage = !empty($property['main_picture'])
                                 class="card-img" alt="Getting a Mortgage">
                             <div class="card-overlay"></div>
                             <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
-                                <h5 class="card-title text-uppercase">Getting a Mortgage</h5>
+                                <h5 class="card-title text-uppercase text-white">Getting a Mortgage</h5>
                                 <p class="card-text text-capitalize">
                                     Mira mortgage is a perfect key for your dream home opportunities
                                 </p>
@@ -381,7 +381,7 @@ $heroImage = !empty($property['main_picture'])
                                 class="card-img" alt="Getting a Mortgage">
                             <div class="card-overlay"></div>
                             <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
-                                <h5 class="card-title text-uppercase">Getting a Mortgage</h5>
+                                <h5 class="card-title text-uppercase text-white">Getting a Mortgage</h5>
                                 <p class="card-text text-capitalize">
                                     Mira mortgage is a perfect key for your dream home opportunities
                                 </p>
@@ -406,7 +406,7 @@ $heroImage = !empty($property['main_picture'])
                                 class="card-img" alt="Getting a Mortgage">
                             <div class="card-overlay"></div>
                             <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
-                                <h5 class="card-title text-uppercase">Getting a Mortgage</h5>
+                                <h5 class="card-title text-uppercase text-white">Getting a Mortgage</h5>
                                 <p class="card-text text-capitalize">
                                     Mira mortgage is a perfect key for your dream home opportunities
                                 </p>

@@ -348,7 +348,6 @@ if ($projectLocations) {
                                             <?php if ($recentProperties && $recentProperties->num_rows > 0): ?>
                                                 <?php while ($p = $recentProperties->fetch_assoc()): ?>
                                                     <div class="col-sm-6 col-lg-4 col-xl-3">
-<<<<<<< HEAD
                                                         <a href="property-details.php?id=<?= $p['id']; ?>" class="text-decoration-none text-dark">
                                                             <div class="card h-100">
                                                                 <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>"
@@ -367,22 +366,6 @@ if ($projectLocations) {
                                                                         <?= htmlspecialchars($p['starting_price']); ?>
                                                                     </h6>
                                                                 </div>
-=======
-                                                        <div class="card h-100">
-                                                            <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>" class="card-img-top" alt="<?= htmlspecialchars($p['project_name']); ?>">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title mb-2">
-                                                                    <a href="property-details.php?id=<?= $p['id']; ?>" class="text-dark">#<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?></a>
-                                                                </h5>
-                                                                <p class="mb-2">
-                                                                    <i class="ri-map-pin-line align-bottom me-1"></i>
-                                                                    <?= htmlspecialchars($p['location']); ?>
-                                                                </p>
-                                                                <h6 class="mb-0">
-                                                                    <i class="ri-price-tag-3-line align-bottom me-1"></i>
-                                                                    <?= htmlspecialchars($p['starting_price']); ?>
-                                                                </h6>
->>>>>>> 1c0b034ec69e250ecf6109e1837f67c92138dafb
                                                             </div>
                                                         </a>
                                                     </div>
