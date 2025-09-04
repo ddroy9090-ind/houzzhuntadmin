@@ -206,38 +206,57 @@
 
 <script>
     (function () {
-        const selectedCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
         const baseCurrency = 'AED';
         const currencySymbols = { AED: 'AED', USD: '$', EUR: '€', GBP: '£' };
+        let currentCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
 
         function applyConversion(rate) {
             document.querySelectorAll('[data-base-amount]').forEach(el => {
-                // Ensure any commas or non-numeric characters are stripped before parsing
                 const raw = el.getAttribute('data-base-amount') || '';
                 const base = parseFloat(raw.replace(/[^0-9.]/g, ''));
                 if (isNaN(base)) return;
                 const converted = base * rate;
-                el.textContent = converted.toLocaleString(undefined, { maximumFractionDigits: 2 });
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.value = converted.toFixed(2);
+                } else {
+                    el.textContent = converted.toLocaleString(undefined, { maximumFractionDigits: 2 });
+                }
             });
             document.querySelectorAll('.currency-symbol').forEach(el => {
-                el.textContent = currencySymbols[selectedCurrency] || selectedCurrency;
+                el.textContent = currencySymbols[currentCurrency] || currentCurrency;
             });
         }
 
-        // Always show the currency symbol even if the exchange-rate fetch fails.
-        applyConversion(1);
-
-        if (selectedCurrency !== baseCurrency) {
+        function updateCurrency(newCurrency) {
+            currentCurrency = newCurrency;
+            applyConversion(1);
+            if (currentCurrency === baseCurrency) return;
             fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
                 .then(res => res.json())
                 .then(data => {
-                    const rate = data.rates[selectedCurrency] || 1;
+                    const rate = data.rates[currentCurrency] || 1;
                     applyConversion(rate);
                 })
-                .catch(() => {
-                    // If the API request fails, we keep the base amount but the symbol remains visible.
-                });
+                .catch(() => {});
         }
+
+        const switcher = document.getElementById('currencySwitcher');
+        if (switcher) {
+            switcher.addEventListener('change', function () {
+                const newCurrency = this.value;
+                fetch('set_currency.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: 'currency=' + encodeURIComponent(newCurrency)
+                });
+                updateCurrency(newCurrency);
+            });
+        }
+
+        updateCurrency(currentCurrency);
     })();
 </script>
 
