@@ -351,7 +351,7 @@ if ($projectLocations) {
                                                             <img src="<?= !empty($p['main_picture']) ? 'uploads/' . $p['main_picture'] : 'assets/images/offplan/default.png'; ?>" class="card-img-top" alt="<?= htmlspecialchars($p['project_name']); ?>">
                                                             <div class="card-body">
                                                                 <h5 class="card-title mb-2">
-                                                                    <a href="property-details.php?id=<?= $p['id']; ?>" class="text-reset">#<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?></a>
+                                                                    <a href="property-details.php?id=<?= $p['id']; ?>" class="text-dark">#<?= str_pad($p['id'], 1, '0', STR_PAD_LEFT); ?> <?= htmlspecialchars($p['project_name']); ?></a>
                                                                 </h5>
                                                                 <p class="mb-2">
                                                                     <i class="ri-map-pin-line align-bottom me-1"></i>
