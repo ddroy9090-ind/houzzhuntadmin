@@ -87,19 +87,19 @@ $heroImage = !empty($property['main_picture'])
                 <div class="row align-items-center">
                     <!-- Left Column (Stats) -->
                     <div class="col-md-5">
-                        <p>Starting Price</p>
-                        <h5>
+                        <p style="font-size: 20px !important;">Starting Price</p>
+                        <h5 style="font-size: 24px; font-weight: 600; color: #edbb68;">
                             <span class="currency-symbol"></span>
                             <span data-base-amount="<?= htmlspecialchars($property['starting_price']); ?>">
                                 <?= htmlspecialchars($property['starting_price']); ?>
                             </span>
                         </h5>
 
-                        <p>Payment Plan</p>
-                        <h5><?= $property['payment_plan']; ?></h5>
+                        <p style="font-size: 20px !important;">Payment Plan</p>
+                        <h5 style="font-size: 24px; font-weight: 600; color: #edbb68;"><?= $property['payment_plan']; ?></h5>
 
-                        <p>Project Handover</p>
-                        <h5><?= $property['handover']; ?></h5>
+                        <p style="font-size: 20px !important;">Project Handover</p>
+                        <h5 style="font-size: 24px; font-weight: 600; color: #edbb68;"><?= $property['handover']; ?></h5>
                     </div>
 
                     <!-- Right Column (Content) -->
@@ -114,73 +114,75 @@ $heroImage = !empty($property['main_picture'])
             </div>
         </section>
 
-        <!-- Property Gallery Section -->
+        <!-- Property Gallery Section (Single Swiper for the whole section) -->
         <section class="property-gallery-section">
             <div class="container-fluid">
-                <div class="row g-3">
-                    <!-- Left Large Image -->
-                    <div class="col-12 col-lg-8 position-relative">
-                        <div class="swiper main-swiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="https://d33om22pidobo4.cloudfront.net/projects/featuredimages/frame-37160png-343fecfa-3bee-4958-897c-d71777a0bcb2.png?d=1000x666&f=webp"
-                                        alt="Building" class="img-fluid w-100 rounded">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
-                                        alt="Alternate Building" class="img-fluid w-100 rounded">
-                                </div>
-                            </div>
-                            <!-- Navigation -->
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                    </div>
+                <div class="swiper gallery-swiper position-relative">
+                    <div class="swiper-wrapper">
 
-                    <!-- Right Side Images -->
-                    <div class="col-12 col-lg-4">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div class="swiper side-swiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide">
+                            <div class="row g-3 align-items-stretch">
+                                <!-- Left Large Image -->
+                                <div class="col-12 col-lg-8">
+                                    <img
+                                        src="https://d33om22pidobo4.cloudfront.net/projects/featuredimages/frame-37160png-343fecfa-3bee-4958-897c-d71777a0bcb2.png?d=1000x666&f=webp"
+                                        alt="Building" class="img-fluid w-100 h-100 rounded object-fit-cover">
+                                </div>
+                                <!-- Right Side Images (stacked) -->
+                                <div class="col-12 col-lg-4">
+                                    <div class="row g-3 h-100">
+                                        <div class="col-12">
+                                            <img
+                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
                                                 alt="Jacuzzi" class="img-fluid w-100 rounded">
                                         </div>
-                                        <div class="swiper-slide">
-                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
+                                        <div class="col-12">
+                                            <img
+                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
                                                 alt="Living Room" class="img-fluid w-100 rounded">
                                         </div>
                                     </div>
-                                    <!-- Navigation -->
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="swiper side-swiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
-                                                alt="Living Room" class="img-fluid w-100 rounded">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
-                                                alt="Jacuzzi" class="img-fluid w-100 rounded">
-                                        </div>
-                                    </div>
-                                    <!-- Navigation -->
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Slide 2 (example) -->
+                        <div class="swiper-slide">
+                            <div class="row g-3 align-items-stretch">
+                                <div class="col-12 col-lg-8">
+                                    <img
+                                        src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=1000x666&f=webp"
+                                        alt="Alternate Building" class="img-fluid w-100 h-100 rounded object-fit-cover">
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    <div class="row g-3 h-100">
+                                        <div class="col-12">
+                                            <img
+                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/5jpg-dbb4e1d6-8f7d-44cf-8660-e93edec0a993.jpg?d=500x333&f=webp"
+                                                alt="Living Room" class="img-fluid w-100 rounded">
+                                        </div>
+                                        <div class="col-12">
+                                            <img
+                                                src="https://d33om22pidobo4.cloudfront.net/projects/gallery/4jpg-727f9584-8b71-47df-add6-acced22a441d.jpg?d=500x333&f=webp"
+                                                alt="Jacuzzi" class="img-fluid w-100 rounded">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add more slides by duplicating the block above -->
                     </div>
+
+                    <!-- Navigation (kept off the images) -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination d-lg-none"></div>
                 </div>
             </div>
         </section>
-
+    
         <!-- Amenities Section -->
         <section class="property-amenities">
             <div class="container">
@@ -200,7 +202,7 @@ $heroImage = !empty($property['main_picture'])
                                     <p><?= trim($amenity); ?></p>
                                 </div>
                             </div>
-                        <?php endforeach;
+                    <?php endforeach;
                     } ?>
                 </div>
             </div>

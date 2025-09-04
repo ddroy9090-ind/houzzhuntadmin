@@ -1281,6 +1281,26 @@ h4.card-title.mb-0.flex-grow-1 {
   box-shadow:none !important;
 }
 
+
+ /* Keep arrows readable but not over the images too much */
+            .property-gallery-section .swiper-button-next,
+            .property-gallery-section .swiper-button-prev {
+                color: #222;
+                text-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+            }
+
+            /* Ensure tall images fill nicely */
+            .object-fit-cover {
+                object-fit: cover;
+            }
+
+            /* Prevent tiny gaps in stacked right images on some screens */
+            @media (min-width: 992px) {
+                .property-gallery-section .col-lg-8 img {
+                    height: 100%;
+                }
+            }
+
 /* Responsive */
 @media(max-width: 768px) {
   .col-md-4 {

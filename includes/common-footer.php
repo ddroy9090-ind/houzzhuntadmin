@@ -242,7 +242,7 @@
                     const rate = data.rates[currentCurrency] || 1;
                     applyConversion(rate);
                 })
-                .catch(() => {});
+                .catch(() => { });
         }
 
         const switcher = document.getElementById('currencySwitcher');
@@ -276,7 +276,7 @@
 </script>
 
 
-<script>
+<!-- <script>
     // Main Large Image Swiper
     new Swiper(".main-swiper", {
         loop: true,
@@ -296,7 +296,7 @@
             },
         });
     });
-</script>
+</script> -->
 
 <script>
     var slider = document.getElementById('price-slider');
@@ -311,6 +311,28 @@
         tooltips: false,
     });
 
+</script>
+
+
+
+<script>
+    // ONE Swiper controlling the whole section
+    new Swiper(".gallery-swiper", {
+        loop: true,
+        navigation: {
+            nextEl: ".gallery-swiper .swiper-button-next",
+            prevEl: ".gallery-swiper .swiper-button-prev",
+        },
+        pagination: {
+            el: ".gallery-swiper .swiper-pagination",
+            clickable: true,
+        },
+        keyboard: {
+            enabled: true
+        },
+        // Optional: smoother swipes
+        speed: 600
+    });
 </script>
 
 
