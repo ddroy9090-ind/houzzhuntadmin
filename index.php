@@ -362,7 +362,7 @@ if ($projectLocations) {
                                                                         <?= htmlspecialchars($p['location']); ?>
                                                                     </p>
                                                                     <h6 class="mb-0" style="font-size: 16px;">
-                                                                        <i class="ri-price-tag-3-line align-bottom me-1"></i>
+                                                                        
                                                                         <span class="currency-symbol"></span>
                                                                         <span class="price"
                                                                             data-base-amount="<?= htmlspecialchars($p['starting_price']); ?>">
