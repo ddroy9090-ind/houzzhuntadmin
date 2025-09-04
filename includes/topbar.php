@@ -59,14 +59,12 @@ $currencyOptions = ['AED','USD','EUR','GBP'];
 
             <div class="d-flex align-items-center">
 
-                <div class="dropdown ms-sm-3">
-                    <form method="POST" action="set_currency.php" style="width:100px">
-                        <select name="currency" class="form-select form-select-sm" onchange="this.form.submit()">
-                            <?php foreach ($currencyOptions as $code): ?>
-                                <option value="<?= $code ?>" <?= $currentCurrency === $code ? 'selected' : '' ?>><?= $code ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </form>
+                <div class="dropdown ms-sm-3" style="width:100px">
+                    <select id="currencySwitcher" class="form-select form-select-sm">
+                        <?php foreach ($currencyOptions as $code): ?>
+                            <option value="<?= $code ?>" <?= $currentCurrency === $code ? 'selected' : '' ?>><?= $code ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
 
                 <div class="dropdown ms-sm-3 header-item topbar-user">
