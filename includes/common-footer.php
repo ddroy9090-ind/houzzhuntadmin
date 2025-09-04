@@ -213,7 +213,7 @@
         function applyConversion(rate) {
             document.querySelectorAll('[data-base-amount],[data-base-value]').forEach(el => {
                 const raw = el.getAttribute('data-base-amount') || el.getAttribute('data-base-value') || '';
-                const base = parseFloat(raw.replace(/[^0-9.]/g, ''));
+                const base = parseFloat(raw.replace(/[^0-9eE.+-]/g, ''));
                 if (isNaN(base)) return;
                 const converted = base * rate;
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
