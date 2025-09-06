@@ -1435,11 +1435,14 @@ h4.card-title.mb-0.flex-grow-1 {
 }
 
 .btn--edit {
-  background: #004a44;
+  background: transparent;
   color: #fff;
-  /* box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25); */
   padding: 5px 14px;
+  color: #004a44;
   width: 80px;
+  font-size: 12px;
+  border: 1px #004a44 solid;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 
 .btn--edit:hover {
@@ -1448,15 +1451,19 @@ h4.card-title.mb-0.flex-grow-1 {
 }
 
 .btn--delete {
-  background: #d01f28;
-  color: #fff !important;
-  /* box-shadow: 0 4px 10px rgba(220, 53, 69, 0.25); */
+  background: transparent;
   padding: 5px 14px;
   width: 80px;
+  font-size: 12px;
+  border: 1px #d01f28 solid;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  color: #d01f28;
+  
 }
 
 .btn--delete:hover {
   background: #d01f28;
+  color: #fff;
 }
 
 /* Subtle hover on full card */
@@ -1465,14 +1472,14 @@ h4.card-title.mb-0.flex-grow-1 {
 }
 
 
-.toggleBtn .btn:hover{
+.toggleBtn .btn:hover {
   background-color: transparent;
   box-shadow: none;
   border: none;
   color: #666;
 }
 
-.toggleBtn .btn{
+.toggleBtn .btn {
   color: #666;
 }
 

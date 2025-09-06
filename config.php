@@ -1,13 +1,13 @@
 <?php
-// $host = "localhost";
-// $user = "root";
-// $pass = "";
-// $db   = "houzzhunt_portal";
-
 $host = "localhost";
-$user = "u431421769_hhroot";
-$pass = "Reliant@1977";
-$db   = "u431421769_Channel_CMS";
+$user = "root";
+$pass = "";
+$db   = "houzzhunt_portal";
+
+// $host = "localhost";
+// $user = "u431421769_hhroot";
+// $pass = "Reliant@1977";
+// $db   = "u431421769_Channel_CMS";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
