@@ -116,6 +116,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('Admin','Manager','Channel Partner') NOT NULL,
+  `profile_image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_active` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -124,10 +125,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `role`, `created_at`, `last_active`) VALUES
-(1, 'Rehman Shaoib', 'rehmanshoaib', 'shoaib@reliantsurveyors.com', '$2y$10$0zpNlMd46dES26IFRynwXebMeIdUO3JXCy.R96yPIJ9yqGP16tbkq', 'Admin', '2025-08-18 06:44:43', NULL),
-(2, 'Dev Aabhroy', 'dev', 'dev@gmail.com', '$2y$10$5/Qxeccnas51So70xhHhGOHq1e6CoBfhThb..kEI2W4c9B45Y9IOa', 'Admin', '2025-08-22 05:14:43', NULL),
-(3, 'Shoaib Akhtar', 'shoaibakhtar', 'shoaib@gmail.com', '$2y$10$FKoW7BU6sBHsQ6I5B3MVtuCZKp4z/ODfgcsmnhfnbgroOqNGTmdgC', 'Admin', '2025-08-22 10:09:35', NULL);
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `role`, `profile_image`, `created_at`, `last_active`) VALUES
+(1, 'Rehman Shaoib', 'rehmanshoaib', 'shoaib@reliantsurveyors.com', '$2y$10$0zpNlMd46dES26IFRynwXebMeIdUO3JXCy.R96yPIJ9yqGP16tbkq', 'Admin', '', '2025-08-18 06:44:43', NULL),
+(2, 'Dev Aabhroy', 'dev', 'dev@gmail.com', '$2y$10$5/Qxeccnas51So70xhHhGOHq1e6CoBfhThb..kEI2W4c9B45Y9IOa', 'Admin', '', '2025-08-22 05:14:43', NULL),
+(3, 'Shoaib Akhtar', 'shoaibakhtar', 'shoaib@gmail.com', '$2y$10$FKoW7BU6sBHsQ6I5B3MVtuCZKp4z/ODfgcsmnhfnbgroOqNGTmdgC', 'Admin', '', '2025-08-22 10:09:35', NULL);
 
 --
 -- Indexes for dumped tables

@@ -121,63 +121,72 @@
 
                         <!-- ✅ Backend Connected Form -->
                      <form id="registerForm" class="tablelist-form" action="register_user.php" method="POST"
-                            autocomplete="off">
+                            enctype="multipart/form-data" autocomplete="off">
                              <input type="hidden" id="user-id" name="id" />
                              <div class="modal-body">
-                                <!-- Name -->
-                                <div class="mb-3">
-                                    <label for="name-field" class="form-label">Name</label>
-                                    <input type="text" id="name-field" name="name" class="form-control"
-                                        placeholder="Enter Full Name" required />
-                                </div>
-
-                                <!-- Username -->
-                                <div class="mb-3">
-                                    <label for="username-field" class="form-label">Username</label>
-                                    <input type="text" id="username-field" name="username" class="form-control"
-                                        placeholder="Enter Username" required />
-                                </div>
-
-                                <!-- Email -->
-                                <div class="mb-3">
-                                    <label for="email-field" class="form-label">Email</label>
-                                    <input type="email" id="email-field" name="email" class="form-control"
-                                        placeholder="Enter Email" required />
-                                </div>
-
-                                 <!-- Password -->
-                                 <div class="mb-3 position-relative toggleBtn" id="password-group">
-                                    <label for="password-field" class="form-label">Password</label>
-                                    <input type="password" id="password-field" name="password" class="form-control"
-                                        placeholder="Enter Password" required />
-                                    <button type="button"
-                                        class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
-                                        onclick="togglePassword('password-field', this)">
-                                        👁
-                                    </button>
-                                </div>
-
-                                 <!-- Confirm Password -->
-                                 <div class="mb-3 position-relative toggleBtn" id="confirm-password-group">
-                                    <label for="confirm-password-field" class="form-label">Confirm Password</label>
-                                    <input type="password" id="confirm-password-field" name="confirm_password"
-                                        class="form-control" placeholder="Confirm Password" required />
-                                    <button type="button"
-                                        class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
-                                        onclick="togglePassword('confirm-password-field', this)">
-                                        👁
-                                    </button>
-                                </div>
-
-                                <!-- Role -->
-                                <div class="mb-3">
-                                    <label for="role-field" class="form-label">Role</label>
-                                    <select class="form-control form-select" name="role" id="role-field" required>
-                                        <option value="">Select Role</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Channel Partner">Channel Partner</option>
-                                    </select>
+                                <div class="row g-3">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="name-field" class="form-label">Name</label>
+                                            <input type="text" id="name-field" name="name" class="form-control"
+                                                placeholder="Enter Full Name" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="username-field" class="form-label">Username</label>
+                                            <input type="text" id="username-field" name="username" class="form-control"
+                                                placeholder="Enter Username" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="email-field" class="form-label">Email</label>
+                                            <input type="email" id="email-field" name="email" class="form-control"
+                                                placeholder="Enter Email" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="role-field" class="form-label">Role</label>
+                                            <select class="form-control form-select" name="role" id="role-field" required>
+                                                <option value="">Select Role</option>
+                                                <option value="Admin">Admin</option>
+                                                <option value="Manager">Manager</option>
+                                                <option value="Channel Partner">Channel Partner</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 position-relative toggleBtn" id="password-group">
+                                            <label for="password-field" class="form-label">Password</label>
+                                            <input type="password" id="password-field" name="password" class="form-control"
+                                                placeholder="Enter Password" required />
+                                            <button type="button"
+                                                class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                                                onclick="togglePassword('password-field', this)">
+                                                👁
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 position-relative toggleBtn" id="confirm-password-group">
+                                            <label for="confirm-password-field" class="form-label">Confirm Password</label>
+                                            <input type="password" id="confirm-password-field" name="confirm_password"
+                                                class="form-control" placeholder="Confirm Password" required />
+                                            <button type="button"
+                                                class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                                                onclick="togglePassword('confirm-password-field', this)">
+                                                👁
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="profile-image" class="form-label">Profile Image</label>
+                                            <input type="file" id="profile-image" name="profile_image" class="form-control" accept="image/*" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
