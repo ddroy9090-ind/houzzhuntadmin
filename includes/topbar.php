@@ -5,8 +5,17 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
-$userName = $_SESSION['name'];
-$userRole = $_SESSION['role'];
+$userId = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT name, role, profile_image FROM users WHERE id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
+
+$userName  = $user['name'] ?? '';
+$userRole  = $user['role'] ?? '';
+$userImage = !empty($user['profile_image']) ? $user['profile_image'] : 'assets/images/users/avatar-1.jpg';
 $currentCurrency = $_SESSION['currency'] ?? 'AED';
 $currencyOptions = ['AED','USD','EUR','GBP'];
 ?>
@@ -72,7 +81,7 @@ $currencyOptions = ['AED','USD','EUR','GBP'];
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <img class="rounded-circle header-profile-user"
-                                src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                src="<?= htmlspecialchars($userImage); ?>" alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
                                     <?php echo htmlspecialchars($userName); ?>
