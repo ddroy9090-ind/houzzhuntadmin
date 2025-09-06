@@ -244,8 +244,10 @@
 
         function updateCurrency(newCurrency) {
             currentCurrency = newCurrency;
-            applyConversion(1);
-            if (currentCurrency === baseCurrency) return;
+            if (currentCurrency === baseCurrency) {
+                applyConversion(1);
+                return;
+            }
             if (ratesCache[currentCurrency]) {
                 applyConversion(ratesCache[currentCurrency]);
                 return;
@@ -257,7 +259,10 @@
                     ratesCache[currentCurrency] = rate;
                     applyConversion(rate);
                 })
-                .catch(() => { });
+                .catch(() => {
+                    currentCurrency = baseCurrency;
+                    applyConversion(1);
+                });
         }
 
         const switcher = document.getElementById('currencySwitcher');
