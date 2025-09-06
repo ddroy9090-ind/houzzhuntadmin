@@ -17,7 +17,36 @@ function fetch_count(mysqli $conn, string $query): int
 $totalProperties = fetch_count($conn, "SELECT COUNT(*) AS c FROM properties");
 $totalLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads");
 $totalUsers       = fetch_count($conn, "SELECT COUNT(*) AS c FROM users");
+
+// counts for today
+$todayProperties  = fetch_count($conn, "SELECT COUNT(*) AS c FROM properties WHERE DATE(created_at)=CURDATE()");
 $todayLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads WHERE DATE(created_at)=CURDATE()");
+$todayUsers       = fetch_count($conn, "SELECT COUNT(*) AS c FROM users WHERE DATE(created_at)=CURDATE()");
+
+// counts for yesterday to calculate change
+$yesterdayProperties = fetch_count($conn, "SELECT COUNT(*) AS c FROM properties WHERE DATE(created_at)=CURDATE() - INTERVAL 1 DAY");
+$yesterdayLeads       = fetch_count($conn, "SELECT COUNT(*) AS c FROM leads WHERE DATE(created_at)=CURDATE() - INTERVAL 1 DAY");
+$yesterdayUsers       = fetch_count($conn, "SELECT COUNT(*) AS c FROM users WHERE DATE(created_at)=CURDATE() - INTERVAL 1 DAY");
+
+function percentage_change(int $today, int $yesterday): array
+{
+    if ($yesterday === 0) {
+        $percent = $today > 0 ? 100 : 0;
+    } else {
+        $percent = (($today - $yesterday) / $yesterday) * 100;
+    }
+    return [
+        'percent' => number_format(abs($percent), 2),
+        'icon'    => $percent >= 0 ? 'ri-arrow-right-up-line' : 'ri-arrow-right-down-line',
+        'class'   => $percent >= 0 ? 'text-success' : 'text-danger',
+        'sign'    => $percent >= 0 ? '+' : '-',
+    ];
+}
+
+$propertiesChange = percentage_change($todayProperties, $yesterdayProperties);
+$leadsChange      = percentage_change($todayLeads, $yesterdayLeads);
+$usersChange      = percentage_change($todayUsers, $yesterdayUsers);
+$todayLeadsChange = $leadsChange;
 
 // Run queries for recent items and handle potential failures gracefully
 // Fetch latest properties including main image for card display
@@ -89,9 +118,9 @@ if ($projectLocations) {
                                                     Total Properties</p>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                    +16.24 %
+                                                <h5 class="<?php echo $propertiesChange['class']; ?> fs-14 mb-0">
+                                                    <i class="<?php echo $propertiesChange['icon']; ?> fs-13 align-middle"></i>
+                                                    <?php echo $propertiesChange['sign'] . $propertiesChange['percent']; ?> %
                                                 </h5>
                                             </div>
                                         </div>
@@ -124,9 +153,9 @@ if ($projectLocations) {
                                                     Total Leads</p>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <h5 class="text-danger fs-14 mb-0">
-                                                    <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-                                                    -3.57 %
+                                                <h5 class="<?php echo $leadsChange['class']; ?> fs-14 mb-0">
+                                                    <i class="<?php echo $leadsChange['icon']; ?> fs-13 align-middle"></i>
+                                                    <?php echo $leadsChange['sign'] . $leadsChange['percent']; ?> %
                                                 </h5>
                                             </div>
                                         </div>
@@ -157,9 +186,9 @@ if ($projectLocations) {
                                                     Channel Partners</p>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                    +29.08 %
+                                                <h5 class="<?php echo $usersChange['class']; ?> fs-14 mb-0">
+                                                    <i class="<?php echo $usersChange['icon']; ?> fs-13 align-middle"></i>
+                                                    <?php echo $usersChange['sign'] . $usersChange['percent']; ?> %
                                                 </h5>
                                             </div>
                                         </div>
@@ -191,8 +220,9 @@ if ($projectLocations) {
                                                     Today</p>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <h5 class="text-muted fs-14 mb-0">
-                                                    +0.00 %
+                                                <h5 class="<?php echo $todayLeadsChange['class']; ?> fs-14 mb-0">
+                                                    <i class="<?php echo $todayLeadsChange['icon']; ?> fs-13 align-middle"></i>
+                                                    <?php echo $todayLeadsChange['sign'] . $todayLeadsChange['percent']; ?> %
                                                 </h5>
                                             </div>
                                         </div>
