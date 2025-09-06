@@ -210,12 +210,18 @@
         const currencySymbols = { AED: 'AED', USD: '$', EUR: '€', GBP: '£' };
         let currentCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
         let currentRate = 1;
+        const ratesCache = {};
 
         function applyConversion(rate) {
             currentRate = rate;
             document.querySelectorAll('[data-base-amount],[data-base-value]').forEach(el => {
-                const raw = el.getAttribute('data-base-amount') || el.getAttribute('data-base-value') || '';
-                const base = parseFloat(raw.replace(/[^0-9eE.+-]/g, ''));
+                let raw = el.getAttribute('data-base-amount') || el.getAttribute('data-base-value');
+                if (!raw) {
+                    raw = (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') ? el.value : el.textContent;
+                    const attr = (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') ? 'data-base-value' : 'data-base-amount';
+                    el.setAttribute(attr, raw);
+                }
+                const base = parseFloat((raw || '').replace(/[^0-9eE.+-]/g, ''));
                 if (isNaN(base)) return;
                 const converted = base * rate;
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
@@ -236,10 +242,15 @@
             currentCurrency = newCurrency;
             applyConversion(1);
             if (currentCurrency === baseCurrency) return;
+            if (ratesCache[currentCurrency]) {
+                applyConversion(ratesCache[currentCurrency]);
+                return;
+            }
             fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
                 .then(res => res.json())
                 .then(data => {
                     const rate = data.rates[currentCurrency] || 1;
+                    ratesCache[currentCurrency] = rate;
                     applyConversion(rate);
                 })
                 .catch(() => { });
