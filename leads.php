@@ -228,11 +228,21 @@ $leads = $conn->query(
                             <?php if ($totalPages > 1): ?>
                                 <nav aria-label="Lead pagination">
                                     <ul class="pagination justify-content-center mt-4">
+                                        <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                                            <a class="page-link" href="leads.php?page=<?php echo max(1, $page - 1); ?>" aria-label="Previous">
+                                                <i class="ri-arrow-left-s-line"></i>
+                                            </a>
+                                        </li>
                                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                             <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
                                                 <a class="page-link" href="leads.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
                                             </li>
                                         <?php endfor; ?>
+                                        <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+                                            <a class="page-link" href="leads.php?page=<?php echo min($totalPages, $page + 1); ?>" aria-label="Next">
+                                                <i class="ri-arrow-right-s-line"></i>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </nav>
                             <?php endif; ?>
