@@ -3,6 +3,10 @@ include 'includes/auth.php';
 include 'config.php';
 
 $message = '';
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']);
+}
 
 // Handle deletion
 if (isset($_GET['delete'])) {
@@ -82,6 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = 'Error preparing statement: ' . $conn->error;
         }
     }
+
+    $_SESSION['message'] = $message;
+    header('Location: leads.php');
+    exit;
 }
 
 $properties = $conn->query("SELECT id, project_name FROM properties ORDER BY project_name");
@@ -294,5 +302,19 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
         document.getElementById('lead-form').reset();
         document.getElementById('lead-id').value = '';
     });
+
+    const leadForm = document.getElementById('lead-form');
+    if (leadForm) {
+        leadForm.addEventListener('submit', () => {
+            leadForm.reset();
+        });
+    }
+
+    const alertEl = document.querySelector('.alert');
+    if (alertEl) {
+        setTimeout(() => {
+            bootstrap.Alert.getOrCreateInstance(alertEl).close();
+        }, 5000);
+    }
 </script>
 <?php include 'includes/common-footer.php'; ?>
