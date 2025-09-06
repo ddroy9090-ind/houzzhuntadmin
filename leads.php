@@ -120,79 +120,67 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                             <button type="button" class="btn btn-success" id="addLeadBtn" data-bs-toggle="modal" data-bs-target="#leadModal"><i class="ri-add-line align-bottom me-1"></i> Add Lead</button>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive table-card">
-                                <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                                    <thead class="text-muted table-light">
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Property</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Date</th>
-                                           <th scope="col">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if ($leads && $leads->num_rows > 0): while ($l = $leads->fetch_assoc()): ?>
-                                            <tr>
-                                                <td>#<?php echo htmlspecialchars($l['id']); ?></td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
-                                                                <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt="" class="avatar-xs rounded-circle material-shadow" />
-                                                            <?php else: ?>
-                                                                <img src="assets/images/users/default-avatar.jpg" alt="" class="avatar-xs rounded-circle material-shadow" />
-                                                            <?php endif; ?>
-                                                        </div>
-                                                        <div class="flex-grow-1"><?php echo htmlspecialchars($l['name']); ?></div>
+                            <div class="row g-4">
+                                <?php if ($leads && $leads->num_rows > 0): while ($l = $leads->fetch_assoc()): ?>
+                                    <div class="col-md-6 col-xl-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
+                                                            <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt="" class="avatar-sm rounded-circle material-shadow" />
+                                                        <?php else: ?>
+                                                            <img src="assets/images/users/default-avatar.jpg" alt="" class="avatar-sm rounded-circle material-shadow" />
+                                                        <?php endif; ?>
                                                     </div>
-                                                </td>
-                                                <td><?php echo htmlspecialchars($l['email']); ?></td>
-                                                <td><?php echo htmlspecialchars($l['project_name'] ?? ''); ?></td>
-                                                <td>
-                                                    <?php
-                                                    $statusClass = '';
-                                                    $statusText = isset($l['status']) ? $l['status'] : 'Interested';
+                                                    <div class="flex-grow-1">
+                                                        <h5 class="mb-1"><?php echo htmlspecialchars($l['name']); ?></h5>
+                                                        <p class="text-muted mb-0"><?php echo htmlspecialchars($l['email']); ?></p>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-1"><strong>Property:</strong> <?php echo htmlspecialchars($l['project_name'] ?? ''); ?></p>
+                                                <?php
+                                                $statusClass = '';
+                                                $statusText = isset($l['status']) ? $l['status'] : 'Interested';
 
-                                                    switch (strtolower($statusText)) {
-                                                        case 'interested':
-                                                            $statusClass = 'bg-success-subtle text-success';
-                                                            break;
-                                                        case 'not interested':
-                                                            $statusClass = 'bg-danger-subtle text-danger';
-                                                            break;
-                                                        case 'cold':
-                                                            $statusClass = 'bg-info-subtle text-info';
-                                                            break;
-                                                        case 'hot':
-                                                            $statusClass = 'bg-warning-subtle text-warning';
-                                                            break;
-                                                        default:
-                                                            $statusClass = 'bg-info-subtle text-info';
-                                                    }
-                                                    ?>
-                                                    <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span>
-                                                </td>
-                                                <td><?php echo date('d/m/Y', strtotime($l['created_at'])); ?></td>
-                                                <td class='edit'>
+                                                switch (strtolower($statusText)) {
+                                                    case 'interested':
+                                                        $statusClass = 'bg-success-subtle text-success';
+                                                        break;
+                                                    case 'not interested':
+                                                        $statusClass = 'bg-danger-subtle text-danger';
+                                                        break;
+                                                    case 'cold':
+                                                        $statusClass = 'bg-info-subtle text-info';
+                                                        break;
+                                                    case 'hot':
+                                                        $statusClass = 'bg-warning-subtle text-warning';
+                                                        break;
+                                                    default:
+                                                        $statusClass = 'bg-info-subtle text-info';
+                                                }
+                                                ?>
+                                                <p class="mb-1"><strong>Status:</strong> <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span></p>
+                                                <p class="mb-3"><strong>Date:</strong> <?php echo date('d/m/Y', strtotime($l['created_at'])); ?></p>
+                                                <div class="d-flex gap-2">
                                                     <button type="button" class="btn btn-sm btn-success edit-lead-btn"
                                                         data-id="<?php echo $l['id']; ?>"
                                                         data-name="<?php echo htmlspecialchars($l['name']); ?>"
                                                         data-email="<?php echo htmlspecialchars($l['email']); ?>"
-                                                    data-phone="<?php echo htmlspecialchars($l['phone']); ?>"
+                                                        data-phone="<?php echo htmlspecialchars($l['phone']); ?>"
                                                         data-property="<?php echo htmlspecialchars($l['property_id']); ?>"
                                                         data-status="<?php echo htmlspecialchars($l['status']); ?>"
                                                         data-message="<?php echo htmlspecialchars($l['message']); ?>">Edit</button>
                                                     <a href="leads.php?delete=<?php echo $l['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this lead?');">Delete</a>
-                                                </td>
-                                            </tr>
-                                        <?php endwhile; else: ?>
-                                            <tr><td colspan="7" class="text-center">No leads found</td></tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; else: ?>
+                                    <div class="col-12">
+                                        <p class="text-center mb-0">No leads found</p>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -209,43 +197,45 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id" id="lead-id" />
-                                <div class="mb-3">
-                                    <label for="lead-name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="lead-name" name="name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lead-email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="lead-email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lead-phone" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" id="lead-phone" name="phone">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lead-property" class="form-label">Property</label>
-                                    <select class="form-select" id="lead-property" name="property_id">
-                                        <option value="0">Select Property</option>
-                                        <?php if ($properties && $properties->num_rows > 0): while ($p = $properties->fetch_assoc()): ?>
-                                            <option value="<?php echo $p['id']; ?>"><?php echo htmlspecialchars($p['project_name']); ?></option>
-                                        <?php endwhile; endif; ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lead-status" class="form-label">Status</label>
-                                    <select class="form-select" id="lead-status" name="status">
-                                        <option value="Interested">Interested</option>
-                                        <option value="Not Interested">Not Interested</option>
-                                        <option value="Cold">Cold</option>
-                                        <option value="Hot">Hot</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lead-avatar" class="form-label">Profile Image</label>
-                                    <input type="file" class="form-control" id="lead-avatar" name="avatar" accept="image/*">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lead-message" class="form-label">Message</label>
-                                    <textarea class="form-control" id="lead-message" name="message" rows="3"></textarea>
+                                <div class="row g-3">
+                                    <div class="col-lg-6">
+                                        <label for="lead-name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="lead-name" name="name" required>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="lead-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="lead-email" name="email" required>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="lead-phone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" id="lead-phone" name="phone">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="lead-property" class="form-label">Property</label>
+                                        <select class="form-select" id="lead-property" name="property_id">
+                                            <option value="0">Select Property</option>
+                                            <?php if ($properties && $properties->num_rows > 0): while ($p = $properties->fetch_assoc()): ?>
+                                                <option value="<?php echo $p['id']; ?>"><?php echo htmlspecialchars($p['project_name']); ?></option>
+                                            <?php endwhile; endif; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="lead-status" class="form-label">Status</label>
+                                        <select class="form-select" id="lead-status" name="status">
+                                            <option value="Interested">Interested</option>
+                                            <option value="Not Interested">Not Interested</option>
+                                            <option value="Cold">Cold</option>
+                                            <option value="Hot">Hot</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="lead-avatar" class="form-label">Profile Image</label>
+                                        <input type="file" class="form-control" id="lead-avatar" name="avatar" accept="image/*">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="lead-message" class="form-label">Message</label>
+                                        <textarea class="form-control" id="lead-message" name="message" rows="3"></textarea>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
