@@ -214,6 +214,10 @@
 
         function applyConversion(rate) {
             currentRate = rate;
+            const formatter = new Intl.NumberFormat(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            });
             document.querySelectorAll('[data-base-amount],[data-base-value]').forEach(el => {
                 let raw = el.getAttribute('data-base-amount') || el.getAttribute('data-base-value');
                 if (!raw) {
@@ -227,7 +231,7 @@
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     el.value = converted.toFixed(2);
                 } else {
-                    el.textContent = converted.toLocaleString(undefined, { maximumFractionDigits: 2 });
+                    el.textContent = formatter.format(converted);
                 }
             });
             document.querySelectorAll('.currency-symbol').forEach(el => {
