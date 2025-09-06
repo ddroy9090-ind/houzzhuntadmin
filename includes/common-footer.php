@@ -211,6 +211,8 @@
         let currentCurrency = '<?php echo $_SESSION['currency'] ?? 'AED'; ?>';
         let currentRate = 1;
         const ratesCache = {};
+        // Fallback rates when the exchange API is unreachable
+        const fallbackRates = { USD: 0.27, EUR: 0.25, GBP: 0.21 };
 
         function applyConversion(rate) {
             currentRate = rate;
@@ -253,15 +255,20 @@
                 return;
             }
             fetch(`https://api.exchangerate.host/latest?base=${baseCurrency}`)
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('network');
+                    return res.json();
+                })
                 .then(data => {
-                    const rate = data.rates[currentCurrency] || 1;
+                    const rate = data.rates && data.rates[currentCurrency];
+                    if (!rate) throw new Error('missing rate');
                     ratesCache[currentCurrency] = rate;
                     applyConversion(rate);
                 })
                 .catch(() => {
-                    currentCurrency = baseCurrency;
-                    applyConversion(1);
+                    const rate = fallbackRates[currentCurrency] || 1;
+                    ratesCache[currentCurrency] = rate;
+                    applyConversion(rate);
                 });
         }
 
