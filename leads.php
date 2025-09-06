@@ -303,13 +303,6 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
         document.getElementById('lead-id').value = '';
     });
 
-    const leadForm = document.getElementById('lead-form');
-    if (leadForm) {
-        leadForm.addEventListener('submit', () => {
-            leadForm.reset();
-        });
-    }
-
     const alertEl = document.querySelector('.alert');
     if (alertEl) {
         setTimeout(() => {
