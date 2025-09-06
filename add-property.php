@@ -307,47 +307,14 @@
                     <div class="row">
 
                         <h4 class="mt-5">Nearby Places</h4>
-
-                        <!-- Burj Al Arab -->
-                        <div class="mb-3 col-md-6">
-                            <label for="burj_al_arab" class="form-label">Burj Al Arab</label>
-                            <input type="number" step="0.01" class="form-control" id="burj_al_arab" name="burj_al_arab">
-                        </div>
-
-                        <!-- Dubai Marina -->
-                        <div class="mb-3 col-md-6">
-                            <label for="dubai_marina" class="form-label">Dubai Marina</label>
-                            <input type="number" step="0.01" class="form-control" id="dubai_marina" name="dubai_marina">
-                        </div>
-
-                        <!-- Dubai Mall -->
-                        <div class="mb-3 col-md-6">
-                            <label for="dubai_mall" class="form-label">Dubai Mall</label>
-                            <input type="number" step="0.01" class="form-control" id="dubai_mall" name="dubai_mall">
-                        </div>
-
-                        <!-- Sheikh Zayed Road -->
-                        <div class="mb-3 col-md-6">
-                            <label for="sheikh_zayed" class="form-label">Sheikh Zayed Road</label>
-                            <input type="number" step="0.01" class="form-control" id="sheikh_zayed" name="sheikh_zayed">
-                        </div>
-
-
                         <!-- Location Coordinates -->
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label for="location" class="form-label">Location Coordinates</label>
                             <input type="text" class="form-control" id="location" name="location"
                                 placeholder="25.204849,55.270782">
                             <small class="form-text text-muted">Enter latitude and longitude separated by a
                                 comma.</small>
                         </div>
-
-                        <!-- Text Field -->
-                        <div class="mb-3 col-md-6">
-                            <label for="extra_text" class="form-label">Additional Information</label>
-                            <input type="text" class="form-control" id="extra_text" name="extra_text">
-                        </div>
-
                     </div>
 
                     <!-- Submit -->

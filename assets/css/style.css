@@ -919,7 +919,7 @@ h2.heading-title {
 
 #sendBtn img {
   position: relative;
-  right: 8px;
+  /* right: 8px; */
 }
 
 /* Chat box container */
