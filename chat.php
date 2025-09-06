@@ -46,20 +46,18 @@ include 'config.php';
                 <div class="col-md-8 d-flex flex-column">
                     <div class="chat-header">
                         <div class="d-flex align-items-center">
-                            <img src="https://i.pravatar.cc/40?img=4" alt="">
+                            <img id="chatUserImage" src="assets/images/users/avatar-1.jpg" alt="" class="rounded-circle">
                             <div>
-                                <div><strong>Theron Trump</strong></div>
-                                <small>Last seen 10:30pm</small>
+                                <div><strong id="chatUserName">Select a user</strong></div>
+                                <small id="chatUserStatus"></small>
                             </div>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <div class="header-icons">
                                 <img src="assets/icons/telephone.png" />
-
                             </div>
                             <div class="header-icons">
                                 <img src="assets/icons/video-call.png" />
-
                             </div>
                         </div>
                     </div>

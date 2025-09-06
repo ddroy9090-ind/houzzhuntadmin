@@ -3,14 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const chatBox = document.getElementById("chatBox");
   const messageInput = document.getElementById("messageInput");
   const sendBtn = document.getElementById("sendBtn");
+  const chatUserImage = document.getElementById("chatUserImage");
+  const chatUserName = document.getElementById("chatUserName");
+  const chatUserStatus = document.getElementById("chatUserStatus");
   let currentUser = null;
+  let usersCache = {};
 
   function loadUsers() {
     fetch("fetch_users.php")
       .then((res) => res.json())
       .then((users) => {
         userList.innerHTML = "";
+        usersCache = {};
         users.forEach((u) => {
+          usersCache[u.id] = u;
           const li = document.createElement("li");
           li.className =
             "list-group-item d-flex justify-content-between align-items-center";
@@ -22,10 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
           li.appendChild(badge);
           li.onclick = () => {
             currentUser = u.id;
+            setChatHeader(u);
             loadMessages();
           };
           userList.appendChild(li);
         });
+        if (currentUser && usersCache[currentUser]) {
+          setChatHeader(usersCache[currentUser]);
+        }
       });
   }
 
@@ -85,6 +95,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateStatus() {
     fetch("update_last_active.php");
+  }
+
+  function setChatHeader(u) {
+    chatUserImage.src = u.profile_image;
+    chatUserName.textContent = u.name;
+    if (u.online) {
+      chatUserStatus.textContent = "Online";
+    } else if (u.last_active) {
+      const d = new Date(u.last_active);
+      chatUserStatus.textContent = "Last seen " + d.toLocaleString();
+    } else {
+      chatUserStatus.textContent = "Offline";
+    }
   }
 
   setInterval(() => {
