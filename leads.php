@@ -106,10 +106,10 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
             </div>
 
             <?php if ($message): ?>
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <?php echo $message; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <?php echo $message; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             <?php endif; ?>
 
             <div class="row">
@@ -122,61 +122,83 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                         <div class="card-body">
                             <div class="row g-4">
                                 <?php if ($leads && $leads->num_rows > 0): while ($l = $leads->fetch_assoc()): ?>
-                                    <div class="col-md-6 col-xl-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center mb-3">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
-                                                            <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt="" class="avatar-sm rounded-circle material-shadow" />
-                                                        <?php else: ?>
-                                                            <img src="assets/images/users/default-avatar.jpg" alt="" class="avatar-sm rounded-circle material-shadow" />
-                                                        <?php endif; ?>
+                                        <div class="col-md-6 col-xl-4">
+                                            <div class="lead-card">
+                                                <div class="lead-card__body">
+                                                    <div class="lead-card__header">
+                                                        <div class="lead-card__avatar">
+                                                            <?php if (isset($l['avatar']) && !empty($l['avatar'])): ?>
+                                                                <img src="<?php echo htmlspecialchars($l['avatar']); ?>" alt="Avatar">
+                                                            <?php else: ?>
+                                                                <img src="assets/images/users/default-avatar.jpg" alt="Avatar">
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <div class="lead-card__identity">
+                                                            <h5 class="lead-card__name"><?php echo htmlspecialchars($l['name']); ?></h5>
+                                                            <p class="lead-card__email"><?php echo htmlspecialchars($l['email']); ?></p>
+                                                        </div>
                                                     </div>
-                                                    <div class="flex-grow-1">
-                                                        <h5 class="mb-1"><?php echo htmlspecialchars($l['name']); ?></h5>
-                                                        <p class="text-muted mb-0"><?php echo htmlspecialchars($l['email']); ?></p>
-                                                    </div>
-                                                </div>
-                                                <p class="mb-1"><strong>Property:</strong> <?php echo htmlspecialchars($l['project_name'] ?? ''); ?></p>
-                                                <?php
-                                                $statusClass = '';
-                                                $statusText = isset($l['status']) ? $l['status'] : 'Interested';
 
-                                                switch (strtolower($statusText)) {
-                                                    case 'interested':
-                                                        $statusClass = 'bg-success-subtle text-success';
-                                                        break;
-                                                    case 'not interested':
-                                                        $statusClass = 'bg-danger-subtle text-danger';
-                                                        break;
-                                                    case 'cold':
-                                                        $statusClass = 'bg-info-subtle text-info';
-                                                        break;
-                                                    case 'hot':
-                                                        $statusClass = 'bg-warning-subtle text-warning';
-                                                        break;
-                                                    default:
-                                                        $statusClass = 'bg-info-subtle text-info';
-                                                }
-                                                ?>
-                                                <p class="mb-1"><strong>Status:</strong> <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($statusText); ?></span></p>
-                                                <p class="mb-3"><strong>Date:</strong> <?php echo date('d/m/Y', strtotime($l['created_at'])); ?></p>
-                                                <div class="d-flex gap-2">
-                                                    <button type="button" class="btn btn-sm btn-success edit-lead-btn"
-                                                        data-id="<?php echo $l['id']; ?>"
-                                                        data-name="<?php echo htmlspecialchars($l['name']); ?>"
-                                                        data-email="<?php echo htmlspecialchars($l['email']); ?>"
-                                                        data-phone="<?php echo htmlspecialchars($l['phone']); ?>"
-                                                        data-property="<?php echo htmlspecialchars($l['property_id']); ?>"
-                                                        data-status="<?php echo htmlspecialchars($l['status']); ?>"
-                                                        data-message="<?php echo htmlspecialchars($l['message']); ?>">Edit</button>
-                                                    <a href="leads.php?delete=<?php echo $l['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this lead?');">Delete</a>
+                                                    <?php
+                                                    // Make status classes without Bootstrap
+                                                    $statusText = isset($l['status']) ? trim(strtolower($l['status'])) : 'interested';
+                                                    $statusClass = 'status--info';
+                                                    switch ($statusText) {
+                                                        case 'interested':
+                                                            $statusClass = 'status--success';
+                                                            break;
+                                                        case 'not interested':
+                                                            $statusClass = 'status--danger';
+                                                            break;
+                                                        case 'cold':
+                                                            $statusClass = 'status--cold';
+                                                            break;
+                                                        case 'hot':
+                                                            $statusClass = 'status--hot';
+                                                            break;
+                                                    }
+                                                    ?>
+
+                                                    <div class="lead-card__kv">
+                                                        <div class="lead-card__label">Property</div>
+                                                        <div class="lead-card__value"><?php echo htmlspecialchars($l['project_name'] ?? ''); ?></div>
+
+                                                        <div class="lead-card__label">Status</div>
+                                                        <div class="lead-card__value">
+                                                            <span class="lead-card__status <?php echo $statusClass; ?>">
+                                                                <?php echo htmlspecialchars($l['status'] ?? 'Interested'); ?>
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="lead-card__label">Date</div>
+                                                        <div class="lead-card__value">
+                                                            <?php echo date('d/m/Y', strtotime($l['created_at'])); ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="lead-card__actions">
+                                                        <button type="button" class="btn btn--edit edit-lead-btn"
+                                                            data-id="<?php echo $l['id']; ?>"
+                                                            data-name="<?php echo htmlspecialchars($l['name']); ?>"
+                                                            data-email="<?php echo htmlspecialchars($l['email']); ?>"
+                                                            data-phone="<?php echo htmlspecialchars($l['phone']); ?>"
+                                                            data-property="<?php echo htmlspecialchars($l['property_id']); ?>"
+                                                            data-status="<?php echo htmlspecialchars($l['status']); ?>"
+                                                            data-message="<?php echo htmlspecialchars($l['message']); ?>">
+                                                            Edit
+                                                        </button>
+
+                                                        <a href="leads.php?delete=<?php echo $l['id']; ?>" class="btn btn--delete"
+                                                            onclick="return confirm('Are you sure you want to delete this lead?');">
+                                                            Delete
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                <?php endwhile; else: ?>
+                                    <?php endwhile;
+                                else: ?>
                                     <div class="col-12">
                                         <p class="text-center mb-0">No leads found</p>
                                     </div>
@@ -188,7 +210,7 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
             </div>
 
             <div class="modal fade" id="leadModal" tabindex="-1" aria-labelledby="leadModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="leads.php" method="POST" enctype="multipart/form-data" id="lead-form">
                             <div class="modal-header">
@@ -215,8 +237,9 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                         <select class="form-select" id="lead-property" name="property_id">
                                             <option value="0">Select Property</option>
                                             <?php if ($properties && $properties->num_rows > 0): while ($p = $properties->fetch_assoc()): ?>
-                                                <option value="<?php echo $p['id']; ?>"><?php echo htmlspecialchars($p['project_name']); ?></option>
-                                            <?php endwhile; endif; ?>
+                                                    <option value="<?php echo $p['id']; ?>"><?php echo htmlspecialchars($p['project_name']); ?></option>
+                                            <?php endwhile;
+                                            endif; ?>
                                         </select>
                                     </div>
                                     <div class="col-lg-6">
@@ -251,26 +274,25 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
     <?php include 'includes/footer.php'; ?>
 </div>
 <script>
-document.querySelectorAll('.edit-lead-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        const modalEl = document.getElementById('leadModal');
-        document.getElementById('leadModalLabel').innerText = 'Edit Lead';
-        document.getElementById('lead-id').value = this.dataset.id;
-        document.getElementById('lead-name').value = this.dataset.name;
-        document.getElementById('lead-email').value = this.dataset.email;
-        document.getElementById('lead-phone').value = this.dataset.phone;
-        document.getElementById('lead-property').value = this.dataset.property;
-        document.getElementById('lead-status').value = this.dataset.status;
-        document.getElementById('lead-message').value = this.dataset.message;
-        new bootstrap.Modal(modalEl).show();
+    document.querySelectorAll('.edit-lead-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const modalEl = document.getElementById('leadModal');
+            document.getElementById('leadModalLabel').innerText = 'Edit Lead';
+            document.getElementById('lead-id').value = this.dataset.id;
+            document.getElementById('lead-name').value = this.dataset.name;
+            document.getElementById('lead-email').value = this.dataset.email;
+            document.getElementById('lead-phone').value = this.dataset.phone;
+            document.getElementById('lead-property').value = this.dataset.property;
+            document.getElementById('lead-status').value = this.dataset.status;
+            document.getElementById('lead-message').value = this.dataset.message;
+            new bootstrap.Modal(modalEl).show();
+        });
     });
-});
 
-document.getElementById('addLeadBtn').addEventListener('click', () => {
-    document.getElementById('leadModalLabel').innerText = 'Add Lead';
-    document.getElementById('lead-form').reset();
-    document.getElementById('lead-id').value = '';
-});
+    document.getElementById('addLeadBtn').addEventListener('click', () => {
+        document.getElementById('leadModalLabel').innerText = 'Add Lead';
+        document.getElementById('lead-form').reset();
+        document.getElementById('lead-id').value = '';
+    });
 </script>
 <?php include 'includes/common-footer.php'; ?>
-

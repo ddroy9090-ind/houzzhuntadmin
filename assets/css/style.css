@@ -1301,6 +1301,177 @@ h4.card-title.mb-0.flex-grow-1 {
   }
 }
 
+
+/* Card */
+.lead-card {
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.lead-card__body {
+  padding: 18px;
+}
+
+/* Header: avatar + identity */
+.lead-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.lead-card__avatar img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f3f3f3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.lead-card__name {
+  margin: 0 0 2px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.lead-card__email {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #6a6a6a;
+}
+
+/* Two-column label/value area */
+.lead-card__kv {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  /* left labels | right values */
+  row-gap: 10px;
+  column-gap: 12px;
+  margin: 12px 0 16px;
+}
+
+.lead-card__label {
+  font-weight: 700;
+  color: #2f2f2f;
+}
+
+.lead-card__value {
+  color: #333;
+  word-break: break-word;
+}
+
+/* Status badge (no Bootstrap) */
+.lead-card__status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  width: 110px;
+  text-align: center;
+}
+
+/* Status variants */
+.status--success {
+  background: #e6f6ee;
+  color: #128a4a;
+}
+
+.status--danger {
+  background: #ffe9e7;
+  color: #d23b2d;
+}
+
+.status--cold {
+  background: #e8f4ff;
+  color: #1671c5;
+}
+
+.status--hot {
+  background: #fff4d6;
+  color: #a86a07;
+}
+
+.status--info {
+  background: #eef5ff;
+  color: #3a67b1;
+}
+
+/* Actions */
+.lead-card__actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Buttons (custom, not Bootstrap) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--edit {
+  background: #004a44;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
+  padding: 5px 14px;
+  width: 80px;
+}
+
+.btn--edit:hover {
+  background: #004a44;
+  color: #fff;
+}
+
+.btn--delete {
+  background: #d01f28;
+  color: #fff !important;
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.25);
+  padding: 5px 14px;
+  width: 80px;
+}
+
+.btn--delete:hover {
+  background: #d01f28;
+}
+
+/* Subtle hover on full card */
+.lead-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive: stack labels/values on small screens */
+@media (max-width: 520px) {
+  .lead-card__kv {
+    grid-template-columns: 1fr;
+    /* labels above values */
+  }
+
+  .lead-card__label {
+    opacity: 0.8;
+  }
+}
+
+
+
 /* Responsive */
 @media(max-width: 768px) {
   .col-md-4 {
