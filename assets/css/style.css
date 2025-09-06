@@ -1358,13 +1358,17 @@ h4.card-title.mb-0.flex-grow-1 {
 }
 
 .lead-card__label {
-  font-weight: 700;
-  color: #2f2f2f;
+  font-weight: 600;
+  color: #666;
+  font-size: 14px;
 }
 
 .lead-card__value {
-  color: #333;
+
   word-break: break-word;
+  font-size: 13px;
+  font-weight: 600;
+  color: #004a44;
 }
 
 /* Status badge (no Bootstrap) */
