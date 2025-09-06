@@ -93,7 +93,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $properties = $conn->query("SELECT id, project_name FROM properties ORDER BY project_name");
-$leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC");
+
+// Pagination setup
+$perPage = 5;
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+
+$totalResult = $conn->query("SELECT COUNT(*) AS cnt FROM leads");
+$totalLeads = $totalResult ? (int)$totalResult->fetch_assoc()['cnt'] : 0;
+$totalPages = (int)ceil($totalLeads / $perPage);
+$offset = ($page - 1) * $perPage;
+
+$leads = $conn->query(
+    "SELECT leads.*, properties.project_name FROM leads LEFT JOIN properties ON leads.property_id = properties.id ORDER BY leads.created_at DESC LIMIT $perPage OFFSET $offset"
+);
 ?>
 <?php include 'includes/common-header.php'; ?>
 <div class="main-content">
@@ -212,6 +224,18 @@ $leads = $conn->query("SELECT leads.*, properties.project_name FROM leads LEFT J
                                     </div>
                                 <?php endif; ?>
                             </div>
+
+                            <?php if ($totalPages > 1): ?>
+                                <nav aria-label="Lead pagination">
+                                    <ul class="pagination justify-content-center mt-4">
+                                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                                <a class="page-link" href="leads.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                            </li>
+                                        <?php endfor; ?>
+                                    </ul>
+                                </nav>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
