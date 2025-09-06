@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $properties = $conn->query("SELECT id, project_name FROM properties ORDER BY project_name");
 
 // Pagination setup
-$perPage = 5;
+$perPage = 6;
 $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 
 $totalResult = $conn->query("SELECT COUNT(*) AS cnt FROM leads");
