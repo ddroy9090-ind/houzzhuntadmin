@@ -330,7 +330,10 @@ $leads = $conn->query(
             document.getElementById('lead-phone').value = this.dataset.phone;
             document.getElementById('lead-property').value = this.dataset.property;
             document.getElementById('lead-status').value = this.dataset.status;
-            document.getElementById('lead-message').value = this.dataset.message;
+            const messageEl = document.getElementById('lead-message');
+            if (messageEl) {
+                messageEl.value = this.dataset.message;
+            }
             new bootstrap.Modal(modalEl).show();
         });
     });
