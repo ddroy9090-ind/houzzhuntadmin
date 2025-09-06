@@ -46,7 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id > 0) {
         if ($avatarPath) {
-            $stmt = $conn->prepare('UPDATE leads SET name=?,email=?,phone=?,property_id=NULLIF(?,0),message=?,avatar=?,status=? WHERE id=?');
+            $stmt = $conn->prepare(
+                'UPDATE leads SET name=?,email=?,phone=?,property_id=NULLIF(?,0),message=?,avatar=?,status=? WHERE id=?'
+            );
             if ($stmt) {
                 $stmt->bind_param('sssisssi', $name, $email, $phone, $property_id, $note, $avatarPath, $status, $id);
                 if ($stmt->execute()) {
@@ -59,7 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = 'Error preparing statement: ' . $conn->error;
             }
         } else {
-            $stmt = $conn->prepare('UPDATE leads SET name=?,email=?,phone=?,property_id=NULLIF(?,0),message=?,status=? WHERE id=?');
+            $stmt = $conn->prepare(
+                'UPDATE leads SET name=?,email=?,phone=?,property_id=NULLIF(?,0),message=?,status=? WHERE id=?'
+            );
             if ($stmt) {
                 $stmt->bind_param('sssissi', $name, $email, $phone, $property_id, $note, $status, $id);
                 if ($stmt->execute()) {
