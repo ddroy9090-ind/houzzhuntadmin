@@ -185,7 +185,7 @@ a.btn.btn-light {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
+  /* text-fill-color: transparent; */
   font-weight: 300;
 }
 
@@ -1482,7 +1482,6 @@ h4.card-title.mb-0.flex-grow-1 {
 
   #chatBox {
     height: 45vh;
-    /* 👈 mobile pe thoda aur chhota */
   }
 }
 
