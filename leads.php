@@ -262,11 +262,11 @@ $leads = $conn->query(
                             <div class="modal-body">
                                 <input type="hidden" name="id" id="lead-id" />
                                 <div class="row g-3">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <label for="lead-name" class="form-label">Name</label>
                                         <input type="text" class="form-control" id="lead-name" name="name" required>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <label for="lead-email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="lead-email" name="email" required>
                                     </div>
@@ -297,10 +297,10 @@ $leads = $conn->query(
                                         <label for="lead-avatar" class="form-label">Profile Image</label>
                                         <input type="file" class="form-control" id="lead-avatar" name="avatar" accept="image/*">
                                     </div>
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <label for="lead-message" class="form-label">Message</label>
                                         <textarea class="form-control" id="lead-message" name="message" rows="3"></textarea>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="modal-footer">

@@ -125,29 +125,30 @@
                              <input type="hidden" id="user-id" name="id" />
                              <div class="modal-body">
                                 <div class="row g-3">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="mb-0">
                                             <label for="name-field" class="form-label">Name</label>
                                             <input type="text" id="name-field" name="name" class="form-control"
                                                 placeholder="Enter Full Name" required />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="username-field" class="form-label">Username</label>
-                                            <input type="text" id="username-field" name="username" class="form-control"
-                                                placeholder="Enter Username" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="mb-0">
                                             <label for="email-field" class="form-label">Email</label>
                                             <input type="email" id="email-field" name="email" class="form-control"
                                                 placeholder="Enter Email" required />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-3">
+                                        <div class="mb-0">
+                                            <label for="username-field" class="form-label">Username</label>
+                                            <input type="text" id="username-field" name="username" class="form-control"
+                                                placeholder="Enter Username" required />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="mb-0">
                                             <label for="role-field" class="form-label">Role</label>
                                             <select class="form-control form-select" name="role" id="role-field" required>
                                                 <option value="">Select Role</option>
@@ -158,7 +159,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-3 position-relative toggleBtn" id="password-group">
+                                        <div class="mb-0 position-relative toggleBtn" id="password-group">
                                             <label for="password-field" class="form-label">Password</label>
                                             <input type="password" id="password-field" name="password" class="form-control"
                                                 placeholder="Enter Password" required />
@@ -170,7 +171,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-3 position-relative toggleBtn" id="confirm-password-group">
+                                        <div class="mb-0 position-relative toggleBtn" id="confirm-password-group">
                                             <label for="confirm-password-field" class="form-label">Confirm Password</label>
                                             <input type="password" id="confirm-password-field" name="confirm_password"
                                                 class="form-control" placeholder="Confirm Password" required />
@@ -181,8 +182,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
+                                    <div class="col-lg-12">
+                                        <div class="mb-0">
                                             <label for="profile-image" class="form-label">Profile Image</label>
                                             <input type="file" id="profile-image" name="profile_image" class="form-control" accept="image/*" />
                                         </div>

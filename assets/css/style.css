@@ -1464,6 +1464,18 @@ h4.card-title.mb-0.flex-grow-1 {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
+
+.toggleBtn .btn:hover{
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  color: #666;
+}
+
+.toggleBtn .btn{
+  color: #666;
+}
+
 /* Responsive: stack labels/values on small screens */
 @media (max-width: 520px) {
   .lead-card__kv {
