@@ -1485,3 +1485,8 @@ h4.card-title.mb-0.flex-grow-1 {
     /* 👈 mobile pe thoda aur chhota */
   }
 }
+
+.pagination .page-item.active .page-link {
+  background-color: #004a44;
+  border-color: #004a44;
+}
