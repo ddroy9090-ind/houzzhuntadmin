@@ -28,6 +28,48 @@ if (!$property) {
     exit;
 }
 
+// Calculate nearby places based on location coordinates
+$nearby = [];
+if (!empty($property['location'])) {
+    $coords = array_map('trim', explode(',', $property['location']));
+    if (count($coords) === 2) {
+        $propLat = floatval($coords[0]);
+        $propLng = floatval($coords[1]);
+
+        // Haversine formula to compute distance in kilometers
+        function calculateDistanceKm($lat1, $lon1, $lat2, $lon2) {
+            $earthRadius = 6371; // km
+            $latFrom = deg2rad($lat1);
+            $lonFrom = deg2rad($lon1);
+            $latTo = deg2rad($lat2);
+            $lonTo = deg2rad($lon2);
+            $latDelta = $latTo - $latFrom;
+            $lonDelta = $lonTo - $lonFrom;
+
+            $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+            return $angle * $earthRadius;
+        }
+
+        $landmarks = [
+            'burj_al_arab' => ['lat' => 25.1412, 'lng' => 55.1853],
+            'dubai_marina' => ['lat' => 25.0800, 'lng' => 55.1400],
+            'dubai_mall'   => ['lat' => 25.1972, 'lng' => 55.2744],
+            'sheikh_zayed' => ['lat' => 25.2150, 'lng' => 55.2820],
+        ];
+
+        $averageSpeed = 60; // km/h average travel speed
+        foreach ($landmarks as $key => $point) {
+            $distance = calculateDistanceKm($propLat, $propLng, $point['lat'], $point['lng']);
+            $timeMinutes = round(($distance / $averageSpeed) * 60);
+            $nearby[$key] = [
+                'distance' => round($distance, 1),
+                'time' => $timeMinutes,
+            ];
+        }
+    }
+}
+
 $heroImage = !empty($property['main_picture'])
     ? 'uploads/' . $property['main_picture']
     : 'assets/images/banner/hero-banner.webp';
@@ -288,22 +330,54 @@ $heroImage = !empty($property['main_picture'])
                     <div class="col-md-3 col-6 mb-4">
                         <img src="assets/icons/location.png" width="50" alt="Burj Al Arab">
                         <h6 class="mt-2">Burj Al Arab</h6>
-                        <small class="text-muted"><?php echo $property['burj_al_arab']; ?> Minutes</small>
+                        <small class="text-muted">
+                            <?php
+                            if (!empty($nearby['burj_al_arab'])) {
+                                echo $nearby['burj_al_arab']['distance'] . ' km / ' . $nearby['burj_al_arab']['time'] . ' Minutes';
+                            } else {
+                                echo htmlspecialchars($property['burj_al_arab']) . ' Minutes';
+                            }
+                            ?>
+                        </small>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <img src="assets/icons/marina.png" width="50" alt="Dubai Marina">
                         <h6 class="mt-2">Dubai Marina</h6>
-                        <small class="text-muted"><?php echo $property['dubai_marina']; ?> Minutes</small>
+                        <small class="text-muted">
+                            <?php
+                            if (!empty($nearby['dubai_marina'])) {
+                                echo $nearby['dubai_marina']['distance'] . ' km / ' . $nearby['dubai_marina']['time'] . ' Minutes';
+                            } else {
+                                echo htmlspecialchars($property['dubai_marina']) . ' Minutes';
+                            }
+                            ?>
+                        </small>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <img src="assets/icons/phone.png" width="50" alt="Dubai Mall">
                         <h6 class="mt-2">Dubai Mall</h6>
-                        <small class="text-muted"><?php echo $property['dubai_mall']; ?> Minutes</small>
+                        <small class="text-muted">
+                            <?php
+                            if (!empty($nearby['dubai_mall'])) {
+                                echo $nearby['dubai_mall']['distance'] . ' km / ' . $nearby['dubai_mall']['time'] . ' Minutes';
+                            } else {
+                                echo htmlspecialchars($property['dubai_mall']) . ' Minutes';
+                            }
+                            ?>
+                        </small>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <img src="assets/icons/route.png" width="50" alt="Sheikh Zayed Road">
                         <h6 class="mt-2">Sheikh Zayed Road</h6>
-                        <small class="text-muted"><?php echo $property['sheikh_zayed']; ?> Minutes</small>
+                        <small class="text-muted">
+                            <?php
+                            if (!empty($nearby['sheikh_zayed'])) {
+                                echo $nearby['sheikh_zayed']['distance'] . ' km / ' . $nearby['sheikh_zayed']['time'] . ' Minutes';
+                            } else {
+                                echo htmlspecialchars($property['sheikh_zayed']) . ' Minutes';
+                            }
+                            ?>
+                        </small>
                     </div>
                 </div>
 
